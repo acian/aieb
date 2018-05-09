@@ -42,7 +42,7 @@ export function fetchPersons() {
 
 export function fetchPerson(dni) {
   return (dispatch) => {
-    return callApi(`persons/${id}`).then(res => dispatch(addPerson(res.person)));
+    return callApi(`persons/${dni}`).then(res => dispatch(addPerson(res.person)));
   };
 }
 
