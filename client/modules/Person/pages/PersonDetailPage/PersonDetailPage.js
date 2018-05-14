@@ -15,7 +15,7 @@ import { getPerson } from '../../PersonReducer';
 export function PersonDetailPage(props) {
   return (
     <div>
-      <Helmet title={props.Person.title} />
+      <Helmet title={props.person.name} />
        <div className={`${styles['single-post']} ${styles['post-detail']}`}>
         <h3 className={styles['post-title']}>{props.person.surname}</h3>
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
@@ -27,21 +27,21 @@ export function PersonDetailPage(props) {
 
 // Actions required to provide data for this component to render in server side.
 PersonDetailPage.need = [params => {
-  return fetchPerson(params.dni);
+  return fetchPerson(params.id);
 }];
 
 // Retrieve data from store as props
 function mapStateToProps(state, props) {
   return {
-    Person: getPerson(state, props.params.dni),
+    person: getPerson(state, props.params.id),
   };
 }
 
 PersonDetailPage.propTypes = {
-  Person: PropTypes.shape({
+  person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
-    dni: PropTypes.number.isRequired,
+    dni: PropTypes.string.isRequired,
   }).isRequired,
 };
 

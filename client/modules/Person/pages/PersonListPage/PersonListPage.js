@@ -6,16 +6,16 @@ import PersonList from '../../components/PersonList';
 import PersonCreateWidget from '../../components/PersonCreateWidget/PersonCreateWidget';
 
 // Import Actions
-import { addPersonRequest, fetchPersons, deletePersonRequest } from '../../PersonActions';
+import { addPersonRequest, fetchPeople, deletePersonRequest } from '../../PersonActions';
 import { toggleAddPerson } from '../../../App/AppActions';
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
-import { getPersons } from '../../PersonReducer';
+import { getPeople } from '../../PersonReducer';
 
 class PersonListPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPersons());
+    this.props.dispatch(fetchPeople());
   }
 
   handleDeletePerson = person => {
@@ -33,28 +33,28 @@ class PersonListPage extends Component {
     return (
       <div>
         <PersonCreateWidget addPerson={this.handleAddPerson} showAddPerson={this.props.showAddPerson} />
-        <PersonList handleDeletePerson={this.handleDeletePerson} persons={this.props.persons} />
+        <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
       </div>
     );
   }
 }
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPersons(); }];
+PersonListPage.need = [() => { return fetchPeople(); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
     showAddPerson: getShowAddPerson(state),
-    persons: getPersons(state),
+    people: getPeople(state),
   };
 }
 
 PersonListPage.propTypes = {
-  persons: PropTypes.arrayOf(PropTypes.shape({
+  people: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
-    dni: PropTypes.number.isRequired,
+    dni: PropTypes.string.isRequired,
   })).isRequired,
   showAddPerson: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,

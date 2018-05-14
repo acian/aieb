@@ -33,7 +33,7 @@ export default (
       }}
     />
     <Route
-      path="/persons/:dni"
+      path="/people/:id"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           //cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);

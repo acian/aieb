@@ -7,7 +7,7 @@ function PersonList(props) {
   return (
     <div className="listView">
       {
-        props.persons.map(person => (
+        props.people.map(person => (
           <PersonListItem
             person={person}
             key={person.dni}
@@ -20,10 +20,10 @@ function PersonList(props) {
 }
 
 PersonList.propTypes = {
-  persons: PropTypes.arrayOf(PropTypes.shape({
+  people: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
-    dni: PropTypes.number.isRequired,
+    dni: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePerson: PropTypes.func.isRequired,
 };

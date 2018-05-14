@@ -9,7 +9,7 @@ function PersonListItem(props) {
   return (
     <div className={styles['single-post']}>
       <h3 className={styles['post-title']}>
-        <Link to={`/persons/${props.person.dni}`} >
+        <Link to={`/people/${props.person.dni}`} >
           {props.person.surname}
         </Link>
       </h3>
@@ -25,7 +25,7 @@ PersonListItem.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
-    dni: PropTypes.number.isRequired,
+    dni: PropTypes.string.isRequired,
     }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };

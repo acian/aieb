@@ -2,7 +2,7 @@ import callApi from '../../util/apiCaller';
 
 // Export Constants
 export const ADD_PERSON = 'ADD_PERSON';
-export const ADD_PERSONS = 'ADD_PERSONS';
+export const ADD_PEOPLE = 'ADD_PEOPLE';
 export const DELETE_PERSON = 'DELETE_PERSON';
 
 // Export Actions
@@ -15,7 +15,7 @@ export function addPerson(person) {
 
 export function addPersonRequest(person) {
   return (dispatch) => {
-    return callApi('persons', 'person', {
+    return callApi('people', 'post', {
       person: {
         name: person.name,
         surname: person.surname,
@@ -25,24 +25,24 @@ export function addPersonRequest(person) {
   };
 }
 
-export function addPersons(persons) {
+export function addPeople(people) {
   return {
-    type: ADD_PERSONS,
-    persons,
+    type: ADD_PEOPLE,
+    people,
   };
 }
 
-export function fetchPersons() {
+export function fetchPeople() {
   return (dispatch) => {
-    return callApi('persons').then(res => {
-      dispatch(addPersons(res.persons));
+    return callApi('people').then(res => {
+      dispatch(addPeople(res.people));
     });
   };
 }
 
 export function fetchPerson(dni) {
   return (dispatch) => {
-    return callApi(`persons/${dni}`).then(res => dispatch(addPerson(res.person)));
+    return callApi(`people/${dni}`).then(res => dispatch(addPerson(res.person)));
   };
 }
 
@@ -55,6 +55,6 @@ export function deletePerson(dni) {
 
 export function deletePersonRequest(dni) {
   return (dispatch) => {
-    return callApi(`persons/${dni}`, 'delete').then(() => dispatch(deletePerson(dni)));
+    return callApi(`people/${dni}`, 'delete').then(() => dispatch(deletePerson(dni)));
   };
 }

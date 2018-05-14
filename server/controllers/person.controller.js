@@ -4,17 +4,17 @@ import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
 
 /**
- * Get all persons
+ * Get people
  * @param req
  * @param res
  * @returns void
  */
-export function getPersons(req, res) {
-  person.find().sort('-dateAdded').exec((err, persons) => {
+export function getPeople(req, res) {
+  person.find().sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ persons });
+    res.json({ people });
   });
 }
 
