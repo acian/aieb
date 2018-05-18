@@ -1,4 +1,5 @@
 import Post from './models/post';
+import Person from './models/person';
 
 export default function () {
   Post.count().exec((err, count) => {
@@ -37,10 +38,19 @@ export default function () {
     const post1 = new Post({ name: 'Admin', title: 'Hello MERN', slug: 'hello-mern', cuid: 'cikqgkv4q01ck7453ualdn3hd', content: content1 });
     const post2 = new Post({ name: 'Admin', title: 'Lorem Ipsum', slug: 'lorem-ipsum', cuid: 'cikqgkv4q01ck7453ualdn3hf', content: content2 });
 
+    const person1 = new Person({ name: 'Admin', surname: 'Lorem Ipsum', dni: 33123456 });
+
     Post.create([post1, post2], (error) => {
       if (!error) {
         // console.log('ready to go....');
       }
     });
+
+    Person.create([person1], (error) => {
+      if (!error) {
+        // console.log('ready to go....');
+      }
+    });
+
   });
 }
