@@ -54,6 +54,7 @@ export function deletePerson(dni) {
 }
 
 export function deletePersonRequest(dni) {
+  console.log(`dni personActions-> ${dni}`);
   return (dispatch) => {
     return callApi(`people/${dni}`, 'delete').then(() => dispatch(deletePerson(dni)));
   };

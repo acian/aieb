@@ -20,7 +20,7 @@ class PersonListPage extends Component {
 
   handleDeletePerson = person => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
-      this.props.dispatch(deletepersonRequest(person));
+      this.props.dispatch(deletePersonRequest(person));
     }
   };
 

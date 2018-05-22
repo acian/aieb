@@ -9,6 +9,7 @@ import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 
 // Import Actions
 import { toggleAddPerson } from './AppActions';
@@ -30,7 +31,8 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <div id="outer-container">
+        <BurgerMenu outerContainerId={"outer-container"} />
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <div>
           <Helmet

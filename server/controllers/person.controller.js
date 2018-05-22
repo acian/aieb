@@ -66,7 +66,9 @@ export function getPerson(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  person.findOne({ dni: req.params.dni }).exec((err, person) => {
+  console.log(`dni: ${req.params.id}`);
+  person.findOne({ dni: req.params.id }).exec((err, person) => {
+    console.log(`dni: ${req.query.dni} person->${person}`);
     if (err) {
       res.status(500).send(err);
     }
