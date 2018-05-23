@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Button } from 'react-bootstrap';
 
 // Import Style
 import styles from './PersonCreateWidget.css';
@@ -24,7 +25,7 @@ export class PersonCreateWidget extends Component {
           <input placeholder={"name"} className={styles['form-field']} ref="name" />
           <input placeholder={"surname"} className={styles['form-field']} ref="surname" />
           <input placeholder={"dni"} className={styles['form-field']} ref="dni" />
-          <a className={styles['post-submit-button']} href="#" onClick={this.addPerson}><FormattedMessage id="submit" /></a>
+          <Button bsStyle="primary" onClick={this.addPerson}>Primary</Button>
         </div>
       </div>
     );

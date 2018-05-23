@@ -11,6 +11,7 @@ import routes from './routes';
 
 // Base stylesheet
 require('./main.css');
+require('bootstrap/dist/css/bootstrap.css');
 
 export default function App(props) {
   return (
