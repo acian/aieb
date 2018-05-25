@@ -9,9 +9,10 @@ export class PersonCreateWidget extends Component {
     const nameRef = this.refs.name;
     const surnameRef = this.refs.surname;
     const dniRef = this.refs.dni;
-    if (nameRef.value && surnameRef.value && dniRef.value) {
-      this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value);
-      nameRef.value = surnameRef.value = dniRef.value = '';
+    const addressRef = this.refs.address;
+    if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
+      this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value, addressRef.value);
+      nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
     }
   };
 
@@ -24,6 +25,7 @@ export class PersonCreateWidget extends Component {
           <input placeholder={"name"} className={styles['form-field']} ref="name" />
           <input placeholder={"surname"} className={styles['form-field']} ref="surname" />
           <input placeholder={"dni"} className={styles['form-field']} ref="dni" />
+          <input placeholder={"address"} className={styles['form-field']} ref="address" />
           <a className={styles['post-submit-button']} href="#" onClick={this.addPerson}><FormattedMessage id="submit" /></a>
         </div>
       </div>

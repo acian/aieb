@@ -35,6 +35,7 @@ export function addPerson(req, res) {
   newPerson.surname = sanitizeHtml(newPerson.surname);
   newPerson.name = sanitizeHtml(newPerson.name);
   newPerson.dni = sanitizeHtml(newPerson.dni);
+  newPerson.address = sanitizeHtml(newPerson.address);
 
   newPerson.save((err, saved) => {
     if (err) {

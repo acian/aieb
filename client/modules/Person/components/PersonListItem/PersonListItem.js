@@ -15,6 +15,7 @@ function PersonListItem(props) {
       </h3>
       <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
       <p className={styles['post-desc']}>{props.person.dni}</p>
+      <p className={styles['post-desc']}>{props.person.address}</p>
       <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePerson" /></a></p>
       <hr className={styles.divider} />
     </div>

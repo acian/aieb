@@ -24,9 +24,9 @@ class PersonListPage extends Component {
     }
   };
 
-  handleAddPerson = (name, surname, dni) => {
+  handleAddPerson = (name, surname, dni, address) => {
     this.props.dispatch(toggleAddPerson());
-    this.props.dispatch(addPersonRequest({ name, surname, dni }));
+    this.props.dispatch(addPersonRequest({ name, surname, dni, address }));
   };
 
   render() {
