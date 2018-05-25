@@ -70,7 +70,7 @@ export function getPerson(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  Person.findOne({ dni: req.params.dni }).exec((err, person) => {
+  Person.findOne({ dni: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
