@@ -7,24 +7,21 @@ const personSchema = new Schema({
   surname: { type: 'String',
              required: true },
   dni: { type: 'String',
-         required: true},
+         required: true },
   address: { type: 'String',
-             required: true }
-  /*email: { type: 'String',
+             required: true },
+  email: { type: 'String',
            required: true,
            trim: true,
            lowercase: true,
-           unique: true,
            required: 'Email es requerido',
            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Ingrese email'] },
-  telephone: { type: 'Number'},
-  cellphone: { type: 'Number'},
-  birthdate: { type: 'Date',
-               default: Date.now,
-               required: true },
+  telephone: { type: 'String'},
+  cellphone: { type: 'String'},
+  birthDate: { type: 'Date', default: Date.now, required: true },
   profession: { type: 'String' },
-  professionplace: { type: 'String' },
-  dateAdded: { type: 'Date', default: Date.now, required: true },*/
+  professionPlace: { type: 'String' },
+  dateCreated: { type: 'Date', default: Date.now},
 });
 
 export default mongoose.model('Person', personSchema);

@@ -21,6 +21,13 @@ export function addPersonRequest(person) {
         surname: person.surname,
         dni: person.dni,
         address: person.address,
+        email: person.email,
+        telephone: person.telephone,
+        cellphone: person.cellphone,
+        birthDate: person.birthDate,
+        profession: person.profession,
+        professionPlace: person.professionPlace,
+        dateCreated: person.dateCreated,
       },
     }).then(res => dispatch(addPerson(res.person)));
   };
