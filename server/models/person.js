@@ -7,10 +7,10 @@ const personSchema = new Schema({
   surname: { type: 'String',
              required: true },
   dni: { type: 'String',
-         required: true},
+         required: true },
   address: { type: 'String',
-             required: true }
-  /*email: { type: 'String',
+             required: true },
+  /*  email: { type: 'String',
            required: true,
            trim: true,
            lowercase: true,
@@ -24,7 +24,7 @@ const personSchema = new Schema({
                required: true },
   profession: { type: 'String' },
   professionplace: { type: 'String' },
-  dateAdded: { type: 'Date', default: Date.now, required: true },*/
+  dateAdded: { type: 'Date', default: Date.now, required: true }, */
 });
 
 export default mongoose.model('Person', personSchema);

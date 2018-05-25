@@ -1,6 +1,4 @@
-import person from '../models/person';
-import cuid from 'cuid';
-import slug from 'limax';
+import Person from '../models/person';
 import sanitizeHtml from 'sanitize-html';
 
 /**
@@ -10,7 +8,7 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  person.find().sort('-dateAdded').exec((err, people) => {
+  Person.find().sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -29,7 +27,7 @@ export function addPerson(req, res) {
     res.status(403).end();
   }
 
-  const newPerson = new person(req.body.person);
+  const newPerson = new Person(req.body.person);
 
   // Let's sanitize inputs
   newPerson.surname = sanitizeHtml(newPerson.surname);
@@ -52,7 +50,7 @@ export function addPerson(req, res) {
  * @returns void
  */
 export function getPerson(req, res) {
-  person.findOne({ dni: req.params.dni }).exec((err, person) => {
+  Person.findOne({ dni: req.params.dni }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -67,7 +65,7 @@ export function getPerson(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  person.findOne({ dni: req.params.dni }).exec((err, person) => {
+  Person.findOne({ dni: req.params.dni }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
