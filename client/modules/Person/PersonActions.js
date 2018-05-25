@@ -20,6 +20,7 @@ export function addPersonRequest(person) {
         name: person.name,
         surname: person.surname,
         dni: person.dni,
+        address: person.address,
       },
     }).then(res => dispatch(addPerson(res.person)));
   };
