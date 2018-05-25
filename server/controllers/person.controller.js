@@ -34,6 +34,11 @@ export function addPerson(req, res) {
   newPerson.name = sanitizeHtml(newPerson.name);
   newPerson.dni = sanitizeHtml(newPerson.dni);
   newPerson.address = sanitizeHtml(newPerson.address);
+  newPerson.email = sanitizeHtml(newPerson.email);
+  newPerson.telephone = sanitizeHtml(newPerson.telephone);
+  newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
+  newPerson.profession = sanitizeHtml(newPerson.profession);
+  newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
 
   newPerson.save((err, saved) => {
     if (err) {

@@ -21,6 +21,13 @@ export function PersonDetailPage(props) {
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
         <p className={styles['post-desc']}>{props.person.dni}</p>
         <p className={styles['post-desc']}>{props.person.address}</p>
+        <p className={styles['post-desc']}>{props.person.email}</p>
+        <p className={styles['post-desc']}>{props.person.telephone}</p>
+        <p className={styles['post-desc']}>{props.person.cellphone}</p>
+        <p className={styles['post-desc']}>{props.person.birthDate}</p>
+        <p className={styles['post-desc']}>{props.person.profession}</p>
+        <p className={styles['post-desc']}>{props.person.professionPlace}</p>
+        <p className={styles['post-desc']}>{props.person.dateCreated}</p>
       </div>
     </div>
   );
@@ -44,6 +51,13 @@ PersonDetailPage.propTypes = {
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    telephone: PropTypes.string.isRequired,
+    cellphone: PropTypes.string.isRequired,
+    birthDate: PropTypes.instanceOf(Date),
+    profession: PropTypes.string.isRequired,
+    professionPlace: PropTypes.string.isRequired,
+    dateCreated: PropTypes.instanceOf(Date),
   }).isRequired,
 };
 
