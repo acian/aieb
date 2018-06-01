@@ -25,7 +25,7 @@ export class PersonCreateWidget extends Component {
           <input placeholder={"name"} className={styles['form-field']} ref="name" />
           <input placeholder={"surname"} className={styles['form-field']} ref="surname" />
           <input placeholder={"dni"} className={styles['form-field']} ref="dni" />
-          <Button bsStyle="primary" onClick={this.addPerson}>Guardar</Button>
+          <Button bsStyle="primary" onClick={this.addPerson}><FormattedMessage id="save" /></Button>
         </div>
       </div>
     );

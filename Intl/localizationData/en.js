@@ -1,11 +1,11 @@
 export default {
   locale: 'en',
   messages: {
-    siteTitle: 'MERN Starter Blog',
+    siteTitle: 'American English Institute',
     addPost: 'Add Post',
     addPerson: 'Add Person',
     deletePerson: 'Delete Person',
-    switchLanguage: 'Switch Language',
+    switchLanguage: 'Switch Language ',
     twitterMessage: 'We are on Twitter',
     by: 'By',
     deletePost: 'Delete Post',
@@ -15,6 +15,7 @@ export default {
     postTitle: 'Post Title',
     postContent: 'Post Content',
     submit: 'Submit',
+    save: 'Save',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}
@@ -29,6 +30,7 @@ export default {
     	  =0 {does not have any comments}
     	  =1 {has # comment}
     	  other {has # comments}
-    	} as of {date}`,
+      } as of {date}`,
+    footer: 'American English Intitute',
   },
 };

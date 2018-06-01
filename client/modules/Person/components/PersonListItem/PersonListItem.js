@@ -1,23 +1,58 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import BootstrapTable from 'react-bootstrap-table-next';
 
 // Import Style
-import styles from './PersonListItem.css';
+// import styles from './PersonListItem.css';
+
+const products = [{
+  id: 1,
+  name: 'Product1',
+  price: 120,
+}, {
+  id: 2,
+  name: 'Product2',
+  price: 80,
+}];
+
+const columns = [{
+  dataField: 'id',
+  text: 'Product ID',
+}, {
+  dataField: 'name',
+  text: 'Product Name',
+  sort: true,
+}, {
+  dataField: 'price',
+  text: 'Product Price',
+  sort: true,
+  formatter: priceFormatter,
+}];
+
+function indication() {
+  return 'Sin datos.';
+}
+
+const CaptionElement = () => <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'purple', border: '1px solid purple', padding: '0.5em' }}>Personas</h3>;
+
+function priceFormatter(cell, row) {
+  if (row.onSale) {
+    return (
+      <span>
+        <strong style={{ color: 'red' }}>$ {cell} </strong>
+      </span>
+    );
+  }
+
+  return (
+    <span>$ {cell} NTD</span>
+  );
+}
 
 function PersonListItem(props) {
   return (
-    <div className={styles['single-post']}>
-      <h3 className={styles['post-title']}>
-        <Link to={`/people/${props.person.dni}`} >
-          {props.person.surname}
-        </Link>
-      </h3>
-      <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
-      <p className={styles['post-desc']}>{props.person.dni}</p>
-      <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePerson" /></a></p>
-      <hr className={styles.divider} />
-    </div>
+    <BootstrapTable keyField="id" data={products} wrapperClasses="boo" caption={<CaptionElement />} columns={columns} noDataIndication={indication} striped hover condensed />
   );
 }
 
@@ -26,7 +61,7 @@ PersonListItem.propTypes = {
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
-    }).isRequired,
+  }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

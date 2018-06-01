@@ -1,9 +1,10 @@
 export default {
   locale: 'fr',
   messages: {
-    siteTitle: 'MERN blog de démarrage',
+    siteTitle: 'American English Institute',
     addPost: 'Ajouter Poster',
-    switchLanguage: 'Changer de langue',
+    addPerson: 'Add Person',
+    switchLanguage: 'Changer de langue ',
     twitterMessage: 'Nous sommes sur Twitter',
     by: 'Par',
     deletePost: 'Supprimer le message',
@@ -12,6 +13,7 @@ export default {
     postTitle: 'Titre de l\'article',
     postContent: 'Contenu après',
     submit: 'Soumettre',
+    save: 'Save',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}
@@ -26,6 +28,7 @@ export default {
   		  =0 {does not have any comments}
   		  =1 {has # comment}
   		  other {has # comments}
-  		} as of {date} (in real app this would be translated to French)`,
+      } as of {date} (in real app this would be translated to French)`,
+    footer: 'American English Intitute',
   },
 };
