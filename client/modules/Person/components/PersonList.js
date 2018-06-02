@@ -1,21 +1,56 @@
 import React, { PropTypes } from 'react';
 
 // Import Components
-import PersonListItem from './PersonListItem/PersonListItem';
+import BootstrapTable from 'react-bootstrap-table-next';
 
-function PersonList(props) {
+
+const products = [{
+  id: 1,
+  name: 'Product1',
+  price: 120,
+}, {
+  id: 2,
+  name: 'Product2',
+  price: 80,
+}];
+
+const columns = [{
+  dataField: 'id',
+  text: 'Product ID',
+}, {
+  dataField: 'name',
+  text: 'Product Name',
+  sort: true,
+}, {
+  dataField: 'price',
+  text: 'Product Price',
+  sort: true,
+  formatter: priceFormatter,
+}];
+
+function indication() {
+  return 'Sin datos.';
+}
+
+const CaptionElement = () => <h3 style={{ borderRadius: '0.55em', textAlign: 'center', color: 'blue', border: '2px solid blue', padding: '5px' }}>Personas</h3>;
+
+function priceFormatter(cell, row) {
+  if (row.onSale) {
+    return (
+      <span>
+        <strong style={{ color: 'red' }}>$ {cell} </strong>
+      </span>
+    );
+  }
+
   return (
-    <div className="listView">
-      {
-        props.people.map(person => (
-          <PersonListItem
-            person={person}
-            key={person.dni}
-            onDelete={() => props.handleDeletePerson(person.dni)}
-          />
-        ))
-      }
-    </div>
+    <span>$ {cell} NTD</span>
+  );
+}
+
+function PersonList() {
+  return (
+    <BootstrapTable keyField="id" data={products} wrapperClasses="boo" caption={<CaptionElement />} columns={columns} noDataIndication={indication} striped hover condensed />
   );
 }
 

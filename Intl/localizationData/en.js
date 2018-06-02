@@ -5,7 +5,7 @@ export default {
     addPost: 'Add Post',
     addPerson: 'Add Person',
     deletePerson: 'Delete Person',
-    switchLanguage: 'Switch Language ',
+    usuario: 'Usuario ',
     twitterMessage: 'We are on Twitter',
     by: 'By',
     deletePost: 'Delete Post',
@@ -32,5 +32,6 @@ export default {
     	  other {has # comments}
       } as of {date}`,
     footer: 'American English Intitute',
+    personTitle: 'Listado de Personas',
   },
 };
