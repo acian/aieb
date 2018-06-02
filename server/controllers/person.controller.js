@@ -1,6 +1,4 @@
-import person from '../models/person';
-import cuid from 'cuid';
-import slug from 'limax';
+import Person from '../models/person';
 import sanitizeHtml from 'sanitize-html';
 
 /**
@@ -10,7 +8,7 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  person.find().sort('-dateAdded').exec((err, people) => {
+  Person.find().sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -29,12 +27,18 @@ export function addPerson(req, res) {
     res.status(403).end();
   }
 
-  const newPerson = new person(req.body.person);
+  const newPerson = new Person(req.body.person);
 
   // Let's sanitize inputs
   newPerson.surname = sanitizeHtml(newPerson.surname);
   newPerson.name = sanitizeHtml(newPerson.name);
   newPerson.dni = sanitizeHtml(newPerson.dni);
+  newPerson.address = sanitizeHtml(newPerson.address);
+  newPerson.email = sanitizeHtml(newPerson.email);
+  newPerson.telephone = sanitizeHtml(newPerson.telephone);
+  newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
+  newPerson.profession = sanitizeHtml(newPerson.profession);
+  newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
 
   newPerson.save((err, saved) => {
     if (err) {
@@ -51,7 +55,7 @@ export function addPerson(req, res) {
  * @returns void
  */
 export function getPerson(req, res) {
-  person.findOne({ dni: req.params.dni }).exec((err, person) => {
+  Person.findOne({ dni: req.params.dni }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -66,9 +70,7 @@ export function getPerson(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  console.log(`dni: ${req.params.id}`);
-  person.findOne({ dni: req.params.id }).exec((err, person) => {
-    console.log(`dni: ${req.query.dni} person->${person}`);
+  Person.findOne({ dni: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }

@@ -9,9 +9,21 @@ export class PersonCreateWidget extends Component {
     const nameRef = this.refs.name;
     const surnameRef = this.refs.surname;
     const dniRef = this.refs.dni;
-    if (nameRef.value && surnameRef.value && dniRef.value) {
-      this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value);
-      nameRef.value = surnameRef.value = dniRef.value = '';
+    const addressRef = this.refs.address;
+    const emailRef = this.refs.email;
+    const telephoneRef = this.refs.telephone;
+    const cellphoneRef = this.refs.cellphone;
+    const birthDateRef = this.refs.birthDate;
+    const professionRef = this.refs.profession;
+    const professionPlaceRef = this.refs.professionPlace;
+    const dateCreatedRef = this.refs.dateCreated;
+    if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
+      this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
+                           emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
+                           professionRef.value, professionPlaceRef.value, dateCreatedRef.value);
+      nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
+      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = '';
+      birthDateRef.value = dateCreatedRef.value = null;
     }
   };
 
@@ -24,6 +36,14 @@ export class PersonCreateWidget extends Component {
           <input placeholder={"name"} className={styles['form-field']} ref="name" />
           <input placeholder={"surname"} className={styles['form-field']} ref="surname" />
           <input placeholder={"dni"} className={styles['form-field']} ref="dni" />
+          <input placeholder={"address"} className={styles['form-field']} ref="address" />
+          <input placeholder={"email"} className={styles['form-field']} ref="email" />
+          <input placeholder={"telephone"} className={styles['form-field']} ref="telephone" />
+          <input placeholder={"cellphone"} className={styles['form-field']} ref="cellphone" />
+          <input placeholder={"dd/mm/yyyy"} type="date" className={styles['form-field']} ref="birthDate" />
+          <input placeholder={"profession"} className={styles['form-field']} ref="profession" />
+          <input placeholder={"professionPlace"} className={styles['form-field']} ref="professionPlace" />
+          <input placeholder={"dd/mm/yyyy"} type="date" className={styles['form-field']} ref="dateCreated" />
           <a className={styles['post-submit-button']} href="#" onClick={this.addPerson}><FormattedMessage id="submit" /></a>
         </div>
       </div>

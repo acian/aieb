@@ -27,7 +27,7 @@ export default (
     <IndexRoute
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          //cb(null, require('./modules/Post/pages/PostListPage/PostListPage').default);
+          //  cb(null, require('./modules/Post/pages/PostListPage/PostListPage').default);
           cb(null, require('./modules/Person/pages/PersonListPage/PersonListPage').default);
         });
       }}
@@ -36,7 +36,7 @@ export default (
       path="/people/:id"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          //cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
+          //   cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
           cb(null, require('./modules/Person/pages/PersonDetailPage/PersonDetailPage').default);
         });
       }}
