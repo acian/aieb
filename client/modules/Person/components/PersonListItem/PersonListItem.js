@@ -1,6 +1,10 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+import ImageIcon from '@material-ui/icons/Image';
 
 // Import Style
 import styles from './PersonListItem.css';
@@ -13,6 +17,12 @@ function PersonListItem(props) {
           {props.person.surname}
         </Link>
       </h3>
+      <ListItem>
+        <Avatar>
+          <ImageIcon />
+        </Avatar>
+        <ListItemText primary={props.person.name} secondary={props.person.dni} />
+      </ListItem>
       <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
       <p className={styles['post-desc']}>{props.person.dni}</p>
       <p className={styles['post-desc']}>{props.person.address}</p>

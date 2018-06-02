@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import TextField from '@material-ui/core/TextField';
 
 // Import Style
 import styles from './PersonCreateWidget.css';
 
 export class PersonCreateWidget extends Component {
   addPerson = () => {
-    const nameRef = this.refs.name;
-    const surnameRef = this.refs.surname;
+    const nameRef = this.name;
+    const surnameRef = this.surname;
     const dniRef = this.refs.dni;
     const addressRef = this.refs.address;
     const emailRef = this.refs.email;
@@ -33,8 +34,8 @@ export class PersonCreateWidget extends Component {
       <div className={cls}>
         <div className={styles['form-content']}>
           <h2 className={styles['form-title']}><FormattedMessage id="createNewPerson" /></h2>
-          <input placeholder={"name"} className={styles['form-field']} ref="name" />
-          <input placeholder={"surname"} className={styles['form-field']} ref="surname" />
+          <TextField inputRef={x => this.name = x} label="Name" margin="normal" />
+          <TextField inputRef={x => this.surname = x} label="Surname" margin="normal" />
           <input placeholder={"dni"} className={styles['form-field']} ref="dni" />
           <input placeholder={"address"} className={styles['form-field']} ref="address" />
           <input placeholder={"email"} className={styles['form-field']} ref="email" />
