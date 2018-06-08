@@ -1,30 +1,48 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
+import Chip from '@material-ui/core/Chip';
+import DoneIcon from '@material-ui/icons/Done';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/ModeEdit';
 
 // Import Style
 import styles from './PersonListItem.css';
 
+function handleClick() {
+  alert('You clicked the Chip.'); // eslint-disable-line no-alert
+}
+
 function PersonListItem(props) {
+  let descriptionPerson = '';
+  descriptionPerson += props.person.email ? `${props.person.email}  /  ` : '';
+  descriptionPerson += props.person.cellphone ? `${props.person.cellphone}  /  ` : '';
+  descriptionPerson += props.person.address ? `${props.person.address} ` : '';
+
+
   return (
-    <div className={styles['single-post']}>
-      <h3 className={styles['post-title']}>
-        <Link to={`/people/${props.person.dni}`} >
-          {props.person.surname}
-        </Link>
-      </h3>
-      <p className={styles['author-name']}><FormattedMessage id="by" /> {props.person.name}</p>
-      <p className={styles['post-desc']}>{props.person.dni}</p>
-      <p className={styles['post-desc']}>{props.person.address}</p>
-      <p className={styles['post-desc']}>{props.person.email}</p>
-      <p className={styles['post-desc']}>{props.person.telephone}</p>
-      <p className={styles['post-desc']}>{props.person.cellphone}</p>
-      <p className={styles['post-desc']}>{props.person.birthDate}</p>
-      <p className={styles['post-desc']}>{props.person.profession}</p>
-      <p className={styles['post-desc']}>{props.person.professionPlace}</p>
-      <p className={styles['post-desc']}>{props.person.dateCreated}</p>
-      <p className={styles['post-action']}><a href="#" onClick={props.onDelete}><FormattedMessage id="deletePerson" /></a></p>
-      <hr className={styles.divider} />
+    <div>
+      <Paper elevation={9} className={styles['paper-description']} >
+        <div className={styles['actions-right']}>
+          <Button onClick={handleClick} mini variant="fab" color="primary" aria-label="Editar">
+            <EditIcon />
+          </Button>
+          <Button onClick={handleClick} mini variant="fab" color="secondary" aria-label="delete">
+            <DeleteIcon />
+          </Button>
+        </div>
+        <Typography variant="headline" component="h6">
+          <Link to={`/people/${props.person.dni}`} >
+            {props.person.surname}, {props.person.name}
+          </Link>
+        </Typography>
+        <Typography component="p">
+          {descriptionPerson}
+        </Typography>
+      </Paper>
     </div>
   );
 }
