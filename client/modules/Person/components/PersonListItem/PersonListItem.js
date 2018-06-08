@@ -17,6 +17,12 @@ function handleClick() {
 }
 
 function PersonListItem(props) {
+  let descriptionPerson = '';
+  descriptionPerson += props.person.email ? `${props.person.email}  /  ` : '';
+  descriptionPerson += props.person.cellphone ? `${props.person.cellphone}  /  ` : '';
+  descriptionPerson += props.person.address ? `${props.person.address} ` : '';
+
+
   return (
     <div>
       <Paper elevation={9} className={styles['paper-description']} >
@@ -29,10 +35,12 @@ function PersonListItem(props) {
           </Button>
         </div>
         <Typography variant="headline" component="h6">
-          {props.person.surname}, {props.person.name}
+          <Link to={`/people/${props.person.dni}`} >
+            {props.person.surname}, {props.person.name}
+          </Link>
         </Typography>
         <Typography component="p">
-          {props.person.email} / {props.person.cellphone} / {props.person.address}
+          {descriptionPerson}
         </Typography>
       </Paper>
     </div>
