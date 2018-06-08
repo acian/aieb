@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import DatePicker from '../../../../components/datePicker/datePicker';
 
 // Import Style
 import styles from './PersonCreateWidget.css';
@@ -46,16 +47,11 @@ export class PersonCreateWidget extends Component {
                 <TextField inputRef={x => this.dni = x} label="DNI" margin="normal" fullWidth />
             </Grid>
             <Grid item xs={6}>
-                <TextField 
-                  type="date" 
+                <DatePicker
                   inputRef={x => this.birthDate = x} 
                   label="Birth Date" 
-                  margin="normal" 
-                  fullWidth 
-                  defaultValue="2017-05-24"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  defaultDate="2017-05-24"
+                  id="birthday"
                 />
             </Grid>
             <Grid item xs={12}>
