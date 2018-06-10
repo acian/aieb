@@ -1,6 +1,20 @@
 export default {
   locale: 'en',
   messages: {
+    //Form people ---------------------------
+    newPerson: 'Agregar persona',
+    name: 'Nombre',
+    surname: 'Apellido',
+    dni: 'DNI',
+    birthDate: 'Fecha de nacimiento',
+    address: 'Dirección',
+    cellphone: 'Celular',
+    telephone: 'Teléfono',
+    email: 'Correo electrónico',
+    profession: 'Profesión',
+    place: 'Lugar',
+    submit: 'Guardar',
+    //---------------------------------------
     siteTitle: 'MERN Starter Blog',
     addPost: 'Add Post',
     addPerson: 'Add Person',
@@ -10,11 +24,9 @@ export default {
     by: 'By',
     deletePost: 'Delete Post',
     createNewPost: 'Create new post',
-    createNewPerson: 'Create new person',
     authorName: 'Author\'s Name',
     postTitle: 'Post Title',
     postContent: 'Post Content',
-    submit: 'Submit',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}
