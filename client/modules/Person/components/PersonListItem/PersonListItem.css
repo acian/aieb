@@ -58,11 +58,21 @@
 }
 
 .paper-description{
-  padding: 11px;
-  margin-top: 8px;
+  padding: 8px;
+  margin-top: 10px;
 }
 
 .actions-right{
   float: right;
   padding-top: 8px;
+}
+
+.primiry-heading{
+  flex-basis: 33.33%;
+  flex-shrink: 0%;
+  text-decoration: black
+}
+
+.secondary-heading{
+  color: rgba(46, 46, 155, 0.705);
 }
