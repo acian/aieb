@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -48,8 +49,8 @@ export class PersonCreateWidget extends Component {
             </Grid>
             <Grid item xs={6}>
                 <DatePicker
-                  inputRef={x => this.birthDate = x} 
-                  label="Birth Date" 
+                  inputRef={x => this.birthDate = x}
+                  label="Birth Date"
                   defaultDate="2017-05-24"
                   id="birthday"
                 />
@@ -79,7 +80,7 @@ export class PersonCreateWidget extends Component {
           <input placeholder={"email"} className={styles['form-field']} ref="email" />
           <input placeholder={"telephone"} className={styles['form-field']} ref="telephone" />
           <input placeholder={"cellphone"} className={styles['form-field']} ref="cellphone" />
-          
+
           <input placeholder={"profession"} className={styles['form-field']} ref="profession" />
           <input placeholder={"professionPlace"} className={styles['form-field']} ref="professionPlace" /> */}
           <input placeholder={"dd/mm/yyyy"} type="date" className={styles['form-field']} ref="dateCreated" />
