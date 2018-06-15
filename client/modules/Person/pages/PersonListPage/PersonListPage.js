@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 
 // Import Components
 import PersonList from '../../components/PersonList';
-import PersonCreateWidget from '../../components/PersonCreateWidget/PersonCreateWidget';
-import PersonFormDialog from '../../components/PersonFormDialog';
+import PersonFormDialog from '../../components/PersonFormDialog/PersonFormDialog';
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest } from '../../PersonActions';
@@ -35,7 +34,6 @@ class PersonListPage extends Component {
     return (
       <div>
         <PersonFormDialog addPerson={this.handleAddPerson}/>
-        <PersonCreateWidget addPerson={this.handleAddPerson} showAddPerson={this.props.showAddPerson} />
         <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
       </div>
     );
