@@ -15,7 +15,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { addPersonRequest } from '../PersonActions';
 import { toggleAddPerson } from '../../App/AppActions';
 
-export default class PersonFormDialog extends Component {
+class PersonFormDialog extends Component {
   state = {
     open: false,
   };
@@ -26,11 +26,6 @@ export default class PersonFormDialog extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
-  };
-
-  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated ) => {
-    this.props.dispatch(toggleAddPerson());
-    this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
   };
 
   render() {
@@ -45,7 +40,7 @@ export default class PersonFormDialog extends Component {
         >
           <DialogTitle id="form-dialog-title">Agregar Persona</DialogTitle>
           <DialogContent>
-            <PersonCreateWidget addPerson={this.handleAddPerson} showAddPerson={true} />
+            <PersonCreateWidget addPerson={this.props.addPerson} showAddPerson={true} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
@@ -60,3 +55,9 @@ export default class PersonFormDialog extends Component {
     );
   }
 }
+
+PersonCreateWidget.propTypes = {
+  addPerson: PropTypes.func.isRequired,
+};
+
+export default PersonFormDialog;

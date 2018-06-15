@@ -34,7 +34,7 @@ class PersonListPage extends Component {
   render() {
     return (
       <div>
-        <PersonFormDialog />
+        <PersonFormDialog addPerson={this.handleAddPerson}/>
         <PersonCreateWidget addPerson={this.handleAddPerson} showAddPerson={this.props.showAddPerson} />
         <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
       </div>
