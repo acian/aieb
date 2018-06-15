@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -46,6 +47,7 @@ export class PersonCreateWidget extends Component {
               <TextField inputRef={x => this.dni = x} label={this.props.intl.messages.dni} fullWidth />
             </Grid>
             <Grid item xs={6}>
+
               <TextField
                 label={this.props.intl.messages.birthDate}
                 type="date"
@@ -54,8 +56,9 @@ export class PersonCreateWidget extends Component {
                   shrink: true,
                 }}
                 fullWidth
-                inputRef={x => this.birthDate = x} 
+                inputRef={x => this.birthDate = x}
               />
+
             </Grid>
             <Grid item xs={12}>
               <TextField inputRef={x => this.address = x} label={this.props.intl.messages.address} fullWidth />
