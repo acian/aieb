@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 
 // Import Components
 import PersonList from '../../components/PersonList';
-import PersonFormDialog from '../../components/PersonFormDialog/PersonFormDialog';
+import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/PersonSearchAndAddForm';
+import Grid from '@material-ui/core/Grid';
 
 // Import Actions
-import { addPersonRequest, fetchPeople, deletePersonRequest } from '../../PersonActions';
+import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest } from '../../PersonActions';
 import { toggleAddPerson } from '../../../App/AppActions';
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople } from '../../PersonReducer';
+
 
 class PersonListPage extends Component {
   componentDidMount() {
@@ -30,11 +32,21 @@ class PersonListPage extends Component {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
   };
 
+  handleSearchPeople = (query) => {
+    this.props.dispatch(searchPeopleRequest(query));
+  };
+
   render() {
     return (
       <div>
-        <PersonFormDialog addPerson={this.handleAddPerson}/>
-        <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
+          </Grid>
+          <Grid item xs={12}>
+            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
+          </Grid>
+        </Grid>
       </div>
     );
   }

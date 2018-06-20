@@ -14,8 +14,9 @@ export default {
     profession: 'Profesión',
     place: 'Lugar',
     submit: 'Guardar',
+    searchPeople:'Buscar persona por DNI, Nombre o Apellido',
     //---------------------------------------
-    siteTitle: 'MERN Starter Blog',
+    siteTitle: 'American English Institute',
     addPost: 'Add Post',
     addPerson: 'Add Person',
     deletePerson: 'Delete Person',
