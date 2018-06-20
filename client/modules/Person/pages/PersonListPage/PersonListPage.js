@@ -1,9 +1,10 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Import Components
 import PersonList from '../../components/PersonList';
-import PersonCreateWidget from '../../components/PersonCreateWidget/PersonCreateWidget';
+import PersonFormDialog from '../../components/PersonFormDialog/PersonFormDialog';
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest } from '../../PersonActions';
@@ -32,7 +33,7 @@ class PersonListPage extends Component {
   render() {
     return (
       <div>
-        <PersonCreateWidget addPerson={this.handleAddPerson} showAddPerson={this.props.showAddPerson} />
+        <PersonFormDialog addPerson={this.handleAddPerson}/>
         <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
       </div>
     );
@@ -68,7 +69,7 @@ PersonListPage.propTypes = {
 };
 
 PersonListPage.contextTypes = {
-  router: React.PropTypes.object,
+  router: PropTypes.object,
 };
 
 export default connect(mapStateToProps)(PersonListPage);
