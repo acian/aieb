@@ -4,8 +4,10 @@ import callApi from '../../util/apiCaller';
 export const ADD_PERSON = 'ADD_PERSON';
 export const ADD_PEOPLE = 'ADD_PEOPLE';
 export const DELETE_PERSON = 'DELETE_PERSON';
+// export const SEARCH_PEOPLE = 'SEARCH_PEOPLE';
 
 // Export Actions
+
 export function addPerson(person) {
   return {
     type: ADD_PERSON,
@@ -51,6 +53,19 @@ export function fetchPeople() {
 export function fetchPerson(dni) {
   return (dispatch) => {
     return callApi(`people/${dni}`).then(res => dispatch(addPerson(res.person)));
+  };
+}
+
+// export function searchPeople(people) {
+//   return {
+//     type: SEARCH_PEOPLE,
+//     people,
+//   };
+// }
+
+export function searchPeopleRequest(query) {
+  return (dispatch) => {
+    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res.people)));
   };
 }
 

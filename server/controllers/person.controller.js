@@ -64,6 +64,22 @@ export function getPerson(req, res) {
 }
 
 /**
+ * Search people
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function searchPeople(req, res) {
+  var queryRegex = new RegExp(req.params.id, "i");
+  Person.find({ $or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}] }).sort('-dateAdded').exec((err, people) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ people });
+  });
+}
+
+/**
  * Delete a person
  * @param req
  * @param res
