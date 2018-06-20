@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 
 // Import Components
 import PersonList from '../../components/PersonList';
-import PersonFormDialog from '../../components/PersonFormDialog/PersonFormDialog';
-import TextField from '@material-ui/core/TextField';
-import SearchIcon from '@material-ui/icons/Search';
+import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/PersonSearchAndAddForm';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest } from '../../PersonActions';
@@ -17,6 +14,7 @@ import { toggleAddPerson } from '../../../App/AppActions';
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople } from '../../PersonReducer';
+
 
 class PersonListPage extends Component {
   componentDidMount() {
@@ -34,28 +32,16 @@ class PersonListPage extends Component {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
   };
 
-  handleSearchPeople = () => {
-    const queryRef = this.query;
-    this.props.dispatch(searchPeopleRequest(queryRef.value));
+  handleSearchPeople = (query) => {
+    this.props.dispatch(searchPeopleRequest(query));
   };
 
   render() {
     return (
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={10}>
-            <TextField
-              label="Search people"
-              inputRef={x => this.query = x}
-              fullWidth
-              type="search"
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <Button variant="fab" size="medium" color="default" aria-label="search" onClick={this.handleSearchPeople}> <SearchIcon /> </Button>
-          </Grid>
-          <Grid item xs={1}>
-            <PersonFormDialog addPerson={this.handleAddPerson}/>
+          <Grid item xs={12}>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
           </Grid>
           <Grid item xs={12}>
             <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
