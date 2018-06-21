@@ -39,6 +39,7 @@ export function addPerson(req, res) {
   newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
   newPerson.profession = sanitizeHtml(newPerson.profession);
   newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
+  newPerson.type = sanitizeHtml(newPerson.type);
 
   newPerson.save((err, saved) => {
     if (err) {

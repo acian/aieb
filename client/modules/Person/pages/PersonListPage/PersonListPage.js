@@ -25,9 +25,9 @@ class PersonListPage extends Component {
     }
   };
 
-  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated ) => {
+  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type ) => {
     this.props.dispatch(toggleAddPerson());
-    this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
+    this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
   };
 
   render() {
@@ -63,6 +63,7 @@ PersonListPage.propTypes = {
     profession: PropTypes.string.isRequired,
     professionPlace: PropTypes.string.isRequired,
     dateCreated: PropTypes.instanceOf(Date),
+    type: PropTypes.string.isRequired,
   })).isRequired,
   showAddPerson: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,

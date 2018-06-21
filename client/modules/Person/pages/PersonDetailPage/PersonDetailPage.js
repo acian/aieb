@@ -29,6 +29,7 @@ export function PersonDetailPage(props) {
         <p className={styles['post-desc']}>{props.person.profession}</p>
         <p className={styles['post-desc']}>{props.person.professionPlace}</p>
         <p className={styles['post-desc']}>{props.person.dateCreated}</p>
+        <p className={styles['post-desc']}>{props.person.type}</p>
       </div>
     </div>
   );
@@ -59,6 +60,7 @@ PersonDetailPage.propTypes = {
     profession: PropTypes.string.isRequired,
     professionPlace: PropTypes.string.isRequired,
     dateCreated: PropTypes.instanceOf(Date),
+    type: PropTypes.string.isRequired,
   }).isRequired,
 };
 

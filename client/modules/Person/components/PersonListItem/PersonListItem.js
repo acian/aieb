@@ -74,6 +74,7 @@ PersonListItem.propTypes = {
     profession: PropTypes.string.isRequired,
     professionPlace: PropTypes.string.isRequired,
     dateCreated: PropTypes.instanceOf(Date),
+    type: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };
