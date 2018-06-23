@@ -52,7 +52,7 @@ function PersonListItem(props) {
           <Button onClick={handleClick} mini variant="fab" color="primary" aria-label="Editar">
             <EditIcon />
           </Button>
-          <Button onClick={handleClick} mini variant="fab" color="secondary" aria-label="delete">
+          <Button onClick={props.onDelete} mini variant="fab" color="secondary" aria-label="delete">
             <DeleteIcon />
           </Button>
         </ExpansionPanelActions>
