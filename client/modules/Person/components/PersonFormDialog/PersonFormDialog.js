@@ -23,7 +23,7 @@ import styles from './PersonFormDialog.css';
 class PersonFormDialog extends Component {
   state = {
     open: false,
-    type: '',
+    type: 10,
   };
 
   addPerson = () => {
@@ -43,7 +43,7 @@ class PersonFormDialog extends Component {
         emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
         professionRef.value, professionPlaceRef.value, typeRef.value);
       nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
-      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = this.state.type = '';
+      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = this.state.type = 10;
       birthDateRef.value = null;
     }
     this.handleClose();
@@ -129,9 +129,6 @@ class PersonFormDialog extends Component {
                           id: 'type-simple',
                         }}
                       >
-                        <MenuItem  value="">
-                          <em>None</em>
-                        </MenuItem>
                         <MenuItem value={10}>{this.props.intl.messages.student}</MenuItem>
                         <MenuItem value={20}>{this.props.intl.messages.teacher}</MenuItem>
                       </Select>

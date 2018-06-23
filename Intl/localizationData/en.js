@@ -20,6 +20,8 @@ export default {
     siteTitle: 'MERN Starter Blog',
     cancel: 'Cancelar',
     accept: 'Aceptar',
+    student: 'Alumno',
+    teacher: 'Profesor',
     siteTitle: 'American English Institute',
     addPost: 'Add Post',
     addPerson: 'Agregar Persona',
