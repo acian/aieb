@@ -28,7 +28,7 @@ export function addPersonRequest(person) {
         birthDate: person.birthDate,
         profession: person.profession,
         professionPlace: person.professionPlace,
-        dateCreated: person.dateCreated,
+        type: person.type,
       },
     }).then(res => dispatch(addPerson(res.person)));
   };

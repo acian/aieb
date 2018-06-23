@@ -12,6 +12,10 @@ import AddIcon from '@material-ui/icons/Add';
 import { injectIntl, intlShape} from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 // Import Style
 import styles from './PersonFormDialog.css';
@@ -19,6 +23,7 @@ import styles from './PersonFormDialog.css';
 class PersonFormDialog extends Component {
   state = {
     open: false,
+    type: 10,
   };
 
   addPerson = () => {
@@ -32,12 +37,13 @@ class PersonFormDialog extends Component {
     const birthDateRef = this.birthDate;
     const professionRef = this.profession;
     const professionPlaceRef = this.professionPlace;
+    const typeRef = this.type.node;
     if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
       this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
         emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
-        professionRef.value, professionPlaceRef.value);
+        professionRef.value, professionPlaceRef.value, typeRef.value);
       nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
-      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = '';
+      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = this.state.type = 10;
       birthDateRef.value = null;
     }
     this.handleClose();
@@ -51,6 +57,10 @@ class PersonFormDialog extends Component {
     this.setState({ open: false });
   };
 
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   render() {
     return (
       <div>
@@ -61,7 +71,7 @@ class PersonFormDialog extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Agregar Persona</DialogTitle>
+          <DialogTitle id="form-dialog-title">{this.props.intl.messages.addPerson}</DialogTitle>
           <DialogContent>
             <div>
               <div>
@@ -108,6 +118,21 @@ class PersonFormDialog extends Component {
                     <TextField inputRef={x => this.professionPlace = x} label={this.props.intl.messages.place} fullWidth />
                   </Grid>
                   <Grid item xs={6}>
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor="type-simple">{this.props.intl.messages.type}</InputLabel>
+                      <Select
+                        inputRef={x => this.type = x}
+                        value={this.state.type}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'type',
+                          id: 'type-simple',
+                        }}
+                      >
+                        <MenuItem value={10}>{this.props.intl.messages.student}</MenuItem>
+                        <MenuItem value={20}>{this.props.intl.messages.teacher}</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               </div>
@@ -115,10 +140,10 @@ class PersonFormDialog extends Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              {this.props.intl.messages.cancel}
             </Button>
             <Button onClick={this.addPerson} color="primary">
-              Aceptar
+              {this.props.intl.messages.accept}
             </Button>
           </DialogActions>
         </Dialog>
