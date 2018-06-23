@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PagApp from "../../App/components/Pagination/pagApp.js";
 
 // Import Components
 import PersonListItem from './PersonListItem/PersonListItem';
@@ -7,15 +8,7 @@ import PersonListItem from './PersonListItem/PersonListItem';
 function PersonList(props) {
   return (
     <div className="listView">
-      {
-        props.people.map(person => (
-          <PersonListItem
-            person={person}
-            key={person.dni}
-            onDelete={() => props.handleDeletePerson(person.dni)}
-          />
-        ))
-      }
+      <PagApp people={props.people} title="Personas" />
     </div>
   );
 }
