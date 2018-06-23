@@ -9,7 +9,6 @@ import styles from './App.css';
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
 import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 
 // Import Actions
@@ -59,7 +58,6 @@ export class App extends Component {
           <div className={styles.container}>
             {this.props.children}
           </div>
-          <Footer />
         </div>
       </div>
     );
