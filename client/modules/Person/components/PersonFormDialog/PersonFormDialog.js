@@ -64,7 +64,7 @@ class PersonFormDialog extends Component {
   render() {
     return (
       <div>
-        <Button variant="fab" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon /> </Button>
+        <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon /> </Button>
 
         <Dialog
           open={this.state.open}

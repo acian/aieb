@@ -15,10 +15,12 @@ export default {
     place: 'Lugar',
     type: 'Tipo',
     submit: 'Guardar',
+    searchPeople:'Buscar persona por DNI, Nombre o Apellido',
     //---------------------------------------
     siteTitle: 'MERN Starter Blog',
     cancel: 'Cancelar',
     accept: 'Aceptar',
+    siteTitle: 'American English Institute',
     addPost: 'Add Post',
     addPerson: 'Agregar Persona',
     deletePerson: 'Delete Person',
