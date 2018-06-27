@@ -34,6 +34,8 @@ export default {
     authorName: 'Author\'s Name',
     postTitle: 'Post Title',
     postContent: 'Post Content',
+    // Validation messages ----------------------
+    nameValidation: 'Sólo se permiten letras',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}

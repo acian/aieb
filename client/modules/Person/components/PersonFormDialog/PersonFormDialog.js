@@ -21,9 +21,16 @@ import FormControl from '@material-ui/core/FormControl';
 import styles from './PersonFormDialog.css';
 
 class PersonFormDialog extends Component {
+
   state = {
     open: false,
     type: 10,
+    nameText: '',
+    nameError: false,
+    error: { name : false,
+             surname : false},
+    regex : { name : /^[a-z||A-Z]*$/,
+              surname : /^[a-z||A-Z]*$/ }
   };
 
   addPerson = () => {
@@ -61,6 +68,21 @@ class PersonFormDialog extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  validate = event => {
+
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+
+    let statusCopy = Object.assign({}, this.state);
+    let regex = statusCopy.regex[inputName];
+
+    statusCopy.error[inputName] = !inputValue.match(regex);
+
+    this.setState(statusCopy);
+  };
+
+
+
   render() {
     return (
       <div>
@@ -77,10 +99,10 @@ class PersonFormDialog extends Component {
               <div>
                 <Grid container spacing={24}>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.name = x} label={this.props.intl.messages.name} fullWidth />
+                    <TextField name="name" inputRef={x => this.name = x} label={this.props.intl.messages.name} required={true} onChange={this.validate} error={this.state.error.name} helperText={(this.state.error.name ? this.props.intl.messages.nameValidation : '')} fullWidth />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.surname = x} label={this.props.intl.messages.surname} fullWidth />
+                    <TextField name="surname" inputRef={x => this.surname = x} label={this.props.intl.messages.surname} required={true} onChange={this.validate} error={this.state.error.surname} helperText={(this.state.error.surname ? this.props.intl.messages.nameValidation : '')} fullWidth />
                   </Grid>
                   <Grid item xs={6}>
                     <TextField inputRef={x => this.dni = x} label={this.props.intl.messages.dni} fullWidth />
