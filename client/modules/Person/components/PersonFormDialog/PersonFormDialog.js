@@ -34,6 +34,11 @@ class PersonFormDialog extends Component {
   };
 
   addPerson = () => {
+
+    if(this.hasError()){
+      return
+    }
+
     const nameRef = this.name;
     const surnameRef = this.surname;
     const dniRef = this.dni;
@@ -55,6 +60,11 @@ class PersonFormDialog extends Component {
     }
     this.handleClose();
   };
+
+  hasError = () => {
+    return  this.state.error['name'] ||
+            this.state.error['surname']
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
