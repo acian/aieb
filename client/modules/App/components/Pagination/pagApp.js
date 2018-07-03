@@ -6,6 +6,10 @@ import "./Pagination.css";
 import Pagination from "./Pagination.js";
 import PersonListItem from '../../../Person/components/PersonListItem/PersonListItem.js';
 
+// Import Actions
+import { fetchPeople } from '../../../../../client/modules/Person/PersonActions';
+
+
 class App extends Component {
   state = {
     allCountries: [],

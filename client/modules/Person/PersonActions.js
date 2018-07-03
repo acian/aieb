@@ -41,9 +41,9 @@ export function addPeople(people) {
   };
 }
 
-export function fetchPeople() {
+export function fetchPeople(offset = 0, limit = 5) {
   return (dispatch) => {
-    return callApi('people').then(res => {
+    return callApi(`people?offset=${offset}&limit=${limit}`).then(res => {
       dispatch(addPeople(res.people));
     });
   };

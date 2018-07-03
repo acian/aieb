@@ -14,11 +14,12 @@ import { toggleAddPerson } from '../../../App/AppActions';
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople } from '../../PersonReducer';
+import { getPeopleTotal } from '../../../../../server/controllers/person.controller';
 
 
 class PersonListPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPeople());
+    this.props.dispatch(fetchPeople(0,5));
   }
 
   handleDeletePerson = person => {
@@ -44,7 +45,7 @@ class PersonListPage extends Component {
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
           </Grid>
           <Grid item xs={12}>
-            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
+            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} totalPeople={this.props.totalPeople}/>
           </Grid>
         </Grid>
       </div>
@@ -53,7 +54,7 @@ class PersonListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPeople(); }];
+PersonListPage.need = [() => { return fetchPeople(0,5); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
