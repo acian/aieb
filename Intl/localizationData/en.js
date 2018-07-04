@@ -12,7 +12,7 @@ export default {
     telephone: 'Teléfono',
     email: 'Correo electrónico',
     profession: 'Profesión',
-    place: 'Lugar',
+    professionPlace: 'Lugar de trabajo',
     type: 'Tipo',
     submit: 'Guardar',
     searchPeople:'Buscar persona por DNI, Nombre o Apellido',
@@ -34,6 +34,13 @@ export default {
     authorName: 'Author\'s Name',
     postTitle: 'Post Title',
     postContent: 'Post Content',
+    // Validation messages ----------------------
+    nameValidation: 'Debes ingresar un valor alfabético de hasta 30 caracteres',
+    addressValidation: 'Debes ingresar un valor alfanumérico de hasta 50 caracteres',
+    dniValidation: 'Debes ingresar un valor numérico de hasta 12 dígitos',
+    professionValidation: 'Debes ingresar un valor alfanumérico de hasta 50 caracteres',
+    cellphoneValidation: 'Debes ingresar un valor numérico de hasta 15 dígitos',
+    emailValidation: 'Debes ingresar un email válido',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}
