@@ -1,7 +1,7 @@
 /**
  * Created by ext_acian on 10/06/18.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,16 +9,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import AddIcon from '@material-ui/icons/Add';
-import { injectIntl, intlShape} from 'react-intl';
+import {injectIntl, intlShape} from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-
-// Import Style
-import styles from './PersonFormDialog.css';
 
 class PersonFormDialog extends Component {
 
@@ -27,15 +24,33 @@ class PersonFormDialog extends Component {
     type: 10,
     nameText: '',
     nameError: false,
-    error: { name : false,
-             surname : false},
-    regex : { name : /^[a-z||A-Z]*$/,
-              surname : /^[a-z||A-Z]*$/ }
+    error: {
+      name: false,
+      surname: false,
+      dni: false,
+      address: false,
+      cellphone: false,
+      telephone: false,
+      email: false,
+      profession: false,
+      professionPlace: false
+    },
+    regex: {
+      name: /^[a-z||A-Z||\s]{1,30}$/,
+      surname: /^[a-z||A-Z||\s]{1,30}$/,
+      dni: /^(\d{7,12})$/,
+      address: /^[a-z||A-Z||\s||\d]{1,50}$/,
+      cellphone: /^(\d{0,15})$/,
+      telephone: /^(\d{0,15})$/,
+      email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      profession: /^[a-z||A-Z||\s]{0,30}$/,
+      professionPlace: /^[a-z||A-Z||\s||\d]{0,30}$/
+    }
   };
 
   addPerson = () => {
 
-    if(this.hasError()){
+    if (this.hasError()) {
       return
     }
 
@@ -62,20 +77,27 @@ class PersonFormDialog extends Component {
   };
 
   hasError = () => {
-    return  this.state.error['name'] ||
-            this.state.error['surname']
-  }
+    return this.state.error['name'] ||
+      this.state.error['surname'] ||
+      this.state.error['dni'] ||
+      this.state.error['address'] ||
+      this.state.error['cellphone'] ||
+      this.state.error['telephone'] ||
+      this.state.error['email'] ||
+      this.state.error['profession'] ||
+      this.state.error['professionPlace']
+  };
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({open: true});
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({open: false});
   };
 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({[event.target.name]: event.target.value});
   };
 
   validate = event => {
@@ -92,11 +114,11 @@ class PersonFormDialog extends Component {
   };
 
 
-
   render() {
     return (
       <div>
-        <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon /> </Button>
+        <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon />
+        </Button>
 
         <Dialog
           open={this.state.open}
@@ -109,13 +131,25 @@ class PersonFormDialog extends Component {
               <div>
                 <Grid container spacing={24}>
                   <Grid item xs={6}>
-                    <TextField name="name" inputRef={x => this.name = x} label={this.props.intl.messages.name} required={true} onChange={this.validate} error={this.state.error.name} helperText={(this.state.error.name ? this.props.intl.messages.nameValidation : '')} fullWidth />
+                    <TextField name="name" inputRef={x => this.name = x} label={this.props.intl.messages.name}
+                               required={true} onChange={this.validate} onBlur={this.validate}
+                               error={this.state.error.name}
+                               helperText={(this.state.error.name ? this.props.intl.messages.nameValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="surname" inputRef={x => this.surname = x} label={this.props.intl.messages.surname} required={true} onChange={this.validate} error={this.state.error.surname} helperText={(this.state.error.surname ? this.props.intl.messages.nameValidation : '')} fullWidth />
+                    <TextField name="surname" inputRef={x => this.surname = x} label={this.props.intl.messages.surname}
+                               required={true} onChange={this.validate} onBlur={this.validate}
+                               error={this.state.error.surname}
+                               helperText={(this.state.error.surname ? this.props.intl.messages.nameValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.dni = x} label={this.props.intl.messages.dni} fullWidth />
+                    <TextField name="dni" inputRef={x => this.dni = x} label={this.props.intl.messages.dni}
+                               required={true} onChange={this.validate} onBlur={this.validate}
+                               error={this.state.error.dni}
+                               helperText={(this.state.error.dni ? this.props.intl.messages.dniValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
 
@@ -127,27 +161,53 @@ class PersonFormDialog extends Component {
                         shrink: true,
                       }}
                       fullWidth
+                      inputProps={{
+                        name: 'date',
+                      }}
                       inputRef={x => this.birthDate = x}
                     />
 
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField inputRef={x => this.address = x} label={this.props.intl.messages.address} fullWidth />
+                    <TextField name="address" inputRef={x => this.address = x} label={this.props.intl.messages.address}
+                               required={true} onChange={this.validate} onBlur={this.validate}
+                               error={this.state.error.address}
+                               helperText={(this.state.error.address ? this.props.intl.messages.addressValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.cellphone = x} label={this.props.intl.messages.cellphone} fullWidth />
+                    <TextField name="cellphone" inputRef={x => this.cellphone = x}
+                               label={this.props.intl.messages.cellphone} onChange={this.validate}
+                               onBlur={this.validate} error={this.state.error.cellphone}
+                               helperText={(this.state.error.cellphone ? this.props.intl.messages.cellphoneValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.telephone = x} label={this.props.intl.messages.telephone} fullWidth />
+                    <TextField name="telephone" inputRef={x => this.telephone = x}
+                               label={this.props.intl.messages.telephone} onChange={this.validate}
+                               onBlur={this.validate} error={this.state.error.telephone}
+                               helperText={(this.state.error.telephone ? this.props.intl.messages.cellphoneValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField inputRef={x => this.email = x} label={this.props.intl.messages.email} fullWidth />
+                    <TextField name="email" inputRef={x => this.email = x} label={this.props.intl.messages.email}
+                               onChange={this.validate} onBlur={this.validate} error={this.state.error.email}
+                               helperText={(this.state.error.email ? this.props.intl.messages.emailValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.profession = x} label={this.props.intl.messages.profession} fullWidth />
+                    <TextField name="profession" inputRef={x => this.profession = x}
+                               label={this.props.intl.messages.profession} onChange={this.validate}
+                               onBlur={this.validate} error={this.state.error.profession}
+                               helperText={(this.state.error.profession ? this.props.intl.messages.professionValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField inputRef={x => this.professionPlace = x} label={this.props.intl.messages.place} fullWidth />
+                    <TextField name="professionPlace" inputRef={x => this.professionPlace = x}
+                               label={this.props.intl.messages.professionPlace} onChange={this.validate}
+                               onBlur={this.validate} error={this.state.error.professionPlace}
+                               helperText={(this.state.error.professionPlace ? this.props.intl.messages.professionValidation : '')}
+                               fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth>
