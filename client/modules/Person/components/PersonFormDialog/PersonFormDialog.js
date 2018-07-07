@@ -75,6 +75,7 @@ class PersonFormDialog extends Component {
       this.state.error.address = this.state.error.telephone = this.state.error.cellphone = false;
       this.state.error.profession = this.state.error.professionPlace = false;
       this.state.type = 10;
+      this.cleanError();
     }
     this.handleClose();
   };
