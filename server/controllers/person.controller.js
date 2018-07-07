@@ -27,19 +27,7 @@ export function addPerson(req, res) {
     res.status(403).end();
   }
 
-  const newPerson = new Person(req.body.person);
-
-  // Let's sanitize inputs
-  newPerson.surname = sanitizeHtml(newPerson.surname);
-  newPerson.name = sanitizeHtml(newPerson.name);
-  newPerson.dni = sanitizeHtml(newPerson.dni);
-  newPerson.address = sanitizeHtml(newPerson.address);
-  newPerson.email = sanitizeHtml(newPerson.email);
-  newPerson.telephone = sanitizeHtml(newPerson.telephone);
-  newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
-  newPerson.profession = sanitizeHtml(newPerson.profession);
-  newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
-  newPerson.type = sanitizeHtml(newPerson.type);
+  const newPerson = sanitizeInputs(req.body.person);
 
   newPerson.save((err, saved) => {
     if (err) {
@@ -56,7 +44,7 @@ export function addPerson(req, res) {
  * @returns void
  */
 export function getPerson(req, res) {
-  Person.findOne({ dni: req.params.id }).exec((err, person) => {
+  Person.findOne({ _id: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -87,7 +75,8 @@ export function searchPeople(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  Person.findOne({ dni: req.params.id }).exec((err, person) => {
+  debugger;
+  Person.findOne({ _id: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -97,3 +86,42 @@ export function deletePerson(req, res) {
     });
   });
 }
+
+/**
+ * Edit person
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function editPerson(req, res) {
+  if (!req.body.person.name || !req.body.person.surname || !req.body.person.dni) {
+    res.status(403).end();
+  }
+
+  const editPerson = sanitizeInputs(req.body.person);
+
+  editPerson.findAndModify({query: { _id: req.body.person._id },}).exec((err, saved) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ person: saved });
+  });
+}
+
+const sanitizeInputs = (person) => {
+  const newPerson = new Person(person);
+
+  // Let's sanitize inputs
+  newPerson.surname = sanitizeHtml(newPerson.surname);
+  newPerson.name = sanitizeHtml(newPerson.name);
+  newPerson.dni = sanitizeHtml(newPerson.dni);
+  newPerson.address = sanitizeHtml(newPerson.address);
+  newPerson.email = sanitizeHtml(newPerson.email);
+  newPerson.telephone = sanitizeHtml(newPerson.telephone);
+  newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
+  newPerson.profession = sanitizeHtml(newPerson.profession);
+  newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
+  newPerson.type = sanitizeHtml(newPerson.type);
+
+  return newPerson
+} ;

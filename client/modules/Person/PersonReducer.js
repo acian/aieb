@@ -17,7 +17,7 @@ const PersonReducer = (state = initialState, action) => {
 
     case DELETE_PERSON :
       return {
-        data: state.data.filter(person => person.dni !== action.dni),
+        data: state.data.filter(person => person._id !== action.id),
       };
 
     default:
