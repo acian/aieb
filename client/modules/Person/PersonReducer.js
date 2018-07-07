@@ -12,7 +12,7 @@ const PersonReducer = (state = initialState, action) => {
 
     case ADD_PEOPLE :
       return {
-        data: action.people,
+        data: { people: action.people, paging: action.paging }
       };
 
     case DELETE_PERSON :

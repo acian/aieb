@@ -1,6 +1,7 @@
 import Person from '../models/person';
 import sanitizeHtml from 'sanitize-html';
 
+
 /**
  * Get people
  * @param req
@@ -8,12 +9,21 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  Person.find().sort('-dateAdded').exec((err, people) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ people });
-  });
+  var offset = (req.params.offset) ? req.params.offset : 0
+  var limit = (req.params.limit) ? req.params.limit : 5
+  var total = 0
+  Person.count().then((n) => { total = n })
+  Person.find()
+    .skip(offset > 0 ? ((offset - 1) * limit) : 0)
+    .limit(limit)
+    .sort('-dateAdded')
+    .exec((err, people) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      
+      res.json({paging:{total:total,limit:limit,offset:offset},results:people});
+    });
 }
 
 /**
@@ -71,7 +81,7 @@ export function getPerson(req, res) {
  */
 export function searchPeople(req, res) {
   var queryRegex = new RegExp(req.params.id, "i");
-  Person.find({ $or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}] }).sort('-dateAdded').exec((err, people) => {
+  Person.find({ $or: [{ dni: { $regex: queryRegex } }, { name: { $regex: queryRegex } }, { surname: { $regex: queryRegex } }] }).sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -95,4 +105,14 @@ export function deletePerson(req, res) {
       res.status(200).end();
     });
   });
+}
+
+/**
+ * Get people total
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function getPeopleTotal() {
+  return Person.find().count();
 }

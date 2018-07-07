@@ -36,7 +36,7 @@ class App extends Component {
       currentPage,
       totalPages
     } = this.state;
-    const totalCountries = allCountries.length;
+    const totalCountries = this.props.total;
 
     if (totalCountries === 0) return null;
 
@@ -52,24 +52,6 @@ class App extends Component {
         <div className="row d-flex flex-row py-5">
           <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
             <div className="d-flex flex-row align-items-center">
-              <h2 className={headerClass}>
-                <strong className="text-secondary">{totalCountries}</strong>{" "}
-                {this.props.title}
-              </h2>
-              {currentPage && (
-                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
-                  Página <span className="font-weight-bold">{currentPage}</span> de {" "}
-                  <span className="font-weight-bold">{totalPages}</span>
-                </span>
-              )}
-            </div>
-            <div className="d-flex flex-row py-4 align-items-center">
-              <Pagination
-                totalRecords={totalCountries}
-                pageLimit={5}
-                pageNeighbours={1}
-                onPageChanged={this.onPageChanged}
-              />
               {
                 currentCountries.map(person => (
                     <PersonListItem
@@ -79,6 +61,24 @@ class App extends Component {
                     />
                   ))
               }
+            </div>
+            <div className="d-flex flex-row py-4 align-items-center">
+            <h2 className={headerClass}>
+                <strong className="text-secondary">{totalCountries}</strong>{" "}
+                {this.props.title}
+              </h2>
+            {currentPage && (
+                <span className="current-page d-inline-block h-100 pl-4 text-secondary">
+                  Página <span className="font-weight-bold">{currentPage}</span> de {" "}
+                  <span className="font-weight-bold">{totalPages}</span>
+                </span>
+              )}
+              <Pagination
+                totalRecords={totalCountries}
+                pageLimit={5}
+                pageNeighbours={1}
+                onPageChanged={this.onPageChanged}
+              />
             </div>
           </div>
         </div>
@@ -94,6 +94,7 @@ App.propTypes = {
     dni: PropTypes.string.isRequired,
   })).isRequired,
   title: PropTypes.string.isRequired,
+  total:PropTypes.number.isRequired,
 };
 
 export default App;

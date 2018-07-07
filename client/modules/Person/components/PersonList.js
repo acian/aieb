@@ -8,7 +8,7 @@ import PersonListItem from './PersonListItem/PersonListItem';
 function PersonList(props) {
   return (
     <div className="listView">
-      <PagApp people={props.people} title="Personas" />
+      <PagApp people={props.people} title="Personas" total={props.totalPeople} />
     </div>
   );
 }
@@ -20,6 +20,7 @@ PersonList.propTypes = {
     dni: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePerson: PropTypes.func.isRequired,
+  totalPeople: PropTypes.number.isRequired,
 };
 
 export default PersonList;

@@ -34,17 +34,18 @@ export function addPersonRequest(person) {
   };
 }
 
-export function addPeople(people) {
+export function addPeople(people,paging) {
   return {
     type: ADD_PEOPLE,
     people,
+    paging,
   };
 }
 
-export function fetchPeople() {
+export function fetchPeople(offset = 0, limit = 5) {
   return (dispatch) => {
-    return callApi('people').then(res => {
-      dispatch(addPeople(res.people));
+    return callApi(`people?offset=${offset}&limit=${limit}`).then(res => {
+      dispatch(addPeople(res.results,res.paging));
     });
   };
 }
