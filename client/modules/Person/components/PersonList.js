@@ -13,7 +13,7 @@ function PersonList(props) {
             person={person}
             key={person.id}
             onDelete={() => props.handleDeletePerson(person._id)}
-            onEdit={() => props.handleEditPerson(person)}
+            onEdit={props.handleEditPerson}
           />
         ))
       }

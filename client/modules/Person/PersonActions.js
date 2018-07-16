@@ -4,12 +4,20 @@ import callApi from '../../util/apiCaller';
 export const ADD_PERSON = 'ADD_PERSON';
 export const ADD_PEOPLE = 'ADD_PEOPLE';
 export const DELETE_PERSON = 'DELETE_PERSON';
+export const EDIT_PERSON = 'EDIT_PERSON';
 
 // Export Actions
 
 export function addPerson(person) {
   return {
     type: ADD_PERSON,
+    person,
+  };
+}
+
+export function editPerson(person) {
+  return {
+    type: EDIT_PERSON,
     person,
   };
 }
@@ -90,6 +98,6 @@ export function editPersonRequest(person) {
         professionPlace: person.professionPlace,
         type: person.type,
       },
-    }).then(() => dispatch(fetchPerson(dni)));
+    }).then(res => dispatch(editPerson(res.editedPerson)));
   };
 }

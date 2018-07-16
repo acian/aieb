@@ -1,4 +1,4 @@
-import { ADD_PERSON, ADD_PEOPLE, DELETE_PERSON } from './PersonActions';
+import { ADD_PERSON, ADD_PEOPLE, DELETE_PERSON, EDIT_PERSON } from './PersonActions';
 
 // Initial State
 const initialState = { data: [] };
@@ -18,6 +18,13 @@ const PersonReducer = (state = initialState, action) => {
     case DELETE_PERSON :
       return {
         data: state.data.filter(person => person._id !== action.id),
+      };
+
+    case EDIT_PERSON :
+      return {
+        data: state.data.map(person => {
+          return person._id === action.person._id ? action.person : person;
+        }),
       };
 
     default:

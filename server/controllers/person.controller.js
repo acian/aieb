@@ -75,7 +75,6 @@ export function searchPeople(req, res) {
  * @returns void
  */
 export function deletePerson(req, res) {
-  debugger;
   Person.findOne({ _id: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
@@ -98,14 +97,33 @@ export function editPerson(req, res) {
     res.status(403).end();
   }
 
-  const editPerson = sanitizeInputs(req.body.person);
-
-  editPerson.findAndModify({query: { _id: req.body.person._id },}).exec((err, saved) => {
+  const editedPerson = sanitizeInputs(req.body.person);
+  editedPerson._id = req.params.id;
+  
+  const newData = { name: editedPerson.name, 
+                    surname: editedPerson.surname,
+                    dni: editedPerson.dni,
+                    address: editedPerson.address,
+                    email: editedPerson.email,
+                    telephone: editedPerson.telephone,
+                    cellphone: editedPerson.cellphone,
+                    profession: editedPerson.profession,
+                    professionPlace: editedPerson.professionPlace,
+                    type: editedPerson.type }
+  
+  Person.findOne({ _id: req.params.id }).exec((err, person) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ person: saved });
+    
+    person.update(newData, function(err, result) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({ editedPerson });
+    });
   });
+
 }
 
 const sanitizeInputs = (person) => {
