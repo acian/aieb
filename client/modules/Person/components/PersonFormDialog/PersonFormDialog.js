@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import EditIcon from '@material-ui/icons/ModeEdit';
 
 class PersonFormDialog extends Component {
 
@@ -48,7 +49,7 @@ class PersonFormDialog extends Component {
     }
   };
 
-  addPerson = () => {
+  submitForm = () => {
 
     if (this.hasError()) {
       return
@@ -66,7 +67,7 @@ class PersonFormDialog extends Component {
     const professionPlaceRef = this.professionPlace;
     const typeRef = this.type.node;
     if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
-      this.props.addPerson(nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
+      this.props.personAction(this.props.person._id, nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
         emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
         professionRef.value, professionPlaceRef.value, typeRef.value);
       nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
@@ -111,6 +112,16 @@ class PersonFormDialog extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
+  componentDidMount = () => {
+    this.handleInitialize();
+  }
+
+  handleInitialize = () => {
+    if (this.props.person) {
+      this.setState({type: Number.parseInt(this.props.person.type)})
+    }
+  }
+
   validate = event => {
 
     let inputName = event.target.name;
@@ -126,23 +137,35 @@ class PersonFormDialog extends Component {
 
 
   render() {
+    let button;
+    const editMode = this.props.editMode;
+    let person = this.props.person;
+    
+    if (editMode) {
+      button = <Button onClick={this.handleClickOpen} mini variant="fab" color="primary" aria-label="Editar">
+                <EditIcon />
+               </Button>;
+    } else {
+      button = <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon /> </Button>;
+    }
+
     return (
       <div>
-        <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon />
-        </Button>
+        {button}
 
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{this.props.intl.messages.addPerson}</DialogTitle>
+          <DialogTitle id="form-dialog-title">{editMode ? this.props.intl.messages.editPerson : this.props.intl.messages.addPerson}</DialogTitle>
           <DialogContent>
             <div>
               <div>
                 <Grid container spacing={24}>
                   <Grid item xs={6}>
                     <TextField name="name" inputRef={x => this.name = x} label={this.props.intl.messages.name}
+                               defaultValue={person ? person.name : ''}
                                required={true} onBlur={this.validate}
                                error={this.state.error.name}
                                helperText={(this.state.error.name ? this.props.intl.messages.nameValidation : '')}
@@ -150,6 +173,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="surname" inputRef={x => this.surname = x} label={this.props.intl.messages.surname}
+                               defaultValue={person ? person.surname : ''}
                                required={true} onBlur={this.validate}
                                error={this.state.error.surname}
                                helperText={(this.state.error.surname ? this.props.intl.messages.nameValidation : '')}
@@ -157,6 +181,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="dni" inputRef={x => this.dni = x} label={this.props.intl.messages.dni}
+                               defaultValue={person ? person.dni : ''}
                                required={true} onBlur={this.validate}
                                error={this.state.error.dni}
                                helperText={(this.state.error.dni ? this.props.intl.messages.dniValidation : '')}
@@ -167,7 +192,7 @@ class PersonFormDialog extends Component {
                     <TextField
                       label={this.props.intl.messages.birthDate}
                       type="date"
-                      defaultValue="2017-05-24"
+                      defaultValue={person ? person.birthDate.substr(0, 10) : '2012-01-01'}
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -181,6 +206,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField name="address" inputRef={x => this.address = x} label={this.props.intl.messages.address}
+                               defaultValue={person ? person.address : ''}
                                required={true} onBlur={this.validate}
                                error={this.state.error.address}
                                helperText={(this.state.error.address ? this.props.intl.messages.addressValidation : '')}
@@ -188,6 +214,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="cellphone" inputRef={x => this.cellphone = x}
+                               defaultValue={person ? person.cellphone : ''}
                                label={this.props.intl.messages.cellphone}
                                onBlur={this.validate} error={this.state.error.cellphone}
                                helperText={(this.state.error.cellphone ? this.props.intl.messages.cellphoneValidation : '')}
@@ -195,6 +222,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="telephone" inputRef={x => this.telephone = x}
+                               defaultValue={person ? person.telephone : ''}
                                label={this.props.intl.messages.telephone}
                                onBlur={this.validate} error={this.state.error.telephone}
                                helperText={(this.state.error.telephone ? this.props.intl.messages.cellphoneValidation : '')}
@@ -202,12 +230,14 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField name="email" inputRef={x => this.email = x} label={this.props.intl.messages.email}
+                               defaultValue={person ? person.email : ''}
                                onBlur={this.validate} error={this.state.error.email}
                                helperText={(this.state.error.email ? this.props.intl.messages.emailValidation : '')}
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="profession" inputRef={x => this.profession = x}
+                               defaultValue={person ? person.profession : ''}
                                label={this.props.intl.messages.profession}
                                onBlur={this.validate} error={this.state.error.profession}
                                helperText={(this.state.error.profession ? this.props.intl.messages.professionValidation : '')}
@@ -215,6 +245,7 @@ class PersonFormDialog extends Component {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField name="professionPlace" inputRef={x => this.professionPlace = x}
+                               defaultValue={person ? person.professionPlace : ''}
                                label={this.props.intl.messages.professionPlace}
                                onBlur={this.validate} error={this.state.error.professionPlace}
                                helperText={(this.state.error.professionPlace ? this.props.intl.messages.professionValidation : '')}
@@ -225,7 +256,7 @@ class PersonFormDialog extends Component {
                       <InputLabel htmlFor="type-simple">{this.props.intl.messages.type}</InputLabel>
                       <Select
                         inputRef={x => this.type = x}
-                        value={this.state.type}
+                        value= {this.state.type}
                         onChange={this.handleChange}
                         inputProps={{
                           name: 'type',
@@ -245,7 +276,7 @@ class PersonFormDialog extends Component {
             <Button onClick={this.handleClose} color="primary">
               {this.props.intl.messages.cancel}
             </Button>
-            <Button onClick={this.addPerson} color="primary">
+            <Button onClick={this.submitForm} color="primary">
               {this.props.intl.messages.accept}
             </Button>
           </DialogActions>
@@ -256,8 +287,27 @@ class PersonFormDialog extends Component {
 }
 
 PersonFormDialog.propTypes = {
-  addPerson: PropTypes.func.isRequired,
+  personAction: PropTypes.func.isRequired,
+  editMode: PropTypes.bool,
   intl: intlShape.isRequired,
+  person: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    surname: PropTypes.string,
+    dni: PropTypes.string,
+    address: PropTypes.string,
+    email: PropTypes.string,
+    telephone: PropTypes.string,
+    cellphone: PropTypes.string,
+    birthDate: PropTypes.instanceOf(Date),
+    profession: PropTypes.string,
+    professionPlace: PropTypes.string,
+    type: PropTypes.string,
+  }),
+};
+
+PersonFormDialog.defaultProps = {
+  editMode: false,
 };
 
 export default injectIntl(PersonFormDialog);

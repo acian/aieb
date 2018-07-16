@@ -4,12 +4,20 @@ import callApi from '../../util/apiCaller';
 export const ADD_PERSON = 'ADD_PERSON';
 export const ADD_PEOPLE = 'ADD_PEOPLE';
 export const DELETE_PERSON = 'DELETE_PERSON';
+export const EDIT_PERSON = 'EDIT_PERSON';
 
 // Export Actions
 
 export function addPerson(person) {
   return {
     type: ADD_PERSON,
+    person,
+  };
+}
+
+export function editPerson(person) {
+  return {
+    type: EDIT_PERSON,
     person,
   };
 }
@@ -49,9 +57,9 @@ export function fetchPeople() {
   };
 }
 
-export function fetchPerson(dni) {
+export function fetchPerson(id) {
   return (dispatch) => {
-    return callApi(`people/${dni}`).then(res => dispatch(addPerson(res.person)));
+    return callApi(`people/${id}`).then(res => dispatch(addPerson(res.person)));
   };
 }
 
@@ -61,15 +69,35 @@ export function searchPeopleRequest(query) {
   };
 }
 
-export function deletePerson(dni) {
+export function deletePerson(id) {
   return {
     type: DELETE_PERSON,
-    dni,
+    id,
   };
 }
 
-export function deletePersonRequest(dni) {
+export function deletePersonRequest(id) {
   return (dispatch) => {
-    return callApi(`people/${dni}`, 'delete').then(() => dispatch(deletePerson(dni)));
+    return callApi(`people/${id}`, 'delete').then(() => dispatch(deletePerson(id)));
+  };
+}
+
+export function editPersonRequest(person) {
+  return (dispatch) => {
+    return callApi(`people/${person.id}`, 'put', {
+      person: {
+        name: person.name,
+        surname: person.surname,
+        dni: person.dni,
+        address: person.address,
+        email: person.email,
+        telephone: person.telephone,
+        cellphone: person.cellphone,
+        birthDate: person.birthDate,
+        profession: person.profession,
+        professionPlace: person.professionPlace,
+        type: person.type,
+      },
+    }).then(res => dispatch(editPerson(res.editedPerson)));
   };
 }

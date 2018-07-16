@@ -5,21 +5,17 @@ import { FormattedMessage } from 'react-intl';
 import Chip from '@material-ui/core/Chip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/ModeEdit';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import PersonFormDialog from '../PersonFormDialog/PersonFormDialog';
 
 
 // Import Style
 import styles from './PersonListItem.css';
-
-function handleClick() {
-  alert('You clicked the Chip.'); // eslint-disable-line no-alert
-}
 
 function PersonListItem(props) {
   let descriptionPerson = '';
@@ -49,9 +45,7 @@ function PersonListItem(props) {
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          <Button onClick={handleClick} mini variant="fab" color="primary" aria-label="Editar">
-            <EditIcon />
-          </Button>
+          <PersonFormDialog personAction={props.onEdit} editMode={true} person={props.person}/>
           <Button onClick={props.onDelete} mini variant="fab" color="secondary" aria-label="delete">
             <DeleteIcon />
           </Button>
@@ -63,6 +57,7 @@ function PersonListItem(props) {
 
 PersonListItem.propTypes = {
   person: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
@@ -77,6 +72,7 @@ PersonListItem.propTypes = {
     type: PropTypes.string.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default PersonListItem;

@@ -32,7 +32,7 @@ class PersonSearchAndAddForm extends Component {
                     <Button variant="fab" size="medium" color="default" aria-label="search" onClick={this.searchPeople}> <SearchIcon /> </Button>
                 </Grid>
                 <Grid item xs={1}>
-                    <PersonFormDialog addPerson={this.props.addPerson}/>
+                    <PersonFormDialog personAction={this.props.addPerson}/>
                 </Grid>
             </Grid>
         );

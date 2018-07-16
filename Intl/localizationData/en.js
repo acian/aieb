@@ -25,6 +25,7 @@ export default {
     siteTitle: 'American English Institute',
     addPost: 'Add Post',
     addPerson: 'Agregar Persona',
+    editPerson: 'Modificar Persona',
     deletePerson: 'Delete Person',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',

@@ -11,8 +11,9 @@ function PersonList(props) {
         props.people.map(person => (
           <PersonListItem
             person={person}
-            key={person.dni}
-            onDelete={() => props.handleDeletePerson(person.dni)}
+            key={person.id}
+            onDelete={() => props.handleDeletePerson(person._id)}
+            onEdit={props.handleEditPerson}
           />
         ))
       }
@@ -27,6 +28,7 @@ PersonList.propTypes = {
     dni: PropTypes.string.isRequired,
   })).isRequired,
   handleDeletePerson: PropTypes.func.isRequired,
+  handleEditPerson: PropTypes.func.isRequired,
 };
 
 export default PersonList;

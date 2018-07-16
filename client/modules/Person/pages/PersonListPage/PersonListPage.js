@@ -8,8 +8,7 @@ import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/Pers
 import Grid from '@material-ui/core/Grid';
 
 // Import Actions
-import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest } from '../../PersonActions';
-import { toggleAddPerson } from '../../../App/AppActions';
+import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest, editPersonRequest } from '../../PersonActions';
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
@@ -21,14 +20,18 @@ class PersonListPage extends Component {
     this.props.dispatch(fetchPeople());
   }
 
-  handleDeletePerson = person => {
+  handleDeletePerson = idPerson => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
-      this.props.dispatch(deletePersonRequest(person));
+      this.props.dispatch(deletePersonRequest(idPerson));
     }
   };
 
+  handleEditPerson = (id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type ) => {
+      this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
+  };
+
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type ) => {
-    this.props.dispatch(toggleAddPerson());
+    //this.props.dispatch(toggleAddPerson());
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
   };
 
@@ -44,7 +47,7 @@ class PersonListPage extends Component {
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
           </Grid>
           <Grid item xs={12}>
-            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} />
+            <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
           </Grid>
         </Grid>
       </div>
@@ -65,6 +68,7 @@ function mapStateToProps(state) {
 
 PersonListPage.propTypes = {
   people: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
