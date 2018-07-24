@@ -26,7 +26,7 @@ class PersonListPage extends Component {
     }
   };
 
-  handleEditPerson = (id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type ) => {
+  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id ) => {
       this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
   };
 

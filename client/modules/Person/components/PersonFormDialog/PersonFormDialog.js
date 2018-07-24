@@ -67,9 +67,9 @@ class PersonFormDialog extends Component {
     const professionPlaceRef = this.professionPlace;
     const typeRef = this.type.node;
     if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
-      this.props.personAction(this.props.person._id, nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
+      this.props.personAction(nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
         emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
-        professionRef.value, professionPlaceRef.value, typeRef.value);
+        professionRef.value, professionPlaceRef.value, typeRef.value, this.props.person ? this.props.person._id : 0);
       nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
       emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = '';
       this.state.error.name = this.state.error.surname = this.state.error.dni = this.state.error.email = false;
