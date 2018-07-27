@@ -21,6 +21,7 @@ const personSchema = new Schema({
   professionPlace: { type: 'String' },
   dateCreated: { type: 'Date', default: Date.now },
   type: { type: 'String' },
+  active: { type: 'Boolean', default: true},
 });
 
 export default mongoose.model('Person', personSchema);
