@@ -9,8 +9,10 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  var offset = (req.params.offset) ? req.params.offset : 0
-  var limit = (req.params.limit) ? req.params.limit : 5
+  console.log("controller req.params.offset" + req.query.offset)
+  console.log("controller req.params.limit" + req.query.limit)
+  var offset = (req.query.offset) ? parseInt(req.query.offset) : 0
+  var limit = (req.query.limit) ? parseInt(req.query.limit) : 5
   var total = 0
   Person.count().then((n) => { total = n })
   Person.find()
@@ -21,7 +23,7 @@ export function getPeople(req, res) {
       if (err) {
         res.status(500).send(err);
       }
-      
+      //TODO VER ERROR      
       res.json({paging:{total:total,limit:limit,offset:offset},results:people});
     });
 }
@@ -85,7 +87,7 @@ export function searchPeople(req, res) {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ people });
+    res.json({paging:{total:people.length,limit:people.length,offset:people.length},results:people});
   });
 }
 
@@ -105,14 +107,4 @@ export function deletePerson(req, res) {
       res.status(200).end();
     });
   });
-}
-
-/**
- * Get people total
- * @param req
- * @param res
- * @returns void
- */
-export function getPeopleTotal() {
-  return Person.find().count();
 }

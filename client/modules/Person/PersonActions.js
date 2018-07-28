@@ -34,18 +34,19 @@ export function addPersonRequest(person) {
   };
 }
 
-export function addPeople(people,paging) {
+export function addPeople(data) {
   return {
     type: ADD_PEOPLE,
-    people,
-    paging,
+    data, 
   };
 }
 
-export function fetchPeople(offset = 0, limit = 5) {
+export function fetchPeople(offset = 0, limit= 2) {
+  console.log("fetchPeople-offset" + offset);
+  console.log("fetchPeople-limit" + limit);
   return (dispatch) => {
     return callApi(`people?offset=${offset}&limit=${limit}`).then(res => {
-      dispatch(addPeople(res.results,res.paging));
+      dispatch(addPeople(res));
     });
   };
 }
@@ -58,7 +59,7 @@ export function fetchPerson(dni) {
 
 export function searchPeopleRequest(query) {
   return (dispatch) => {
-    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res.people)));
+    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res.people,res.paging)));
   };
 }
 

@@ -15,16 +15,25 @@ import { toggleAddPerson } from '../../../App/AppActions';
 import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople, getPaging } from '../../PersonReducer';
 
+//pagination
+import Pagination from "../../../App/components/Pagination/Pagination.js";
+import "../../../App/components/Pagination/Pagination.css";
+
 
 class PersonListPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPeople(0,5));
+    //this.props.dispatch(fetchPeople(0,5));
   }
 
   handleDeletePerson = person => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
       this.props.dispatch(deletePersonRequest(person));
     }
+  };
+
+  handlePageChange = (currentPage, limit) => {
+    console.log("handlePageCHange " + currentPage + "limit  " + limit);
+    this.props.dispatch(fetchPeople(currentPage, limit));
   };
 
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated ) => {
@@ -41,11 +50,17 @@ class PersonListPage extends Component {
       <div>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} />
           </Grid>
           <Grid item xs={12}>
-            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.dataPeople.people} totalPeople={this.props.dataPeople.paging.total}/>
+            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} paging={this.props.paging} />
           </Grid>
+          <Pagination
+                totalRecords={this.props.paging.total}
+                pageLimit={5}
+                pageNeighbours={1}
+                onPageChanged={this.handlePageChange(2,5)}
+              />
         </Grid>
       </div>
     );
@@ -53,18 +68,20 @@ class PersonListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPeople(0,5); }];
+PersonListPage.need = [() => { return fetchPeople(1,5); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
     showAddPerson: getShowAddPerson(state),
-    dataPeople: getPeople(state),
+    people: getPeople(state),
+    paging: getPaging(state),
   };
 }
 
 PersonListPage.propTypes = {
   people: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
@@ -75,6 +92,12 @@ PersonListPage.propTypes = {
     profession: PropTypes.string.isRequired,
     professionPlace: PropTypes.string.isRequired,
     dateCreated: PropTypes.instanceOf(Date),
+    type: PropTypes.string.isRequired,
+  })).isRequired,
+  paging: PropTypes.arrayOf(PropTypes.shape({
+    total: PropTypes.number.isRequired,
+    limit: PropTypes.number.isRequired,
+    offset: PropTypes.number.isRequired,
   })).isRequired,
   showAddPerson: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,

@@ -8,37 +8,37 @@ import PersonListItem from '../../../Person/components/PersonListItem/PersonList
 
 class App extends Component {
   state = {
-    allCountries: [],
-    currentCountries: [],
+    allPersons: [],
+    currentPersons: [],
     currentPage: null,
     totalPages: null
   };
 
   componentDidMount() {
-    const allCountries = this.props.people;
-    this.setState({ allCountries });
+    const allPersons = this.props.people;
+    this.setState({ allPersons });
   }
 
   onPageChanged = data => {
-    const { allCountries } = this.state;
+    const { allPersons } = this.state;
     const { currentPage, totalPages, pageLimit } = data;
 
     const offset = (currentPage - 1) * pageLimit;
-    const currentCountries = allCountries.slice(offset, offset + pageLimit);
+    const currentPersons = allPersons.slice(offset, offset + pageLimit);
 
-    this.setState({ currentPage, currentCountries, totalPages });
+    this.setState({ currentPage, currentPersons, totalPages });
   };
 
   render() {
     const {
-      allCountries,
-      currentCountries,
+      allPersons,
+      currentPersons,
       currentPage,
       totalPages
     } = this.state;
-    const totalCountries = this.props.total;
+    const totalPersons = this.props.total;
 
-    if (totalCountries === 0) return null;
+    if (totalPersons === 0) return null;
 
     const headerClass = [
       "text-dark py-2 pr-4 m-0",
@@ -53,7 +53,7 @@ class App extends Component {
           <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
             <div className="d-flex flex-row align-items-center">
               {
-                currentCountries.map(person => (
+                currentPersons.map(person => (
                     <PersonListItem
                       person={person}
                       key={person.dni}
@@ -64,7 +64,7 @@ class App extends Component {
             </div>
             <div className="d-flex flex-row py-4 align-items-center">
             <h2 className={headerClass}>
-                <strong className="text-secondary">{totalCountries}</strong>{" "}
+                <strong className="text-secondary">{totalPersons}</strong>{" "}
                 {this.props.title}
               </h2>
             {currentPage && (
@@ -74,7 +74,7 @@ class App extends Component {
                 </span>
               )}
               <Pagination
-                totalRecords={totalCountries}
+                totalRecords={totalPersons}
                 pageLimit={5}
                 pageNeighbours={1}
                 onPageChanged={this.onPageChanged}
