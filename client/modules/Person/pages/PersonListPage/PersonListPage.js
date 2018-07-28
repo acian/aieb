@@ -17,8 +17,12 @@ import { getPeople } from '../../PersonReducer';
 
 class PersonListPage extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchPeople());
+    this.handleFetchPeople;
   }
+
+  handleFetchPeople = () => {
+    this.props.dispatch(fetchPeople());
+  };
 
   handleDeletePerson = idPerson => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
@@ -44,7 +48,7 @@ class PersonListPage extends Component {
       <div>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople}/>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople}/>
           </Grid>
           <Grid item xs={12}>
             <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
