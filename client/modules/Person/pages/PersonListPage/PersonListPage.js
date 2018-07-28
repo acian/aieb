@@ -21,9 +21,6 @@ import "../../../App/components/Pagination/Pagination.css";
 
 
 class PersonListPage extends Component {
-  componentDidMount() {
-    //this.props.dispatch(fetchPeople(0,5));
-  }
 
   handleDeletePerson = person => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
@@ -32,7 +29,6 @@ class PersonListPage extends Component {
   };
 
   handlePageChange = (currentPage, limit) => {
-    console.log("handlePageCHange " + currentPage + "limit  " + limit);
     this.props.dispatch(fetchPeople(currentPage, limit));
   };
 
@@ -55,12 +51,7 @@ class PersonListPage extends Component {
           <Grid item xs={12}>
             <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} paging={this.props.paging} />
           </Grid>
-          <Pagination
-                totalRecords={this.props.paging.total}
-                pageLimit={5}
-                pageNeighbours={1}
-                onPageChanged={this.handlePageChange(2,5)}
-              />
+          <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
         </Grid>
       </div>
     );

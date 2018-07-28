@@ -9,8 +9,6 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  console.log("controller req.params.offset" + req.query.offset)
-  console.log("controller req.params.limit" + req.query.limit)
   var offset = (req.query.offset) ? parseInt(req.query.offset) : 0
   var limit = (req.query.limit) ? parseInt(req.query.limit) : 5
   var total = 0

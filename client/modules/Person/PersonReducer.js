@@ -11,7 +11,6 @@ const PersonReducer = (state = initialState, action) => {
       };
 
     case ADD_PEOPLE :
-      console.log(action);
       return {
         data: action.data.results,
         paging: action.data.paging, 
@@ -33,8 +32,7 @@ const PersonReducer = (state = initialState, action) => {
 export const getPeople = state => state.people.data;
 
 // Get paging
-export const getPaging = state => {console.log(state);
-                                  return state.people.paging};
+export const getPaging = state => state.people.paging;
 
 // Get person by dni
 export const getPerson = (state, dni) => state.people.data.filter(person => person.dni === dni)[0];
