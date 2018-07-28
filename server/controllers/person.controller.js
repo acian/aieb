@@ -8,7 +8,7 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function getPeople(req, res) {
-  Person.find().sort('-dateAdded').exec((err, people) => {
+  Person.find({active: true}).sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -60,7 +60,10 @@ export function getPerson(req, res) {
  */
 export function searchPeople(req, res) {
   var queryRegex = new RegExp(req.params.id, "i");
-  Person.find({ $or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}] }).sort('-dateAdded').exec((err, people) => {
+  Person.find({$and: [{active: true},
+                      {$or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}]
+                      }]
+              }).sort('-dateAdded').exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
