@@ -12,6 +12,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import PersonFormDialog from '../PersonFormDialog/PersonFormDialog';
+import Grid from '@material-ui/core/Grid';
+import CallIcon from '@material-ui/icons/Call';
+import EmailIcon from '@material-ui/icons/Email';
 
 
 // Import Style
@@ -26,12 +29,23 @@ function PersonListItem(props) {
     <div>
       <ExpansionPanel className={styles['paper-description']}>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <div className={styles['primiry-heading']}>
-            <strong>{props.person.surname} , {props.person.name}</strong>
-          </div>
-          <div className={styles['secondary-heading']}>
-            <p >{descriptionPerson}</p>
-          </div>
+          <Grid container spacing={24}>
+            <Grid item xs={4}>
+              <div className={styles['primiry-heading']}>
+                <strong>{props.person.surname} , {props.person.name}</strong>
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className={styles['secondary-heading']}>
+                <EmailIcon/>  {props.person.email}
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className={styles['secondary-heading']}>
+                <CallIcon/>  {props.person.cellphone}
+              </div>
+            </Grid>
+          </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           {Object.keys(props.person).map(function (key) {
