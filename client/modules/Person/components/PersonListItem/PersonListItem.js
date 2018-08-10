@@ -51,9 +51,9 @@ function PersonListItem(props) {
           {Object.keys(props.person).map(function (key) {
             if ((['birthDate', 'profession', 'professionPlace', 'address'].indexOf(key) >= 0) && (props.person[key].length > 0)) {
               if (key === 'birthDate') {
-                return <Chip label={props.person[key].substr(0, 10)} />;
+                return <Chip key={key} label={props.person[key].substr(0, 10)} />;
               }
-              return <Chip label={props.person[key]} />;
+              return <Chip key={key} label={props.person[key]} />;
             }
           })}
         </ExpansionPanelDetails>
