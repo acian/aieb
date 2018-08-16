@@ -1,17 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 
-// Import Actions
-import { fetchPeople } from '../../../Person/PersonActions';
+// Import Style
+import styles from "../Pagination/Pagination.css"
 
 class Pagination extends React.Component {
 
   handlePageChange = (event) => {
-    this.props.handlePageChange(Number(event.target.id),this.props.paging.limit);
+    this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
+    event.preventDefault();
+  }
+
+  handlePageChangeLeft = (event) => {
+    this.props.handlePageChange(Number(1), this.props.paging.limit);
+    event.preventDefault();
+  }
+
+  handlePageChangeRight = (event) => {
+    this.props.handlePageChange(Number(this.props.paging.total / this.props.paging.limit), this.props.paging.limit);
     event.preventDefault();
   }
 
   render() {
+
+    const currentPage = (this.props.paging.total > 0) ? this.props.paging.offset : 0
+    const totalPersons = this.props.paging.total
+    const totalPages = totalPersons / this.props.paging.limit;
 
     // Logic for displaying page numbers
     const pageNumbers = [];
@@ -21,28 +36,39 @@ class Pagination extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        <li
-        key={number}        
-        className={`page-item`}
-      >
-        <a
-          className="page-link"
-          href="#"
-          id={number}
-          onClick={this.handlePageChange}
-        >
+        (number == currentPage) ?
+        <a href="#" id={number} className={styles['isDisabled active']} onClick={this.handlePageChange} >{number}</a>
+        : (Math.abs(number - currentPage) < 4) ? 
+        <a href="#" id={number} onClick={this.handlePageChange} >
           {number}
-        </a>
-      </li>
+        </a> : ''
       );
     });
 
     return (
-      <div>
-        <ul id="page-numbers">
+      <Grid className={styles['pagination']} container direction="row" justify="space-between" alignItems="center" spacing={8}>
+        <Grid item >
+          {
+            <span>{" "} Página {currentPage} de {" "} {totalPages}</span>
+          }
+        </Grid>
+        <Grid item>
+          {(currentPage > 1) ?
+            <a href="#" id={0} onClick={this.handlePageChangeLeft}>&laquo;</a>
+            :
+            <a href="#" className={styles['isDisabled']} id={0} onClick={this.handlePageChangeLeft}>&laquo;</a>
+          }
           {renderPageNumbers}
-        </ul>
-      </div>
+          {(currentPage < totalPages) ?
+            <a href="#" id={0} onClick={this.handlePageChangeRight}>&raquo;</a>
+            :
+            <a href="#" className={styles['isDisabled']} id={0} onClick={this.handlePageChangeRight}>&raquo;</a>
+          }
+        </Grid>
+        <Grid item>
+          <span>{totalPersons} {" "} Personas </span>
+        </Grid>
+      </Grid>
     );
   }
 }

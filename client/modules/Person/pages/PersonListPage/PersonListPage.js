@@ -17,8 +17,6 @@ import { getPeople, getPaging } from '../../PersonReducer';
 
 //pagination
 import Pagination from "../../../App/components/Pagination/Pagination.js";
-import "../../../App/components/Pagination/Pagination.css";
-
 
 class PersonListPage extends Component {
 
@@ -32,7 +30,7 @@ class PersonListPage extends Component {
     this.props.dispatch(fetchPeople(currentPage, limit));
   };
 
-  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated ) => {
+  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated) => {
     this.props.dispatch(toggleAddPerson());
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
   };
@@ -49,17 +47,17 @@ class PersonListPage extends Component {
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} />
           </Grid>
           <Grid item xs={12}>
-            <PersonList handleDeletePerson={this.handleDeletePerson} people={this.props.people} paging={this.props.paging} />
+            <PersonList people={this.props.people} />
           </Grid>
-          <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
         </Grid>
+        <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
       </div>
     );
   }
 }
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPeople(1,5); }];
+PersonListPage.need = [() => { return fetchPeople(1, 5); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
