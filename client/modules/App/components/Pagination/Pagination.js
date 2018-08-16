@@ -24,9 +24,9 @@ class Pagination extends React.Component {
 
   render() {
 
-    const currentPage = (this.props.paging.total > 0) ? this.props.paging.offset : 0
+    const currentPage = this.props.paging.offset
     const totalPersons = this.props.paging.total
-    const totalPages = totalPersons / this.props.paging.limit;
+    const totalPages = ((totalPersons / this.props.paging.limit) > 1) ? totalPersons / this.props.paging.limit : 1;
 
     // Logic for displaying page numbers
     const pageNumbers = [];
@@ -37,7 +37,7 @@ class Pagination extends React.Component {
     const renderPageNumbers = pageNumbers.map(number => {
       return (
         (number == currentPage) ?
-        <a href="#" id={number} className={styles['isDisabled active']} onClick={this.handlePageChange} >{number}</a>
+        <a href="#" id={number} className={styles['isDisabled']} onClick={this.handlePageChange} >{number}</a>
         : (Math.abs(number - currentPage) < 4) ? 
         <a href="#" id={number} onClick={this.handlePageChange} >
           {number}
@@ -62,7 +62,7 @@ class Pagination extends React.Component {
           {(currentPage < totalPages) ?
             <a href="#" id={0} onClick={this.handlePageChangeRight}>&raquo;</a>
             :
-            <a href="#" className={styles['isDisabled']} id={0} onClick={this.handlePageChangeRight}>&raquo;</a>
+            <a href="#" className={styles['isDisabled']} id={totalPages + 1} onClick={this.handlePageChangeRight}>&raquo;</a>
           }
         </Grid>
         <Grid item>

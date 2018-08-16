@@ -57,7 +57,7 @@ class PersonListPage extends Component {
 }
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPeople(1, 5); }];
+PersonListPage.need = [() => { return fetchPeople(1, 25); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
