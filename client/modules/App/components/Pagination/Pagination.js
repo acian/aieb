@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
+import { FormattedMessage } from 'react-intl';
 
 // Import Style
 import styles from "../Pagination/Pagination.css"
@@ -49,7 +50,7 @@ class Pagination extends React.Component {
       <Grid className={styles['pagination']} container direction="row" justify="space-between" alignItems="center" spacing={8}>
         <Grid item >
           {
-            <span>{" "} Página {currentPage} de {" "} {totalPages}</span>
+            <span>{" "} <FormattedMessage id="pagina" /> {currentPage} <FormattedMessage id="de" /> {" "} {totalPages}</span>
           }
         </Grid>
         <Grid item>
@@ -66,7 +67,7 @@ class Pagination extends React.Component {
           }
         </Grid>
         <Grid item>
-          <span>{totalPersons} {" "} Personas </span>
+          <span>{totalPersons} {" "} <FormattedMessage id="personas" /> </span>
         </Grid>
       </Grid>
     );
