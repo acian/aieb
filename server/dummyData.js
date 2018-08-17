@@ -38,18 +38,11 @@ export default function () {
     const post1 = new Post({ name: 'Admin', title: 'Hello MERN', slug: 'hello-mern', cuid: 'cikqgkv4q01ck7453ualdn3hd', content: content1 });
     const post2 = new Post({ name: 'Admin', title: 'Lorem Ipsum', slug: 'lorem-ipsum', cuid: 'cikqgkv4q01ck7453ualdn3hf', content: content2 });
 
-    const person6 = new Person({ name: 'CHUPE LA PIJ...', surname: 'PERO QUE ME', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person7 = new Person({ name: 'S.A.', surname: 'BAIZEN', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person8 = new Person({ name: 'KINERZO', surname: 'GRUPO', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person9 = new Person({ name: 'julio', surname: 'Lorem 8', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person10 = new Person({ name: 'Admin', surname: 'Lorem 9', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person1 = new Person({ name: 'NELSON', surname: 'DICE', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person2 = new Person({ name: 'PUTO', surname: 'TOMA POR', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person3 = new Person({ name: 'LEANDRO', surname: 'LEANDRO', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person4 = new Person({ name: 'gustabo', surname: 'Lorem 3', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    const person5 = new Person({ name: 'juan', surname: 'Lorem 4', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now() });
-    
-
+    const person1 = new Person({ name: 'Lorena', surname: 'Ramirez', dni: 33123456, address: 'Illia 123', email: 'pepe@gmail.com', telephone:'3434567890', cellphone:'34345667890', birthDate:Date.now(), profession:'conductor', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
+    const person2 = new Person({ name: 'Ignacio', surname: 'García', dni: 22123456, address: 'Las Heras 333', email: 'igarcia@gmail.com', telephone:'3434566565', cellphone:'34345667890', birthDate:Date.now(), profession:'administrativo', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
+    const person3 = new Person({ name: 'Gustavo', surname: 'Rodriguez', dni: 11123456, address: 'La Rioja 321', email: 'grodriguez@gmail.com', telephone:'34341122233', cellphone:'34345667890', birthDate:Date.now(), profession:'maestra', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
+    const person4 = new Person({ name: 'Fabiana', surname: 'Sanchez', dni: 30123456, address: 'Carbó 444', email: 'fsanchez@gmail.com', telephone:'3434223344', cellphone:'34345667890', birthDate:Date.now(), profession:'vendedora', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
+    const person5 = new Person({ name: 'Marta', surname: 'Perez', dni: 29123456, address: 'Feliciano 326', email: 'mperez@gmail.com', telephone:'3434112233', cellphone:'34345667890', birthDate:Date.now(), profession:'directora', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
 
     Post.create([post1, post2], (error) => {
       if (!error) {
@@ -57,7 +50,7 @@ export default function () {
       }
     });
 
-    Person.create([person1,person2,person3,person4,person5,person6,person7,person8,person9,person10], (error) => {
+    Person.create([person1, person2, person3, person4, person5], (error) => {
       if (error) {
         console.log(`ERROR ${error}`);
       }

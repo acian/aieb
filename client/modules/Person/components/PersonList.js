@@ -14,14 +14,15 @@ function PersonList(props) {
         props.people.map(person => (
           <PersonListItem
             person={person}
-            key={person.dni}
-            onDelete={() => componentDidMount}
+            key={person.id}
+            onDelete={() => props.handleDeletePerson(person._id)}
+            onEdit={props.handleEditPerson}
           />
         ))
       }
     </div>
   );
-};
+}
 
 PersonList.propTypes = {
   people: PropTypes.arrayOf(PropTypes.shape({
@@ -29,15 +30,9 @@ PersonList.propTypes = {
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    telephone: PropTypes.string.isRequired,
-    cellphone: PropTypes.string.isRequired,
-    birthDate: PropTypes.instanceOf(Date),
-    profession: PropTypes.string.isRequired,
-    professionPlace: PropTypes.string.isRequired,
-    dateCreated: PropTypes.instanceOf(Date),
-    type: PropTypes.string.isRequired,
-  })).isRequired
+  })).isRequired,
+  handleDeletePerson: PropTypes.func.isRequired,
+  handleEditPerson: PropTypes.func.isRequired,
 };
 
 export default PersonList;

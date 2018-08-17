@@ -14,6 +14,9 @@ router.route('/people').post(PersonController.addPerson);
 // Delete person by id
 router.route('/people/:id').delete(PersonController.deletePerson);
 
+// Edit person by id
+router.route('/people/:id').put(PersonController.editPerson);
+
 // Search people by name or dni
 router.route('/people/search/:id').get(PersonController.searchPeople);
 

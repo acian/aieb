@@ -11,23 +11,23 @@ class Pagination extends React.Component {
   handlePageChange = (event) => {
     this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
     event.preventDefault();
-  }
+  };
 
   handlePageChangeLeft = (event) => {
     this.props.handlePageChange(Number(1), this.props.paging.limit);
     event.preventDefault();
-  }
+  };
 
   handlePageChangeRight = (event) => {
     this.props.handlePageChange(Number(this.props.paging.total / this.props.paging.limit), this.props.paging.limit);
     event.preventDefault();
-  }
+  };
 
   render() {
 
     const currentPage = this.props.paging.offset
     const totalPersons = this.props.paging.total
-    const totalPages = ((totalPersons / this.props.paging.limit) > 1) ? totalPersons / this.props.paging.limit : 1;
+    const totalPages = (Math.round(totalPersons / this.props.paging.limit) > 1) ? Math.round(totalPersons / this.props.paging.limit) : 1;
 
     // Logic for displaying page numbers
     const pageNumbers = [];

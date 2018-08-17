@@ -8,8 +8,7 @@ import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/Pers
 import Grid from '@material-ui/core/Grid';
 
 // Import Actions
-import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest } from '../../PersonActions';
-import { toggleAddPerson } from '../../../App/AppActions';
+import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest, editPersonRequest } from '../../PersonActions';
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
@@ -19,10 +18,17 @@ import { getPeople, getPaging } from '../../PersonReducer';
 import Pagination from "../../../App/components/Pagination/Pagination.js";
 
 class PersonListPage extends Component {
+  componentDidMount() {
+    this.handleFetchPeople;
+  }
 
-  handleDeletePerson = person => {
+  handleFetchPeople = () => {
+    this.props.dispatch(fetchPeople());
+  };
+
+  handleDeletePerson = idPerson => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
-      this.props.dispatch(deletePersonRequest(person));
+      this.props.dispatch(deletePersonRequest(idPerson));
     }
   };
 
@@ -35,6 +41,10 @@ class PersonListPage extends Component {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, dateCreated }));
   };
 
+  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id ) => {
+      this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
+  };
+
   handleSearchPeople = (query) => {
     this.props.dispatch(searchPeopleRequest(query));
   };
@@ -44,20 +54,20 @@ class PersonListPage extends Component {
       <div>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} />
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople}/>
           </Grid>
           <Grid item xs={12}>
-            <PersonList people={this.props.people} />
+            <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
           </Grid>
         </Grid>
         <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
       </div>
     );
   }
-}
+};
 
 // Actions required to provide data for this component to render in sever side.
-PersonListPage.need = [() => { return fetchPeople(1, 25); }];
+PersonListPage.need = [() => { return fetchPeople(1, 2); }];
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
