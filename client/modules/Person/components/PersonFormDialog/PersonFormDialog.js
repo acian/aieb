@@ -140,7 +140,7 @@ class PersonFormDialog extends Component {
     let button;
     const editMode = this.props.editMode;
     let person = this.props.person;
-    
+
     if (editMode) {
       button = <Button onClick={this.handleClickOpen} mini variant="fab" color="primary" aria-label="Editar">
                 <EditIcon />
@@ -231,7 +231,8 @@ class PersonFormDialog extends Component {
                   <Grid item xs={12}>
                     <TextField name="email" inputRef={x => this.email = x} label={this.props.intl.messages.email}
                                defaultValue={person ? person.email : ''}
-                               onBlur={this.validate} error={this.state.error.email}
+                               required={true} onBlur={this.validate}
+                               error={this.state.error.email}
                                helperText={(this.state.error.email ? this.props.intl.messages.emailValidation : '')}
                                fullWidth/>
                   </Grid>
@@ -299,7 +300,7 @@ PersonFormDialog.propTypes = {
     email: PropTypes.string,
     telephone: PropTypes.string,
     cellphone: PropTypes.string,
-    birthDate: PropTypes.instanceOf(Date),
+    birthDate: PropTypes.string,
     profession: PropTypes.string,
     professionPlace: PropTypes.string,
     type: PropTypes.string,
