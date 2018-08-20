@@ -8,21 +8,21 @@ export const EDIT_PERSON = 'EDIT_PERSON';
 
 // Export Actions
 
-export function addPerson(person) {
+export function addPerson(data) {
   return {
     type: ADD_PERSON,
-    person,
+    data,
   };
 }
 
-export function editPerson(person) {
+export function editPerson(data) {
   return {
     type: EDIT_PERSON,
-    person,
+    data,
   };
 }
 
-export function addPersonRequest(person) {
+export function addPersonRequest(person, paging) {
   return (dispatch) => {
     return callApi('people', 'post', {
       person: {
@@ -38,14 +38,14 @@ export function addPersonRequest(person) {
         professionPlace: person.professionPlace,
         type: person.type,
       },
-    }).then(res => dispatch(addPerson(res.person)));
+    }).then(res => dispatch(addPerson({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.person })));
   };
 }
 
 export function addPeople(data) {
   return {
     type: ADD_PEOPLE,
-    data, 
+    data,
   };
 }
 
@@ -65,7 +65,7 @@ export function fetchPerson(id) {
 
 export function searchPeopleRequest(query) {
   return (dispatch) => {
-    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res.people,res.paging)));
+    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res)));
   };
 }
 
@@ -82,7 +82,7 @@ export function deletePersonRequest(id) {
   };
 }
 
-export function editPersonRequest(person) {
+export function editPersonRequest(person, paging) {
   return (dispatch) => {
     return callApi(`people/${person.id}`, 'put', {
       person: {
@@ -98,6 +98,6 @@ export function editPersonRequest(person) {
         professionPlace: person.professionPlace,
         type: person.type,
       },
-    }).then(res => dispatch(editPerson(res.editedPerson)));
+    }).then(res => dispatch(editPerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedPerson })));
   };
 }

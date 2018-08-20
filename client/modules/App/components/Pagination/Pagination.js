@@ -19,7 +19,7 @@ class Pagination extends React.Component {
   };
 
   handlePageChangeRight = (event) => {
-    this.props.handlePageChange(Number(this.props.paging.total / this.props.paging.limit), this.props.paging.limit);
+    this.props.handlePageChange(Math.round(Number(this.props.paging.total / this.props.paging.limit)), this.props.paging.limit);
     event.preventDefault();
   };
 
@@ -31,7 +31,7 @@ class Pagination extends React.Component {
 
     // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(this.props.paging.total / this.props.paging.limit); i++) {
+    for (let i = 1; i <= Math.ceil(totalPersons / this.props.paging.limit); i++) {
       pageNumbers.push(i);
     }
 
@@ -39,7 +39,7 @@ class Pagination extends React.Component {
       return (
         (number == currentPage) ?
         <a href="#" id={number} className={styles['isDisabled']} onClick={this.handlePageChange} >{number}</a>
-        : (Math.abs(number - currentPage) < 4) ? 
+        : (Math.abs(number - currentPage) < 4) ?
         <a href="#" id={number} onClick={this.handlePageChange} >
           {number}
         </a> : ''

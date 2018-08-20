@@ -15,7 +15,7 @@ class PersonSearchAndAddForm extends Component {
     if (queryRef.value) {
       this.props.searchPeople(queryRef.value);
     } else {
-      this.props.fetchPeople();
+      this.props.fetchPeople(1,2);
     }
   };
 

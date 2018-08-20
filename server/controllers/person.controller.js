@@ -15,7 +15,7 @@ export function getPeople(req, res) {
   Person.find({active: true})
     .skip(offset > 0 ? ((offset - 1) * limit) : 0)
     .limit(limit)
-    .sort('-dateAdded')
+    .sort({ dateCreated: -1 })
     .exec((err, people) => {
       if (err) {
         res.status(500).send(err);

@@ -14,7 +14,7 @@ function PersonList(props) {
         props.people.map(person => (
           <PersonListItem
             person={person}
-            key={person.id}
+            key={person._id}
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
           />

@@ -6,14 +6,16 @@ const initialState = { data: [], paging: [] };
 const PersonReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_PERSON :
+      const dataState = state.data.filter(person => person._id !== state.data[state.data.length - 1]._id);
       return {
-        data: [action.person, ...state.data],
+        data: [action.data.results, ...dataState],
+        paging: action.data.paging,
       };
 
     case ADD_PEOPLE :
       return {
         data: action.data.results,
-        paging: action.data.paging, 
+        paging: action.data.paging,
       };
 
     case DELETE_PERSON :
@@ -24,8 +26,9 @@ const PersonReducer = (state = initialState, action) => {
     case EDIT_PERSON :
       return {
         data: state.data.map(person => {
-          return person._id === action.person._id ? action.person : person;
+          return person._id === action.data.results._id ? action.data.results : person;
         }),
+        paging: action.data.paging,
       };
 
     default:
