@@ -8,10 +8,10 @@ function PersonList(props) {
   return (
     <div className="listView">
       {
-        props.people.map(person => (
+        props.people.map((person, index) => (
           <PersonListItem
             person={person}
-            key={person.id}
+            key={index}
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
           />
