@@ -11,7 +11,7 @@ export function getPeople(req, res) {
   var offset = (req.query.offset) ? parseInt(req.query.offset) : 0
   var limit = (req.query.limit) ? parseInt(req.query.limit) : 5
   var total = 0
-  Person.count().then((n) => { total = n })
+  Person.count({active: true}).then((n) => { total = n })
   Person.find({active: true})
     .skip(offset > 0 ? ((offset - 1) * limit) : 0)
     .limit(limit)
@@ -21,7 +21,7 @@ export function getPeople(req, res) {
         res.status(500).send(err);
       }
       //TODO VER ERROR
-      res.json({paging:{total:total,limit:limit,offset:offset},results:people});
+      res.json({paging:{total:total,limit:limit,offset:offset},results: people, server_side: true});
     });
 }
 
@@ -68,15 +68,17 @@ export function getPerson(req, res) {
  * @returns void
  */
 export function searchPeople(req, res) {
+  var offset = (req.query.offset) ? parseInt(req.query.offset) : 0
+  var limit = (req.query.limit) ? parseInt(req.query.limit) : 5
   var queryRegex = new RegExp(req.params.id, "i");
   Person.find({$and: [{active: true},
                       {$or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}]
                       }]
-              }).sort('-dateAdded').exec((err, people) => {
+              }).sort({ dateCreated: -1 }).exec((err, people) => {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({paging:{total:people.length,limit:people.length,offset:people.length},results:people});
+    res.json({paging:{total:people.length,limit:limit,offset:offset},results:people, server_side: false });
   });
 }
 
@@ -100,7 +102,6 @@ export function deletePerson(req, res) {
       }
       res.status(200).end();
     });
-
   });
 }
 

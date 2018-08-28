@@ -12,7 +12,7 @@ import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
-import { getPeople, getPaging } from '../../PersonReducer';
+import { getPeople, getPaging, getServerSide } from '../../PersonReducer';
 
 //pagination
 import Pagination from "../../../App/components/Pagination/Pagination.js";
@@ -23,12 +23,13 @@ class PersonListPage extends Component {
   }
 
   handleFetchPeople = () => {
-    this.props.dispatch(fetchPeople());
+    this.props.dispatch(fetchPeople(1,2));
   };
 
   handleDeletePerson = idPerson => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
       this.props.dispatch(deletePersonRequest(idPerson));
+      this.props.dispatch(fetchPeople(1, 2));
     }
   };
 
@@ -37,7 +38,6 @@ class PersonListPage extends Component {
   };
 
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type) => {
-    //this.props.dispatch(toggleAddPerson());
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
   };
 
@@ -46,7 +46,7 @@ class PersonListPage extends Component {
   };
 
   handleSearchPeople = (query) => {
-    this.props.dispatch(searchPeopleRequest(query));
+    this.props.dispatch(searchPeopleRequest(query, 1, 2));
   };
 
   render() {
@@ -60,7 +60,7 @@ class PersonListPage extends Component {
             <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
           </Grid>
         </Grid>
-        <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
+        <Pagination paging={this.props.paging} server_side={this.props.server_side} handlePageChange={this.handlePageChange} />
       </div>
     );
   }
@@ -75,6 +75,7 @@ function mapStateToProps(state) {
     showAddPerson: getShowAddPerson(state),
     people: getPeople(state),
     paging: getPaging(state),
+    server_side: getServerSide(state),
   };
 }
 
@@ -87,10 +88,10 @@ PersonListPage.propTypes = {
     email: PropTypes.string.isRequired,
     telephone: PropTypes.string.isRequired,
     cellphone: PropTypes.string.isRequired,
-    birthDate: PropTypes.instanceOf(Date),
+    birthDate: PropTypes.string,
     profession: PropTypes.string.isRequired,
     professionPlace: PropTypes.string.isRequired,
-    dateCreated: PropTypes.instanceOf(Date),
+    dateCreated: PropTypes.string,
     type: PropTypes.string.isRequired,
   })).isRequired,
   paging: PropTypes.arrayOf(PropTypes.shape({
@@ -98,6 +99,7 @@ PersonListPage.propTypes = {
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
   })).isRequired,
+  server_side: PropTypes.bool.isRequired,
   showAddPerson: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

@@ -9,12 +9,12 @@ function PersonList(props) {
   if (props.people.size === 0) return null;
 
   return (
-    <div>
+    <div className="listView">
       {
-        props.people.map(person => (
+        props.people.map((person, index) => (
           <PersonListItem
             person={person}
-            key={person._id}
+            key={index}
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
           />

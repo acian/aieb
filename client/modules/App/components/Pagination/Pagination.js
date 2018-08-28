@@ -9,8 +9,13 @@ import styles from "../Pagination/Pagination.css"
 class Pagination extends React.Component {
 
   handlePageChange = (event) => {
-    this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
-    event.preventDefault();
+    if (this.props.server_side === true) {
+      this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
+      event.preventDefault();
+    } else {
+      console.log('nelson');
+      //currentPage = currentPage + 1;
+    }
   };
 
   handlePageChangeLeft = (event) => {
@@ -37,7 +42,7 @@ class Pagination extends React.Component {
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
-        (number == currentPage) ?
+        (number === currentPage) ?
         <a href="#" id={number} className={styles['isDisabled']} onClick={this.handlePageChange} >{number}</a>
         : (Math.abs(number - currentPage) < 4) ?
         <a href="#" id={number} onClick={this.handlePageChange} >
@@ -80,6 +85,7 @@ Pagination.propTypes = {
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
   })).isRequired,
+  server_side: PropTypes.bool.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 };
 

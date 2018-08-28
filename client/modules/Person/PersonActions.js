@@ -49,7 +49,7 @@ export function addPeople(data) {
   };
 }
 
-export function fetchPeople(offset = 0, limit= 5) {
+export function fetchPeople(offset = 0, limit= 2) {
   return (dispatch) => {
     return callApi(`people?offset=${offset}&limit=${limit}`).then(res => {
       dispatch(addPeople(res));
@@ -63,22 +63,22 @@ export function fetchPerson(id) {
   };
 }
 
-export function searchPeopleRequest(query) {
+export function searchPeopleRequest(query, offset, limit) {
   return (dispatch) => {
-    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res)));
+    return callApi(`people/search/${query}?offset=${offset}&limit=${limit}`).then(res => dispatch(addPeople(res)));
   };
 }
 
-export function deletePerson(id) {
+export function deletePerson(data) {
   return {
     type: DELETE_PERSON,
-    id,
+    data,
   };
 }
 
 export function deletePersonRequest(id) {
   return (dispatch) => {
-    return callApi(`people/${id}`, 'delete').then(() => dispatch(deletePerson(id)));
+    return callApi(`people/${id}`, 'delete').then();
   };
 }
 
