@@ -4,18 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import { FormattedMessage } from 'react-intl';
 
 // Import Style
-import styles from "../Pagination/Pagination.css"
+import styles from './Pagination.css';
 
 class Pagination extends React.Component {
 
   handlePageChange = (event) => {
-    if (this.props.server_side === true) {
-      this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
-      event.preventDefault();
-    } else {
-      console.log('nelson');
-      //currentPage = currentPage + 1;
-    }
+    this.props.handlePageChange(Number(event.target.id), this.props.paging.limit);
+    event.preventDefault();
   };
 
   handlePageChangeLeft = (event) => {
@@ -29,9 +24,8 @@ class Pagination extends React.Component {
   };
 
   render() {
-
-    const currentPage = this.props.paging.offset
-    const totalPersons = this.props.paging.total
+    const currentPage = this.props.paging.offset;
+    const totalPersons = this.props.paging.total;
     const totalPages = (Math.round(totalPersons / this.props.paging.limit) > 1) ? Math.round(totalPersons / this.props.paging.limit) : 1;
 
     // Logic for displaying page numbers
@@ -85,7 +79,6 @@ Pagination.propTypes = {
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
   })).isRequired,
-  server_side: PropTypes.bool.isRequired,
   handlePageChange: PropTypes.func.isRequired,
 };
 

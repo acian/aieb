@@ -12,11 +12,11 @@ class PersonSearchAndAddForm extends Component {
 
   searchPeople = () => {
     const queryRef = this.query;
-    if (queryRef.value) {
+    //if (queryRef.value) {
       this.props.searchPeople(queryRef.value);
-    } else {
-      this.props.fetchPeople(1,2);
-    }
+    //} else {
+      //this.props.fetchPeople(1,2);
+    //}
   };
 
   render() {
@@ -27,7 +27,6 @@ class PersonSearchAndAddForm extends Component {
             label={this.props.intl.messages.searchPeople}
             inputRef={x => this.query = x}
             onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev.key}`);
               if (ev.key === 'Enter') {
                 this.searchPeople()
                 ev.preventDefault();

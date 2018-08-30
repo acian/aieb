@@ -12,18 +12,19 @@ import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
-import { getPeople, getPaging, getServerSide } from '../../PersonReducer';
+import { getPeople, getPaging } from '../../PersonReducer';
 
 //pagination
-import Pagination from "../../../App/components/Pagination/Pagination.js";
+import Pagination from '../../components/Pagination/Pagination.js';
 
 class PersonListPage extends Component {
   componentDidMount() {
     this.handleFetchPeople;
+    var querySearch = '';
   }
 
   handleFetchPeople = () => {
-    this.props.dispatch(fetchPeople(1,2));
+    this.props.dispatch(fetchPeople());
   };
 
   handleDeletePerson = idPerson => {
@@ -34,7 +35,7 @@ class PersonListPage extends Component {
   };
 
   handlePageChange = (currentPage, limit) => {
-    this.props.dispatch(fetchPeople(currentPage, limit));
+    this.querySearch ? this.handleSearchPeople(this.querySearch, currentPage, limit) : this.props.dispatch(fetchPeople(currentPage, limit));
   };
 
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type) => {
@@ -45,8 +46,15 @@ class PersonListPage extends Component {
       this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
   };
 
-  handleSearchPeople = (query) => {
-    this.props.dispatch(searchPeopleRequest(query, 1, 2));
+  handleSearchPeople = (query, currentPage, limit) => {
+    var offset = currentPage ? currentPage : 1;
+    var lim = limit ? limit : 2;
+    this.querySearch = query;
+    if (query) {
+      this.props.dispatch(searchPeopleRequest(this.querySearch, offset, lim));
+    } else {
+      this.props.dispatch(fetchPeople(1, 2));
+    }
   };
 
   render() {
@@ -60,7 +68,7 @@ class PersonListPage extends Component {
             <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
           </Grid>
         </Grid>
-        <Pagination paging={this.props.paging} server_side={this.props.server_side} handlePageChange={this.handlePageChange} />
+        <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
       </div>
     );
   }
@@ -75,7 +83,6 @@ function mapStateToProps(state) {
     showAddPerson: getShowAddPerson(state),
     people: getPeople(state),
     paging: getPaging(state),
-    server_side: getServerSide(state),
   };
 }
 
@@ -99,7 +106,6 @@ PersonListPage.propTypes = {
     limit: PropTypes.number.isRequired,
     offset: PropTypes.number.isRequired,
   })).isRequired,
-  server_side: PropTypes.bool.isRequired,
   showAddPerson: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
