@@ -12,11 +12,7 @@ class PersonSearchAndAddForm extends Component {
 
   searchPeople = () => {
     const queryRef = this.query;
-    //if (queryRef.value) {
       this.props.searchPeople(queryRef.value);
-    //} else {
-      //this.props.fetchPeople(1,2);
-    //}
   };
 
   render() {
