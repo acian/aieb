@@ -13,6 +13,7 @@ import PersonFormDialog from '../PersonFormDialog/PersonFormDialog';
 import Grid from '@material-ui/core/Grid';
 import CallIcon from '@material-ui/icons/Call';
 import EmailIcon from '@material-ui/icons/Email';
+import FaceIcon from '@material-ui/icons/Face';
 
 
 // Import Style
@@ -26,40 +27,57 @@ function PersonListItem(props) {
   return (
     <div>
       <ExpansionPanel className={styles['paper-description']}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
           <Grid container spacing={24}>
             <Grid item xs={4}>
               <div className={styles['primiry-heading']}>
-                <strong>{props.person.surname} , {props.person.name}</strong>
+                <FaceIcon/> <strong>{props.person.surname} , {props.person.name}</strong>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={styles['secondary-heading']}>
-                <EmailIcon/>  {props.person.email}
+                <EmailIcon/> {props.person.email}
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={styles['secondary-heading']}>
-                <CallIcon/>  {props.person.cellphone}
+                <CallIcon/> {props.person.cellphone}
               </div>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {Object.keys(props.person).map(function (key) {
-            if ((['birthDate', 'profession', 'professionPlace', 'address'].indexOf(key) >= 0) && (props.person[key].length > 0)) {
-              if (key === 'birthDate') {
-                return <Chip key={key} label={props.person[key].substr(0, 10)} />;
-              }
-              return <Chip key={key} label={props.person[key]} />;
-            }
-          })}
+          <Grid container justify={'center'}>
+            {Object.keys(props.person)
+              .map(function (key) {
+                if ((props.person[key].length > 0)) {
+                  switch (key) {
+                    case 'dni':
+                      return <Chip key={key} label={'DNI: ' + props.person[key]}/>;
+                    case 'address':
+                      return <Chip key={key} label={'DIRECCION: ' + props.person[key]}/>;
+                    case 'telephone':
+                      return <Chip key={key} label={'TELÉFONO: ' + props.person[key]}/>;
+                    case 'birthDate':
+                      return <Chip key={key} label={'NACIMIENTO: ' + props.person[key].substr(0, 10)}/>;
+                    case 'profession':
+                      return <Chip key={key} label={'PROFESION: ' + props.person[key]}/>;
+                    case 'professionPlace':
+                      return <Chip key={key} label={'LUGAR DE PROFESION: ' + props.person[key]}/>;
+                    case 'dateCreated':
+                      return <Chip key={key} label={'CREADO: ' + props.person[key].substr(0, 10)}/>;
+                    default:
+                      return null;
+                  }
+                }
+              })}
+          </Grid>
         </ExpansionPanelDetails>
-        <Divider />
+        <Divider/>
         <ExpansionPanelActions>
           <PersonFormDialog personAction={props.onEdit} editMode={true} person={props.person}/>
           <Button onClick={props.onDelete} mini variant="fab" color="secondary" aria-label="delete">
-            <DeleteIcon />
+            <DeleteIcon/>
           </Button>
         </ExpansionPanelActions>
       </ExpansionPanel>

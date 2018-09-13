@@ -56,13 +56,13 @@ class Pagination extends React.Component {
           {(currentPage > 1) ?
             <a href="#" id={0} onClick={this.handlePageChangeLeft}>&laquo;</a>
             :
-            <a href="#" className={styles['isDisabled']} id={0} onClick={this.handlePageChangeLeft}>&laquo;</a>
+            <a href="#" className={styles['isDisabled']} id={0}>&laquo;</a>
           }
           {renderPageNumbers}
           {(currentPage < totalPages) ?
             <a href="#" id={0} onClick={this.handlePageChangeRight}>&raquo;</a>
             :
-            <a href="#" className={styles['isDisabled']} id={totalPages + 1} onClick={this.handlePageChangeRight}>&raquo;</a>
+            <a href="#" className={styles['isDisabled']} id={totalPages + 1} >&raquo;</a>
           }
         </Grid>
         <Grid item>
