@@ -17,7 +17,6 @@ export default {
     submit: 'Guardar',
     searchPeople:'Buscar persona por DNI, Nombre o Apellido',
     //---------------------------------------
-    siteTitle: 'MERN Starter Blog',
     cancel: 'Cancelar',
     accept: 'Aceptar',
     student: 'Alumno',
