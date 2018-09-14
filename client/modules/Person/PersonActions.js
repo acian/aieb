@@ -8,21 +8,21 @@ export const EDIT_PERSON = 'EDIT_PERSON';
 
 // Export Actions
 
-export function addPerson(person) {
+export function addPerson(data) {
   return {
     type: ADD_PERSON,
-    person,
+    data,
   };
 }
 
-export function editPerson(person) {
+export function editPerson(data) {
   return {
     type: EDIT_PERSON,
-    person,
+    data,
   };
 }
 
-export function addPersonRequest(person) {
+export function addPersonRequest(person, paging) {
   return (dispatch) => {
     return callApi('people', 'post', {
       person: {
@@ -38,21 +38,21 @@ export function addPersonRequest(person) {
         professionPlace: person.professionPlace,
         type: person.type,
       },
-    }).then(res => dispatch(addPerson(res.person)));
+    }).then(res => dispatch(addPerson({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.person })));
   };
 }
 
-export function addPeople(people) {
+export function addPeople(data) {
   return {
     type: ADD_PEOPLE,
-    people,
+    data,
   };
 }
 
-export function fetchPeople() {
+export function fetchPeople(offset = 0, limit= 2) {
   return (dispatch) => {
-    return callApi('people').then(res => {
-      dispatch(addPeople(res.people));
+    return callApi(`people?offset=${offset}&limit=${limit}`).then(res => {
+      dispatch(addPeople(res));
     });
   };
 }
@@ -63,26 +63,26 @@ export function fetchPerson(id) {
   };
 }
 
-export function searchPeopleRequest(query) {
+export function searchPeopleRequest(query, offset, limit) {
   return (dispatch) => {
-    return callApi(`people/search/${query}`).then(res => dispatch(addPeople(res.people)));
+    return callApi(`people/search/${query}?offset=${offset}&limit=${limit}`).then(res => dispatch(addPeople(res)));
   };
 }
 
-export function deletePerson(id) {
+export function deletePerson(data) {
   return {
     type: DELETE_PERSON,
-    id,
+    data,
   };
 }
 
 export function deletePersonRequest(id) {
   return (dispatch) => {
-    return callApi(`people/${id}`, 'delete').then(() => dispatch(deletePerson(id)));
+    return callApi(`people/${id}`, 'delete').then();
   };
 }
 
-export function editPersonRequest(person) {
+export function editPersonRequest(person, paging) {
   return (dispatch) => {
     return callApi(`people/${person.id}`, 'put', {
       person: {
@@ -98,6 +98,6 @@ export function editPersonRequest(person) {
         professionPlace: person.professionPlace,
         type: person.type,
       },
-    }).then(res => dispatch(editPerson(res.editedPerson)));
+    }).then(res => dispatch(editPerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedPerson })));
   };
 }
