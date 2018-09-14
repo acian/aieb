@@ -31,23 +31,23 @@ function PersonListItem(props) {
           <Grid container spacing={24}>
             <Grid item xs={4}>
               <div className={styles['primiry-heading']}>
-                <FaceIcon/> <strong>{props.person.surname} , {props.person.name}</strong>
+                <FaceIcon/> <div className={styles['detail-item']}><strong>{props.person.surname} , {props.person.name}</strong></div>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={styles['secondary-heading']}>
-                <EmailIcon/> {props.person.email}
+                <EmailIcon/> <div className={styles['detail-item']}>{props.person.email}</div>
               </div>
             </Grid>
             <Grid item xs={4}>
               <div className={styles['secondary-heading']}>
-                <CallIcon/> {props.person.cellphone}
+                <CallIcon/> <div className={styles['detail-item']}>{props.person.cellphone}</div>
               </div>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container justify={'center'}>
+          <Grid container justify={props.sorted}>
             {Object.keys(props.person)
               .map(function (key) {
                 if ((props.person[key].length > 0)) {
@@ -69,6 +69,8 @@ function PersonListItem(props) {
                     default:
                       return null;
                   }
+                } else {
+                  return null;
                 }
               })}
           </Grid>
@@ -103,6 +105,7 @@ PersonListItem.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  sorted: PropTypes.string.isRequired,
 };
 
 export default PersonListItem;

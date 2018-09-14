@@ -76,3 +76,8 @@
 .secondary-heading{
   color: rgba(46, 46, 155, 0.705);
 }
+
+.detail-item{
+  margin-top: -1.56em;
+  margin-left: 1.9em;
+}

@@ -11,12 +11,13 @@ function PersonList(props) {
   return (
     <div>
       {
-        props.people.map(person => (
+        props.people.map((person, i) => (
           <PersonListItem
             person={person}
             key={person.id}
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
+            sorted={(i % 2 === 0 || i === 0) ? 'flex-start' : 'flex-end'}
           />
         ))
       }

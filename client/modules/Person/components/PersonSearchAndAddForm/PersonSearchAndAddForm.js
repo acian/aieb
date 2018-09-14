@@ -12,7 +12,8 @@ class PersonSearchAndAddForm extends Component {
 
   searchPeople = () => {
     const queryRef = this.query;
-      this.props.searchPeople(queryRef.value);
+    const escapeRE = new RegExp(/([.*+?^=!:$(){}|[\]\/\\])/g);
+    this.props.searchPeople(queryRef.value.replace(escapeRE, ''));
   };
 
   render() {

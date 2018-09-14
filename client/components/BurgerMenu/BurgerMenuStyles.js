@@ -39,6 +39,12 @@ const styles = {
   bmOverlay: {
     background: 'rgba(0, 0, 0, 0.3)'
   },
+
+  detailItem: {
+    marginTop: '-1.56em',
+    marginLeft: '1.9em',
+}
+
 };
 
 export default styles;
