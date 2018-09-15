@@ -8,17 +8,17 @@ export const EDIT_COURSE = 'EDIT_COURSE';
 
 // Export Actions
 
-export function addCourse(course) {
+export function addCourse(data) {
   return {
     type: ADD_COURSE,
-    course,
+    data,
   };
 }
 
-export function editCourse(course) {
+export function editCourse(data) {
   return {
     type: EDIT_COURSE,
-    course,
+    data,
   };
 }
 
@@ -37,21 +37,21 @@ export function addCourseRequest(course) {
         comment: course.comment,
         dateCreated: course.dateCreated
       },
-    }).then(res => dispatch(addCourse(res.course)));
+    }).then(res => dispatch(addCourse({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.course })));
   };
 }
 
-export function addCourses(courses) {
+export function addCourses(data) {
   return {
     type: ADD_COURSES,
-    courses,
+    data,
   };
 }
 
-export function fetchCourses() {
+export function fetchCourses(offset = 0, limit= 2) {
   return (dispatch) => {
-    return callApi('courses').then(res => {
-      dispatch(addCourses(res.courses));
+    return callApi(`courses?offset=${offset}&limit=${limit}`).then(res => {
+      dispatch(addCourses(res));
     });
   };
 }
@@ -62,26 +62,26 @@ export function fetchCourse(id) {
   };
 }
 
-export function searchCoursesRequest(query) {
+export function searchCoursesRequest(query, offset, limit) {
   return (dispatch) => {
-    return callApi(`courses/search/${query}`).then(res => dispatch(addCourse(res.courses)));
+    return callApi(`courses/search/${query}?offset=${offset}&limit=${limit}`).then(res => dispatch(addCourses(res)));
   };
 }
 
-export function deleteCourse(id) {
+export function deleteCourse(data) {
   return {
     type: DELETE_COURSE,
-    id,
+    data,
   };
 }
 
 export function deleteCourseRequest(id) {
   return (dispatch) => {
-    return callApi(`courses/${id}`, 'delete').then(() => dispatch(deleteCourse(id)));
+    return callApi(`course/${id}`, 'delete').then();
   };
 }
 
-export function editCourseRequest(course) {
+export function editCourseRequest(course, paging) {
   return (dispatch) => {
     return callApi(`courses/${course.id}`, 'put', {
       course: {
@@ -96,6 +96,6 @@ export function editCourseRequest(course) {
         comment: course.comment,
         dateCreated: course.dateCreated,
       },
-    }).then(res => dispatch(editCourse(res.editedCourse)));
+    }).then(res => dispatch(editCourse({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedCourse })));
   };
 }

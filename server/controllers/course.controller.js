@@ -2,21 +2,27 @@ import Course from '../models/course';
 import sanitizeHtml from 'sanitize-html';
 
 /**
- * Get course
+ * Get courses
  * @param req
  * @param res
  * @returns void
  */
 export function getCourses(req, res) {
-  Course.find({active: true}).sort('-dateCreated').exec((err, courses) => {
-    console.log(`GET COURSES EN CONTROLLER`);
-    if (err) {
-      console.log(`GET COURSES ERROR ${err}`);
-      res.status(500).send(err);
-    }
-    console.log(`GET COURSES OK ${courses[0]}`);
-    res.json({ courses });
-  });
+  var offset = (req.query.offset) ? parseInt(req.query.offset) : 0
+  var limit = (req.query.limit) ? parseInt(req.query.limit) : 5
+  var total = 0
+  Course.count({active: true}).then((n) => { total = n })
+  Course.find({active: true})
+    .skip(offset > 0 ? ((offset - 1) * limit) : 0)
+    .limit(limit)
+    .sort({ dateCreated: -1 })
+    .exec((err, courses) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      //TODO VER ERROR
+      res.json({paging:{total:total,limit:limit,offset:offset},results: courses});
+    });
 }
 
 /**
@@ -62,16 +68,27 @@ export function getCourse(req, res) {
  * @returns void
  */
 export function searchCourse(req, res) {
+  var offset = (req.query.offset) ? parseInt(req.query.offset) : 0;
+  var limit = (req.query.limit) ? parseInt(req.query.limit) : 5;
   var queryRegex = new RegExp(req.params.id, "i");
+  var total = 0;
+  Course.count({$and: [{active: true},
+    {$or: [{name: {$regex: queryRegex}}]
+    }],
+  }).then((n) => { total = n });
   Course.find({$and: [{active: true},
-    {$or: [{dni: {$regex: queryRegex}}, {name: {$regex: queryRegex}}, {surname: {$regex: queryRegex}}]
-    }]
-  }).sort('-dateAdded').exec((err, courses) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ people });
-  });
+    {$or: [{name: {$regex: queryRegex}}]
+    }],
+  })
+    .sort({ dateCreated: -1 })
+    .skip(offset > 0 ? ((offset - 1) * limit) : 0)
+    .limit(limit)
+    .exec((err, courses) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({paging:{total:total,limit:limit,offset:offset}, results: courses });
+    });
 }
 
 /**

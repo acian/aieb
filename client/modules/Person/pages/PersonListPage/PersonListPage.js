@@ -16,7 +16,7 @@ import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople, getPaging } from '../../PersonReducer';
 
 // pagination
-import Pagination from '../../components/Pagination/Pagination.js';
+import Pagination from '../../../../components/Pagination/Pagination.js';
 
 class PersonListPage extends Component {
 

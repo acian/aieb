@@ -5,15 +5,19 @@ import PropTypes from 'prop-types';
 import CourseListItem from './CourseListItem/CourseListItem';
 
 function CourseList(props) {
+
+  if (props.courses.size === 0) return null;
+
   return (
-    <div className="listView">
+    <div>
       {
-        props.courses.map((course, index) => (
+        props.courses.map((course, i) => (
           <CourseListItem
             course={course}
-            key={index}
+            key={course.id}
             onDelete={() => props.handleDeleteCourse(course._id)}
             onEdit={props.handleEditCourse}
+            sorted={(i % 2 === 0 || i === 0) ? 'flex-start' : 'flex-end'}
           />
         ))
       }

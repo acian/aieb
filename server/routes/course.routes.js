@@ -18,6 +18,6 @@ router.route('/course/:id').delete(CourseController.deleteCourse);
 router.route('/course/:id').put(CourseController.editCourse);
 
 // Search people by name or dni
-router.route('/courses/search/:id').get(CourseController.searchCourse);
+router.route('/course/search/:id').get(CourseController.searchCourse);
 
 export default router;

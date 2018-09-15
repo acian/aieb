@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import {injectIntl, intlShape} from 'react-intl';
 import Chip from '@material-ui/core/Chip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
@@ -13,8 +12,6 @@ import Divider from '@material-ui/core/Divider';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import CourseFormDialog from '../CourseFormDialog/CourseFormDialog';
 import Grid from '@material-ui/core/Grid';
-import CallIcon from '@material-ui/icons/Call';
-import EmailIcon from '@material-ui/icons/Email';
 
 import styles from './CourseListItem.css';
 
@@ -67,6 +64,8 @@ CourseListItem.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  sorted: PropTypes.string.isRequired,
+  intl: intlShape.isRequired,
 };
 
-export default CourseListItem;
+export default injectIntl(CourseListItem);

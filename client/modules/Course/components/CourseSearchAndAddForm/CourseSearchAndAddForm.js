@@ -12,11 +12,8 @@ class CourseSearchAndAddForm extends Component {
 
   searchCourses = () => {
     const queryRef = this.query;
-    if (queryRef.value) {
-      this.props.searchCourses(queryRef.value);
-    } else {
-      this.props.fetchCourses();
-    }
+    const escapeRE = new RegExp(/([.*+?^=!:$(){}|[\]\/\\])/g);
+    this.props.searchCourses(queryRef.value.replace(escapeRE, ''));
   };
 
   render() {

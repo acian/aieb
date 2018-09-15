@@ -34,6 +34,7 @@ export default {
     editPerson: 'Modificar Persona',
     deletePerson: 'Delete Person',
     personas: 'Personas',
+    items: 'Total',
     pagina: 'Páginas',
     de: 'de',
     switchLanguage: 'Switch Language',
