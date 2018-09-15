@@ -15,7 +15,10 @@ export class BurgerMenu extends Component {
 	        <a id="Students" href="/">
 						<PersonIcon/><span>Personas</span>
 					</a>
-	        <a id="about" className="menu-item" href="/">About</a>
+	        <a id="Users" href="/users">
+						<PersonIcon/><span>Usuarios</span>
+					</a>
+					<a id="about" className="menu-item" href="/">About</a>
 	        <a id="contact" className="menu-item" href="/">Contact</a>
 	        <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
 	      </Menu>

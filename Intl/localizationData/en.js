@@ -1,6 +1,10 @@
 export default {
   locale: 'en',
   messages: {
+    //Form user -----------------------------
+    user: 'Usuario',
+    password: 'Contraseña',
+    login: 'Ingresar',
     //Form people ---------------------------
     newPerson: 'Agregar persona',
     name: 'Nombre',

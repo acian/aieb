@@ -83,7 +83,7 @@ export function deletePerson(req, res) {
       res.status(500).send(err);
     }
 
-    const inactive = { active: false }
+    const inactive = { active: false };
 
     person.update(inactive, function(err, result) {
       if (err) {

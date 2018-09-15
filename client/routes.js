@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+//import { browserHistory } from 'react-router';
 import App from './modules/App/App';
 
 // require.ensure polyfill for node
@@ -20,26 +21,48 @@ if (process.env.NODE_ENV !== 'production') {
   require('./modules/Person/pages/PersonDetailPage/PersonDetailPage');
 }
 
+function loggedIn() {
+  return false;
+}
+
+function requireAuth(nextState, replace) {
+  if (!loggedIn()) {
+    replace({
+      pathname: '/login'
+    })
+  }
+}
+
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
   <Route path="/" component={App}>
     <IndexRoute
+      onEnter={requireAuth}
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          //  cb(null, require('./modules/Post/pages/PostListPage/PostListPage').default);
           cb(null, require('./modules/Person/pages/PersonListPage/PersonListPage').default);
+
         });
       }}
     />
     <Route
-      path="/people/:id"
+      path="/login"
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
-          //   cb(null, require('./modules/Post/pages/PostDetailPage/PostDetailPage').default);
-          cb(null, require('./modules/Person/pages/PersonDetailPage/PersonDetailPage').default);
+          cb(null, require('./modules/Login/pages/LoginPage/LoginPage').default);
+        });
+      }}
+    />
+    <Route
+      path="/users"
+      onEnter={requireAuth}
+      getComponent={(nextState, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./modules/Users/pages/UserListPage/UserListPage').default);
         });
       }}
     />
   </Route>
 );
+

@@ -36,7 +36,7 @@ export class PersonCreateWidget extends Component {
     return (
       <div className={cls}>
         <div className={styles['form-content']}>
-        <h2 className={styles['form-title']}><FormattedMessage id="newPerson" /></h2>
+          <h2 className={styles['form-title']}><FormattedMessage id="newPerson" /></h2>
           <Grid container spacing={24}>
             <Grid item xs={6}>
               <TextField inputRef={x => this.name = x} label={this.props.intl.messages.name} fullWidth />
