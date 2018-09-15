@@ -24,7 +24,6 @@ export default {
     deleteCourse: 'Delete Curso',
     amount: 'Valor de la cuota',
     //---------------------------------------
-    siteTitle: 'MERN Starter Blog',
     cancel: 'Cancelar',
     accept: 'Aceptar',
     student: 'Alumno',
@@ -34,6 +33,9 @@ export default {
     addPerson: 'Agregar Persona',
     editPerson: 'Modificar Persona',
     deletePerson: 'Delete Person',
+    personas: 'Personas',
+    pagina: 'Páginas',
+    de: 'de',
     switchLanguage: 'Switch Language',
     twitterMessage: 'We are on Twitter',
     by: 'By',

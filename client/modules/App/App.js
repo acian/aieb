@@ -1,6 +1,8 @@
 import React, { Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import purple from '@material-ui/core/colors/purple';
 
 // Import Style
 import styles from './App.css';
@@ -19,10 +21,11 @@ import { switchLanguage } from '../../modules/Intl/IntlActions';
 export class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    this.state = { isMounted: false, loading: true};
   }
 
   componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }), 100); // simulates an async action, and hides the spinner
     this.setState({isMounted: true}); // eslint-disable-line
   }
 
@@ -35,6 +38,16 @@ export class App extends Component {
   };
 
   render() {
+    const { loading } = this.state;
+
+    if (loading) { // if your component doesn't have to wait for an async action, remove this block
+      return (
+        <div>
+          <CircularProgress style={{marginLeft: '50%', color: purple[500] }} thickness={7} />
+        </div>
+      );
+    }
+
     return (
       <div id="outer-container">
         <BurgerMenu outerContainerId={"outer-container"} />

@@ -5,15 +5,19 @@ import PropTypes from 'prop-types';
 import PersonListItem from './PersonListItem/PersonListItem';
 
 function PersonList(props) {
+
+  if (props.people.size === 0) return null;
+
   return (
-    <div className="listView">
+    <div>
       {
-        props.people.map((person, index) => (
+        props.people.map((person, i) => (
           <PersonListItem
             person={person}
-            key={index}
+            key={person.id}
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
+            sorted={(i % 2 === 0 || i === 0) ? 'flex-start' : 'flex-end'}
           />
         ))
       }
@@ -23,6 +27,7 @@ function PersonList(props) {
 
 PersonList.propTypes = {
   people: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,

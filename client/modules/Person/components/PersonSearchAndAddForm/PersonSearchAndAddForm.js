@@ -12,11 +12,8 @@ class PersonSearchAndAddForm extends Component {
 
   searchPeople = () => {
     const queryRef = this.query;
-    if (queryRef.value) {
-      this.props.searchPeople(queryRef.value);
-    } else {
-      this.props.fetchPeople();
-    }
+    const escapeRE = new RegExp(/([.*+?^=!:$(){}|[\]\/\\])/g);
+    this.props.searchPeople(queryRef.value.replace(escapeRE, ''));
   };
 
   render() {
@@ -27,7 +24,6 @@ class PersonSearchAndAddForm extends Component {
             label={this.props.intl.messages.searchPeople}
             inputRef={x => this.query = x}
             onKeyPress={(ev) => {
-              console.log(`Pressed keyCode ${ev.key}`);
               if (ev.key === 'Enter') {
                 this.searchPeople()
                 ev.preventDefault();
