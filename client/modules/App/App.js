@@ -13,6 +13,7 @@ import BurgerMenu from '../../components/BurgerMenu/BurgerMenu';
 
 // Import Actions
 import { toggleAddPerson } from './AppActions';
+import { toggleAddCourse } from './AppActions';
 import { switchLanguage } from '../../modules/Intl/IntlActions';
 
 export class App extends Component {
@@ -27,6 +28,10 @@ export class App extends Component {
 
   toggleAddPersonSection = () => {
     this.props.dispatch(toggleAddPerson());
+  };
+
+  toggleAddCourseSection = () => {
+    this.props.dispatch(toggleAddCourse());
   };
 
   render() {

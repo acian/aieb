@@ -16,6 +16,13 @@ export default {
     type: 'Tipo',
     submit: 'Guardar',
     searchPeople:'Buscar persona por DNI, Nombre o Apellido',
+    //Form course ---------------------------
+    days: 'Días',
+    schedule : 'Horario',
+    addCourse: 'Agregar Curso',
+    editCourse: 'Modificar Curso',
+    deleteCourse: 'Delete Curso',
+    amount: 'Valor de la cuota',
     //---------------------------------------
     siteTitle: 'MERN Starter Blog',
     cancel: 'Cancelar',
