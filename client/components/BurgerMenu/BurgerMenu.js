@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import PersonIcon from '@material-ui/icons/Person';
+import GroupIcon from '@material-ui/icons/Group';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Settings from '@material-ui/icons/Settings';
 import ContactMail from '@material-ui/icons/ContactMail';
@@ -19,8 +20,8 @@ export class BurgerMenu extends Component {
           <a id="Students" href="/">
             <PersonIcon /> <div className={styles['detail-item']}><span>Personas</span></div>
           </a>
-          <a id="Students" href="/">
-            <PersonIcon /> <div className={styles['detail-item']}><span>Cursos</span></div>
+          <a id="Courses" href="/courses">
+            <GroupIcon /> <div className={styles['detail-item']}><span>Cursos</span></div>
           </a>
           <a id="about" href="/">
             <AssignmentIcon /> <div className={styles['detail-item']}><span>About</span></div>
