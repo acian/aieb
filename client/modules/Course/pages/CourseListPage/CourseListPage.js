@@ -40,7 +40,7 @@ class CourseListPage extends Component {
   handleDeleteCourse = idCourse => {
     if (confirm('Do you want to delete this person')) { // eslint-disable-line
       this.props.dispatch(deleteCourseRequest(idCourse));
-      this.props.dispatch(fetchCourse(this.defaultLimit, this.defaultOffset));
+      this.props.dispatch(fetchCourses(this.defaultLimit, this.defaultOffset));
     }
   };
 
@@ -59,7 +59,7 @@ class CourseListPage extends Component {
     if (query) {
       this.props.dispatch(searchCoursesRequest(this.querySearch, offset, lim));
     } else {
-      this.props.dispatch(fetchCourse(this.defaultLimit, this.defaultOffset));
+      this.props.dispatch(fetchCourses(this.defaultLimit, this.defaultOffset));
     }
   };
 

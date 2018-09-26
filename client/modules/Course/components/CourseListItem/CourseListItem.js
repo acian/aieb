@@ -64,7 +64,6 @@ CourseListItem.propTypes = {
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
-  sorted: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
 };
 
