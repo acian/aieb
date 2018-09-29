@@ -30,11 +30,9 @@ export function addCourseRequest(course) {
         days: course.days,
         schedule: course.schedule,
         amount: course.amount,
-        firstDueDate: course.firstDueDate,
-        secondDueDate: course.secondDueDate,
         dueCost: course.dueCost,
         teacher: course.teacher,
-        comment: course.comment,
+        printCost: course.printCost,
         dateCreated: course.dateCreated
       },
     }).then(res => dispatch(addCourse({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.course })));
@@ -89,11 +87,9 @@ export function editCourseRequest(course, paging) {
         days: course.days,
         schedule: course.schedule,
         amount: course.amount,
-        firstDueDate: course.firstDueDate,
-        secondDueDate: course.secondDueDate,
         dueCost: course.dueCost,
         teacher: course.teacher,
-        comment: course.comment,
+        printCost: course.printCost,
         dateCreated: course.dateCreated,
       },
     }).then(res => dispatch(editCourse({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedCourse })));

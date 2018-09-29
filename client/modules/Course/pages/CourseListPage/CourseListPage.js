@@ -119,11 +119,9 @@ CourseListPage.propTypes = {
     days: PropTypes.string.isRequired,
     schedule: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
-    firstDueDate: PropTypes.string,
-    secondDueDate: PropTypes.string,
     dueCost: PropTypes.number,
     teacher: PropTypes.string,
-    comment: PropTypes.string,
+    printCost: PropTypes.number,
     dateCreated: PropTypes.string,
   })).isRequired,
   paging: PropTypes.arrayOf(PropTypes.shape({

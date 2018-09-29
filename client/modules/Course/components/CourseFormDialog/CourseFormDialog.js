@@ -12,11 +12,11 @@ import AddIcon from '@material-ui/icons/Add';
 import {injectIntl, intlShape} from 'react-intl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import EditIcon from '@material-ui/icons/ModeEdit';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import styles from './CourseFormDialog.css';
 
 class CourseFormDialog extends Component {
 
@@ -32,7 +32,7 @@ class CourseFormDialog extends Component {
       amount: false,
       dueCost: false,
       teacher: false,
-      comment: false,
+      printCost: false,
     },
     regex: {
       name: /^[a-z||A-Z||\s]{1,30}$/,
@@ -41,7 +41,7 @@ class CourseFormDialog extends Component {
       amount: /^(\d{1,10})$/,
       dueCost: /^(\d{1,10})$/,
       teacher: /^[a-z||A-Z||\s||\d]{0,50}$/,
-      comment: /^[a-z||A-Z||\s]{0,30}$/,
+      printCost: /^[a-z||A-Z||\s]{0,30}$/,
     }
   };
 
@@ -57,15 +57,19 @@ class CourseFormDialog extends Component {
     const amountRef = this.amount;
     const dueCostRef = this.dueCost;
     const teacherRef = this.teacher;
-    const commentRef = this.comment;
-    const firstDueDateRef = this.firstDueDate;
-    const secondDueDateRef = this.secondDueDate;
+    const printCostRef = this.printCost;
+    const mondayRef = this.monday;
+    const thursdayRef = this.thursday;
+    const wednesdayRef = this.wednesday;
+    const tuesdayRef = this.tuesday;
+    const fridayRef = this.friday;
+    const saturdayRef = this.saturday;
 
     this.props.courseAction(nameRef.value, daysRef.value, scheduleRef.value, amountRef.value,
-    dueCostRef.value, teacherRef.value, commentRef.value, firstDueDateRef.value,
-    secondDueDateRef.value, this.props.course ? this.props.course._id : 0);
+      dueCostRef.value, teacherRef.value, printCostRef.value, firstDueDateRef.value,
+      secondDueDateRef.value, this.props.course ? this.props.course._id : 0);
     nameRef.value = daysRef.value = scheduleRef.value = amountRef.value = '';
-    dueCostRef.value = teacherRef.value = commentRef.value = firstDueDateRef.value = secondDueDateRef.value = '';
+    dueCostRef.value = teacherRef.value = printCostRef.value = '';
 
     this.cleanError();
     this.handleClose();
@@ -74,7 +78,7 @@ class CourseFormDialog extends Component {
   cleanError = () => {
     this.state.error.name = this.state.error.days = this.state.error.schedule = false;
     this.state.error.amount = this.state.error.dueCost = this.state.error.teacher = false;
-    this.state.error.comment = false;
+    this.state.error.printCost = false;
   };
 
   hasError = () => {
@@ -84,7 +88,7 @@ class CourseFormDialog extends Component {
       this.state.error.amount ||
       this.state.error.dueCost ||
       this.state.error.teacher ||
-      this.state.error.comment
+      this.state.error.printCost
   };
 
   handleClickOpen = () => {
@@ -124,7 +128,9 @@ class CourseFormDialog extends Component {
         <EditIcon />
       </Button>;
     } else {
-      button = <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon /> </Button>;
+      button =
+        <Button variant="fab" size="medium" color="primary" aria-label="add" onClick={this.handleClickOpen}> <AddIcon />
+        </Button>;
     }
 
     return (
@@ -136,7 +142,8 @@ class CourseFormDialog extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{editMode ? this.props.intl.messages.editCourse : this.props.intl.messages.addCourse}</DialogTitle>
+          <DialogTitle
+            id="form-dialog-title">{editMode ? this.props.intl.messages.editCourse : this.props.intl.messages.addCourse}</DialogTitle>
           <DialogContent>
             <div>
               <div>
@@ -150,22 +157,14 @@ class CourseFormDialog extends Component {
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="days" inputRef={x => this.days = x} label={this.props.intl.messages.days}
-                               defaultValue={course ? course.days : ''}
-                               required={true} onBlur={this.validate}
-                               error={this.state.error.days}
-                               helperText={(this.state.error.days ? this.props.intl.messages.daysValidation : '')}
+                    <TextField name="teacher" inputRef={x => this.teacher = x}
+                               defaultValue={course ? course.teacher : ''}
+                               label={this.props.intl.messages.teacher}
+                               onBlur={this.validate} error={this.state.error.teacher}
+                               helperText={(this.state.error.teacher ? this.props.intl.messages.teacherValidation : '')}
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="schedule" inputRef={x => this.schedule = x} label={this.props.intl.messages.schedule}
-                               defaultValue={course ? course.schedule : ''}
-                               required={true} onBlur={this.validate}
-                               error={this.state.error.schedule}
-                               helperText={(this.state.error.schedule ? this.props.intl.messages.scheduleValidation : '')}
-                               fullWidth/>
-                  </Grid>
-                  <Grid item xs={12}>
                     <TextField name="amount" inputRef={x => this.amount = x} label={this.props.intl.messages.amount}
                                defaultValue={course ? course.amount : ''}
                                required={true} onBlur={this.validate}
@@ -174,58 +173,118 @@ class CourseFormDialog extends Component {
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="dueCost" inputRef={x => this.dueCost = x}
+                    <TextField name="dueCost" inputRef={x => this.dueCost = x} label={this.props.intl.messages.dueCost}
                                defaultValue={course ? course.dueCost : ''}
-                               label={this.props.intl.messages.dueCost}
                                onBlur={this.validate} error={this.state.error.dueCost}
                                helperText={(this.state.error.dueCost ? this.props.intl.messages.dueCostValidation : '')}
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="teacher" inputRef={x => this.teacher = x}
-                               defaultValue={course ? course.teacher : ''}
-                               label={this.props.intl.messages.teacher}
-                               onBlur={this.validate} error={this.state.error.teacher}
-                               helperText={(this.state.error.teacher ? this.props.intl.messages.teacherValidation : '')}
-                               fullWidth/>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField name="comment" inputRef={x => this.comment = x} label={this.props.intl.messages.comment}
-                               defaultValue={course ? course.comment : ''}
+                    <TextField name="printCost" inputRef={x => this.printCost = x}
+                               label={this.props.intl.messages.printCost}
+                               defaultValue={course ? course.printCost : ''}
                                required={true} onBlur={this.validate}
-                               error={this.state.error.comment}
-                               helperText={(this.state.error.comment ? this.props.intl.messages.commentValidation : '')}
+                               error={this.state.error.printCost}
+                               helperText={(this.state.error.printCost ? this.props.intl.messages.printCostValidation : '')}
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      label={this.props.intl.messages.firstDueDate}
-                      type="date"
-                      defaultValue={course ? course.firstDueDate.substr(0, 10) : '2012-01-01'}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      fullWidth
-                      inputProps={{
-                        name: 'date',
-                      }}
-                      inputRef={x => this.firstDueDate = x}
+                    <TextField name="schedule" inputRef={x => this.schedule = x}
+                               id="time"
+                               label={this.props.intl.messages.schedule}
+                               defaultValue={course ? course.schedule : "20:30"}
+                               type="time"
+                               required={true} onBlur={this.validate}
+                               error={this.state.error.schedule}
+                               helperText={(this.state.error.schedule ? this.props.intl.messages.scheduleValidation : '')}
+                               InputLabelProps={{
+                                 shrink: true,
+                               }}
+                               inputProps={{
+                                 step: 300, // 5 min
+                               }}
+                               fullWidth/>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <label className={styles['title']}>{this.props.intl.messages.days}</label>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-up']}
+                      control={
+                        <Checkbox
+                          checked={this.mondayRef}
+                          inputRef={x => this.mondayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.monday}
                     />
-                    <Grid item xs={6}>
-                      <TextField
-                        label={this.props.intl.messages.secondDueDate}
-                        type="date"
-                        defaultValue={course ? course.secondDueDate.substr(0, 10) : '2012-01-01'}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        fullWidth
-                        inputProps={{
-                          name: 'date',
-                        }}
-                        inputRef={x => this.secondDueDate = x}
-                      />
-                    </Grid>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-up']}
+                      control={
+                        <Checkbox
+                          checked={this.thursdayRef}
+                          inputRef={x => this.thursdayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.thursday}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-up']}
+                      control={
+                        <Checkbox
+                          checked={this.wednesdayRef}
+                          inputRef={x => this.wednesdayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.wednesday}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-low']}
+                      control={
+                        <Checkbox
+                          checked={this.tuesdayRef}
+                          inputRef={x => this.tuesdayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.tuesday}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-low']}
+                      control={
+                        <Checkbox
+                          checked={this.fridayRef}
+                          inputRef={x => this.fridayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.friday}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <FormControlLabel
+                      className={styles['days-week-low']}
+                      control={
+                        <Checkbox
+                          checked={this.saturdayRef}
+                          inputRef={x => this.saturdayRef = x}
+                          color="primary"
+                        />
+                      }
+                      label={this.props.intl.messages.saturday}
+                    />
                   </Grid>
                 </Grid>
               </div>
@@ -255,11 +314,9 @@ CourseFormDialog.propTypes = {
     days: PropTypes.string.isRequired,
     schedule: PropTypes.string.isRequired,
     amount: PropTypes.number,
-    firstDueDate: PropTypes.string,
-    secondDueDate: PropTypes.string,
     dueCost: PropTypes.number,
     teacher: PropTypes.string,
-    comment: PropTypes.string,
+    printCost: PropTypes.number,
     dateCreated: PropTypes.string,
   }),
 };

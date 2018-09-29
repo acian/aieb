@@ -133,11 +133,9 @@ export function editCourse(req, res) {
     days: editedCourse.days,
     schedule: editedCourse.schedule,
     amount: editedCourse.amount,
-    firstDueDate: editedCourse.firstDueDate,
-    secondDueDate: editedCourse.secondDueDate,
     dueCost: editedCourse.dueCost,
     teacher: editedCourse.teacher,
-    comment: editedCourse.comment,
+    printCost: editedCourse.printCost,
     active: editedCourse.active,
     dateCreated: editedCourse.dateCreated
   }
@@ -165,11 +163,9 @@ const sanitizeInputs = (course) => {
   newCourse.days = sanitizeHtml(newCourse.days);
   newCourse.schedule = sanitizeHtml(newCourse.schedule);
   newCourse.amount = sanitizeHtml(newCourse.amount);
-  newCourse.firstDueDate = sanitizeHtml(newCourse.firstDueDate);
-  newCourse.secondDueDate = sanitizeHtml(newCourse.secondDueDate);
   newCourse.dueCost = sanitizeHtml(newCourse.dueCost);
   newCourse.teacher = sanitizeHtml(newCourse.teacher);
-  newCourse.comment = sanitizeHtml(newCourse.comment);
+  newCourse.printCost = sanitizeHtml(newCourse.printCost);
 
   return newCourse
 } ;
