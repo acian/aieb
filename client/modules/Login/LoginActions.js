@@ -1,4 +1,7 @@
 import callApi from '../../util/apiCaller';
+import { getFromStorage, setInStorage } from '../../util/storage';
+//import history from '../../history';
+
 
 // Export Constants
 export const LOGIN = 'LOGIN';
@@ -12,13 +15,22 @@ export function login(user) {
   };
 }
 
-export function loginRequest(user) {
+export function loginRequest(user, password) {
   return (dispatch) => {
-    return callApi('/user/login', 'post', {
+    return callApi('user/login', 'post', {
       user: {
-        name: user.user,
-        surname: user.password,
-      },
-    }).then(res => dispatch(login(res.user)));
+        user: user,
+        password: password,
+      }
+    }).then(res => {
+      if (res.success) {
+        dispatch(login({user: user, token: res.token}));
+        setInStorage('aei_loggedin_user', { token: res.token });
+        //browserHistory.push('/');
+      }
+      else {
+
+      }
+    });
   };
 }

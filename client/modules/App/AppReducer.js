@@ -1,10 +1,11 @@
 // Import Actions
-import { TOGGLE_ADD_POST, TOGGLE_ADD_PERSON } from './AppActions';
+import { TOGGLE_ADD_POST, TOGGLE_ADD_PERSON, TOGGLE_ADD_USER } from './AppActions';
 
 // Initial State
 const initialState = {
   showAddPost: false,
   showAddPerson: false,
+  showAddUser: false,
 };
 
 const AppReducer = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const AppReducer = (state = initialState, action) => {
       return {
         showAddPerson: !state.showAddPerson,
       };
+    case TOGGLE_ADD_USER:
+      return {
+        showAddUser: !state.showAddUser,
+      };
 
     default:
       return state;
@@ -25,9 +30,10 @@ const AppReducer = (state = initialState, action) => {
 
 /* Selectors */
 
-// Get showAddPost
+// Get shows
 export const getShowAddPost = state => state.app.showAddPost;
 export const getShowAddPerson = state => state.app.showAddPerson;
+export const getShowAddUser = state => state.app.showAddUser;
 
 // Export Reducer
 export default AppReducer;

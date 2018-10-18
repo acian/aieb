@@ -4,6 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { injectIntl, intlShape } from 'react-intl';
 import 'whatwg-fetch';
+import { loginRequest } from '../../LoginActions';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 
 class LoginPage extends React.Component {
 
@@ -45,6 +49,9 @@ class LoginPage extends React.Component {
     this.setState({
       isLoading: true,
     });
+
+    this.props.dispatch(loginRequest(signInUser, signInPassword));
+    this.props.history.push('/');
 
     // Post request to backend
     // fetch('/api/account/signin', {
@@ -113,6 +120,7 @@ LoginPage.propTypes = {
   user: PropTypes.string,
   password: PropTypes.string,
   intl: intlShape.isRequired,
+  dispatch: PropTypes.func,
 };
 
-export default injectIntl(LoginPage);
+export default withRouter(connect()(injectIntl(LoginPage)));

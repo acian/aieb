@@ -7,18 +7,23 @@ const UserReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_USER:
             return {
-                
+
             };
 
         case GET_USER:
             return {
                 data: action.user,
             };
-        
+
         default:
             return state;
     }
 }
+
+/* Selectors */
+
+// Get users
+export const getUsers = state => state.users.data;
 
 // Export Reducer
 export default UserReducer;

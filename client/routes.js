@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 function loggedIn() {
-  return false;
+  return true;
 }
 
 function requireAuth(nextState, replace) {

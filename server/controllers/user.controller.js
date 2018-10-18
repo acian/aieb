@@ -76,7 +76,6 @@ export function login(req, res) {
   if (!req.body.user.user || !req.body.user.password) {
     res.status(403).end();
   }
-
   let username = sanitizeHtml(req.body.user.user);
   let password = sanitizeHtml(req.body.user.password);
 
