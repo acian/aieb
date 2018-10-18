@@ -7,6 +7,9 @@ import PersonList from '../../components/PersonList';
 import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/PersonSearchAndAddForm';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnackBar';
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest, editPersonRequest } from '../../PersonActions';
@@ -22,6 +25,7 @@ class PersonListPage extends Component {
 
   state = {
     loading: true,
+    open: false,
   };
 
   componentDidMount() {
@@ -29,6 +33,14 @@ class PersonListPage extends Component {
     var querySearch = '';
     setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
   }
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
   defaultLimit = 1;
@@ -79,8 +91,10 @@ class PersonListPage extends Component {
       );
     }
 
+
     return (
       <div>
+        <MessageSnackBar textMessage={'Nelson'} typeMessage={'error'} />
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople} />
