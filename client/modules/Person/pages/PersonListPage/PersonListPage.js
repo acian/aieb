@@ -25,24 +25,22 @@ class PersonListPage extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
     this.handleFetchPeople;
     var querySearch = '';
+    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
   }
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
-  defaultLimit = 1
-  defaultOffset = 2
+  defaultLimit = 1;
+  defaultOffset = 2;
 
   handleFetchPeople = () => {
     this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
   };
 
   handleDeletePerson = idPerson => {
-    if (confirm('Do you want to delete this person')) { // eslint-disable-line
-      this.props.dispatch(deletePersonRequest(idPerson));
-      this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
-    }
+    this.props.dispatch(deletePersonRequest(idPerson, this.props.paging));
+    this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
   };
 
   handlePageChange = (currentPage, limit) => {
@@ -53,8 +51,8 @@ class PersonListPage extends Component {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
   };
 
-  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id ) => {
-      this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id) => {
+    this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
   };
 
   handleSearchPeople = (query, currentPage, limit) => {
@@ -74,9 +72,9 @@ class PersonListPage extends Component {
     if (loading) { // if your component doesn't have to wait for an async action, remove this block
       return (
         <div>
-          <LinearProgress />
-          <br />
-          <LinearProgress color="secondary" />
+          <LinearProgress/>
+          <br/>
+          <LinearProgress color="secondary"/>
         </div>
       );
     }
@@ -85,7 +83,7 @@ class PersonListPage extends Component {
       <div>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople}/>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople} />
           </Grid>
           <Grid item xs={12}>
             <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
@@ -95,13 +93,13 @@ class PersonListPage extends Component {
       </div>
     );
   }
-};
+}
 
 // Actions required to provide data for this component to render in sever side.
 // constantes para el paginado, limit y offset de cada consulta server side
 PersonListPage.need = [() => {
-  const defaultLimit = 1
-  const defaultOffset = 2
+  const defaultLimit = 1;
+  const defaultOffset = 2;
   return fetchPeople(defaultLimit, defaultOffset);
 }];
 
