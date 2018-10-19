@@ -36,6 +36,7 @@ export function addPersonRequest(person, paging) {
         birthDate: person.birthDate,
         profession: person.profession,
         professionPlace: person.professionPlace,
+        birthPlace: person.birthPlace,
         type: person.type,
       },
     }).then(res => dispatch(addPerson({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.person })));
@@ -96,6 +97,7 @@ export function editPersonRequest(person, paging) {
         birthDate: person.birthDate,
         profession: person.profession,
         professionPlace: person.professionPlace,
+        birthPlace: person.birthPlace,
         type: person.type,
       },
     }).then(res => dispatch(editPerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedPerson })));

@@ -17,6 +17,7 @@ const personSchema = new Schema({
   telephone: { type: 'String' },
   cellphone: { type: 'String' },
   birthDate: { type: 'Date', required: true },
+  birthPlace: { type: 'String' },
   profession: { type: 'String' },
   professionPlace: { type: 'String' },
   dateCreated: { type: 'Date', default: Date.now },
