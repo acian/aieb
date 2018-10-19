@@ -34,7 +34,8 @@ class PersonFormDialog extends Component {
       telephone: false,
       email: false,
       profession: false,
-      professionPlace: false
+      professionPlace: false,
+      birthPlace: false
     },
     regex: {
       name: /^[a-z||A-Z||\s]{1,30}$/,
@@ -45,7 +46,8 @@ class PersonFormDialog extends Component {
       telephone: /^(\d{0,15})$/,
       email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       profession: /^[a-z||A-Z||\s]{0,30}$/,
-      professionPlace: /^[a-z||A-Z||\s||\d]{0,30}$/
+      professionPlace: /^[a-z||A-Z||\s||\d]{0,30}$/,
+      birthPlace: /^[a-z||A-Z||\s||\d]{0,30}$/
     }
   };
 
@@ -65,16 +67,17 @@ class PersonFormDialog extends Component {
     const birthDateRef = this.birthDate;
     const professionRef = this.profession;
     const professionPlaceRef = this.professionPlace;
+    const birthPlaceRef = this.birthPlace;
     const typeRef = this.type.node;
     if (nameRef.value && surnameRef.value && dniRef.value && addressRef.value) {
       this.props.personAction(nameRef.value, surnameRef.value, dniRef.value, addressRef.value,
         emailRef.value, telephoneRef.value, cellphoneRef.value, birthDateRef.value,
-        professionRef.value, professionPlaceRef.value, typeRef.value, this.props.person ? this.props.person._id : 0);
+        professionRef.value, professionPlaceRef.value, birthPlaceRef.value, typeRef.value, this.props.person ? this.props.person._id : 0);
       nameRef.value = surnameRef.value = dniRef.value = addressRef.value = '';
-      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = '';
+      emailRef.value = telephoneRef.value = cellphoneRef.value = professionRef.value = professionPlaceRef.value = birthPlaceRef.value = '';
       this.state.error.name = this.state.error.surname = this.state.error.dni = this.state.error.email = false;
       this.state.error.address = this.state.error.telephone = this.state.error.cellphone = false;
-      this.state.error.profession = this.state.error.professionPlace = false;
+      this.state.error.profession = this.state.error.professionPlace = this.state.error.birthPlace = false;
       this.state.type = 10;
       this.cleanError();
     }
@@ -84,7 +87,7 @@ class PersonFormDialog extends Component {
   cleanError = () => {
     this.state.error.name = this.state.error.surname = this.state.error.dni = this.state.error.email = false;
     this.state.error.address = this.state.error.telephone = this.state.error.cellphone = false;
-    this.state.error.profession = this.state.error.professionPlace = false;
+    this.state.error.profession = this.state.error.professionPlace = this.state.error.birthPlace = false;
   };
 
   hasError = () => {
@@ -96,7 +99,8 @@ class PersonFormDialog extends Component {
       this.state.error.telephone ||
       this.state.error.email ||
       this.state.error.profession ||
-      this.state.error.professionPlace
+      this.state.error.professionPlace ||
+      this.state.error.birthPlace
   };
 
   handleClickOpen = () => {
@@ -187,6 +191,25 @@ class PersonFormDialog extends Component {
                                helperText={(this.state.error.dni ? this.props.intl.messages.dniValidation : '')}
                                fullWidth/>
                   </Grid>
+
+                  <Grid item xs={6}>
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor="type-simple">{this.props.intl.messages.type}</InputLabel>
+                      <Select
+                        inputRef={x => this.type = x}
+                        value= {this.state.type}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'type',
+                          id: 'type-simple',
+                        }}
+                      >
+                        <MenuItem value={10}>{this.props.intl.messages.student}</MenuItem>
+                        <MenuItem value={20}>{this.props.intl.messages.teacher}</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+
                   <Grid item xs={6}>
 
                     <TextField
@@ -204,6 +227,16 @@ class PersonFormDialog extends Component {
                     />
 
                   </Grid>
+
+                  <Grid item xs={6}>
+                    <TextField name="birthPlace" inputRef={x => this.birthPlace = x}
+                               defaultValue={person ? person.birthPlace : ''}
+                               label={this.props.intl.messages.birthPlace}
+                               onBlur={this.validate} error={this.state.error.birthPlace}
+                               helperText={(this.state.error.birthPlace ? this.props.intl.messages.professionValidation : '')}
+                               fullWidth/>
+                  </Grid>
+
                   <Grid item xs={12}>
                     <TextField name="address" inputRef={x => this.address = x} label={this.props.intl.messages.address}
                                defaultValue={person ? person.address : ''}
@@ -252,23 +285,7 @@ class PersonFormDialog extends Component {
                                helperText={(this.state.error.professionPlace ? this.props.intl.messages.professionValidation : '')}
                                fullWidth/>
                   </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth>
-                      <InputLabel htmlFor="type-simple">{this.props.intl.messages.type}</InputLabel>
-                      <Select
-                        inputRef={x => this.type = x}
-                        value= {this.state.type}
-                        onChange={this.handleChange}
-                        inputProps={{
-                          name: 'type',
-                          id: 'type-simple',
-                        }}
-                      >
-                        <MenuItem value={10}>{this.props.intl.messages.student}</MenuItem>
-                        <MenuItem value={20}>{this.props.intl.messages.teacher}</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
+
                 </Grid>
               </div>
             </div>
