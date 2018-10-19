@@ -13,6 +13,7 @@ export default {
     email: 'Correo electrónico',
     profession: 'Profesión',
     professionPlace: 'Lugar de trabajo',
+    birthPlace: 'Lugar de nacimiento',
     type: 'Tipo',
     submit: 'Guardar',
     searchPeople:'Buscar persona por DNI, Nombre o Apellido',

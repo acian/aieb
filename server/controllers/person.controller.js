@@ -137,6 +137,7 @@ export function editPerson(req, res) {
                     cellphone: editedPerson.cellphone,
                     profession: editedPerson.profession,
                     professionPlace: editedPerson.professionPlace,
+                    birthPlace: editedPerson.birthPlace,
                     type: editedPerson.type }
 
   Person.findOne({ _id: req.params.id }).exec((err, person) => {
@@ -167,6 +168,7 @@ const sanitizeInputs = (person) => {
   newPerson.cellphone = sanitizeHtml(newPerson.cellphone);
   newPerson.profession = sanitizeHtml(newPerson.profession);
   newPerson.professionPlace = sanitizeHtml(newPerson.professionPlace);
+  newPerson.birthPlace = sanitizeHtml(newPerson.birthPlace);
   newPerson.type = sanitizeHtml(newPerson.type);
 
   return newPerson

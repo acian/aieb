@@ -32,9 +32,9 @@ class PersonListPage extends Component {
   };
 
   componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
     this.handleFetchPeople;
     var querySearch = '';
-    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
   }
 
   handleOpenMsj = () => {
@@ -46,8 +46,8 @@ class PersonListPage extends Component {
   };
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
-  defaultLimit = 1;
-  defaultOffset = 2;
+  defaultLimit = 1
+  defaultOffset = 2
 
   handleFetchPeople = () => {
     this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
