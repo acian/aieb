@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
@@ -48,7 +47,7 @@ const styles1 = theme => ({
 });
 
 function MySnackbarContent(props) {
-  const { classes, className, message, onClose, variant, ...other } = props;
+  const { classes, className, message, onClose, variant } = props;
   const Icon = variantIcon[variant];
 
   return (
@@ -57,7 +56,7 @@ function MySnackbarContent(props) {
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar" className={classes.message}>
-          <Icon className={classNames(classes.icon, classes.iconVariant)} />
+          <Icon className={classNames(classes.icon, classes.iconVariant)}/>
           {message}
         </span>
       }
@@ -92,47 +91,36 @@ const styles2 = theme => ({
   },
 });
 
-class MessageSnackBar extends React.Component {
-  state = {
-    open: this.props.openMsj,
-  };
+function MessageSnackBar(props) {
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <div>
-        <Button className={classes.margin} onClick={this.handleClick}>
-          Open success snackbar
-        </Button>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={this.state.open}
-          autoHideDuration={6000}
-          onClose={this.handleClose}
-        >
-          <MySnackbarContentWrapper
-            onClose={this.handleClose}
-            variant={this.props.typeMessage}
-            className={classes.margin}
-            message={this.props.textMessage}
-          />
-        </Snackbar>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={props.openMsj}
+        autoHideDuration={4000}
+        onClose={props.handleClose}
+      >
+        <MySnackbarContentWrapper
+          onClose={props.handleClose}
+          variant={props.typeMessage}
+          className={props.classes.margin}
+          message={props.textMessage}
+        />
+      </Snackbar>
+    </div>
+  );
 }
 
 MessageSnackBar.propTypes = {
   classes: PropTypes.object.isRequired,
   typeMessage: PropTypes.string,
   textMessage: PropTypes.string,
-  onClose: PropTypes.func,
   openMsj: PropTypes.bool,
-  handleClose: PropTypes.func.isRequired,
+  handleClose: PropTypes.func,
 };
 
 export default withStyles(styles2)(MessageSnackBar);

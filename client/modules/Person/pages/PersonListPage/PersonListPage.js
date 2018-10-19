@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
 import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnackBar';
 
 // Import Actions
@@ -25,7 +26,9 @@ class PersonListPage extends Component {
 
   state = {
     loading: true,
-    open: false,
+    openMsj: false,
+    typeMsj: 'error',
+    textMsj: 'Error',
   };
 
   componentDidMount() {
@@ -34,12 +37,12 @@ class PersonListPage extends Component {
     setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
   }
 
-  handleClick = () => {
-    this.setState({ open: true });
+  handleOpenMsj = () => {
+    this.setState({ openMsj: true });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleCloseMsj = () => {
+    this.setState({ openMsj: false });
   };
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
@@ -53,6 +56,7 @@ class PersonListPage extends Component {
   handleDeletePerson = idPerson => {
     this.props.dispatch(deletePersonRequest(idPerson, this.props.paging));
     this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona eliminada correctamente' });
   };
 
   handlePageChange = (currentPage, limit) => {
@@ -61,10 +65,12 @@ class PersonListPage extends Component {
 
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type) => {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' agregada correctamente' });
   };
 
   handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id) => {
     this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' editada correctamente' });
   };
 
   handleSearchPeople = (query, currentPage, limit) => {
@@ -73,6 +79,7 @@ class PersonListPage extends Component {
     this.querySearch = query;
     if (query) {
       this.props.dispatch(searchPeopleRequest(this.querySearch, offset, lim));
+      this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Buscando: ' + this.querySearch + '...' });
     } else {
       this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
     }
@@ -84,9 +91,9 @@ class PersonListPage extends Component {
     if (loading) { // if your component doesn't have to wait for an async action, remove this block
       return (
         <div>
-          <LinearProgress/>
-          <br/>
-          <LinearProgress color="secondary"/>
+          <LinearProgress />
+          <br />
+          <LinearProgress color="secondary" />
         </div>
       );
     }
@@ -94,7 +101,7 @@ class PersonListPage extends Component {
 
     return (
       <div>
-        <MessageSnackBar textMessage={'Nelson'} typeMessage={'error'} />
+        <MessageSnackBar typeMessage={this.state.typeMsj} textMessage={this.state.textMsj} openMsj={this.state.openMsj} handleClose={this.handleCloseMsj} />
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople} />
