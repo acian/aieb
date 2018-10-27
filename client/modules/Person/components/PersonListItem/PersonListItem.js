@@ -21,9 +21,6 @@ import FaceIcon from '@material-ui/icons/Face';
 import styles from './PersonListItem.css';
 
 function PersonListItem(props) {
-  let descriptionPerson = '';
-  descriptionPerson += props.person.email ? `${props.person.email}  /  ` : '';
-  descriptionPerson += props.person.cellphone ? `${props.person.cellphone}  ` : '';
 
   return (
     <div>
