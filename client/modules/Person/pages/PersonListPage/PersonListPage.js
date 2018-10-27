@@ -32,6 +32,7 @@ class PersonListPage extends Component {
   };
 
   componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
     this.handleFetchPeople;
     var querySearch = '';
     setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
@@ -63,13 +64,13 @@ class PersonListPage extends Component {
     this.querySearch ? this.handleSearchPeople(this.querySearch, currentPage, limit) : this.props.dispatch(fetchPeople(currentPage, limit));
   };
 
-  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type) => {
-    this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+  handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type) => {
+    this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type }, this.props.paging));
     this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' agregada correctamente' });
   };
 
-  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id) => {
-    this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+  handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type, id ) => {
+    this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type }, this.props.paging));
     this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' editada correctamente' });
   };
 

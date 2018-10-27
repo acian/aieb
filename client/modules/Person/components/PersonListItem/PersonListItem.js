@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {injectIntl, intlShape} from 'react-intl';
 import Chip from '@material-ui/core/Chip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
@@ -35,6 +36,7 @@ class PersonListItem extends Component {
 
   render() {
     const propsPerson = this.props.person;
+    const propsIntlMessages = this.props.intl.messages;
     const textDelete = this.props.person.surname + ', ' + this.props.person.name;
     return (
       <div>
@@ -65,19 +67,19 @@ class PersonListItem extends Component {
                   if ((propsPerson[key].length > 0)) {
                     switch (key) {
                       case 'dni':
-                        return <Chip key={key} label={'DNI: ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.dni.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'address':
-                        return <Chip key={key} label={'DIRECCION: ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.address.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'telephone':
-                        return <Chip key={key} label={'TELÉFONO: ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.telephone.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'birthDate':
-                        return <Chip key={key} label={'NACIMIENTO: ' + propsPerson[key].substr(0, 10)}/>;
+                        return <Chip key={key} label={propsIntlMessages.birthDate.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       case 'profession':
-                        return <Chip key={key} label={'PROFESION: ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.profession.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'professionPlace':
-                        return <Chip key={key} label={'LUGAR DE PROFESION: ' + propsPerson[key]}/>;
-                      case 'dateCreated':
-                        return <Chip key={key} label={'CREADO: ' + propsPerson[key].substr(0, 10)}/>;
+                        return <Chip key={key} label={propsIntlMessages.professionPlace.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'birthPlace':
+                        return <Chip key={key} label={propsIntlMessages.birthPlace.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       default:
                         return null;
                     }
@@ -120,6 +122,7 @@ PersonListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   sorted: PropTypes.string.isRequired,
+  intl: intlShape.isRequired,
 };
 
-export default PersonListItem;
+export default injectIntl(PersonListItem);
