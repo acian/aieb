@@ -24,8 +24,8 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: false }), 100); // simulates an async action, and hides the spinner
     this.setState({isMounted: true}); // eslint-disable-line
+    setTimeout(() => this.setState({ loading: false }), 100); // simulates an async action, and hides the spinner
   }
 
   toggleAddPersonSection = () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {injectIntl, intlShape} from 'react-intl';
 import Chip from '@material-ui/core/Chip';
@@ -15,75 +15,92 @@ import Grid from '@material-ui/core/Grid';
 import CallIcon from '@material-ui/icons/Call';
 import EmailIcon from '@material-ui/icons/Email';
 import FaceIcon from '@material-ui/icons/Face';
-
-
-// Import Style
 import styles from './PersonListItem.css';
+import DeleteDialog from '../../../App/components/DeleteDialog/DeleteDialog';
 
-function PersonListItem(props) {
-  let descriptionPerson = '';
-  descriptionPerson += props.person.email ? `${props.person.email}  /  ` : '';
-  descriptionPerson += props.person.cellphone ? `${props.person.cellphone}  ` : '';
+class PersonListItem extends Component {
+  state = { openDelete: false };
 
-  return (
-    <div>
-      <ExpansionPanel className={styles['paper-description']}>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-          <Grid container spacing={24}>
-            <Grid item xs={4}>
-              <div className={styles['primiry-heading']}>
-                <FaceIcon/> <div className={styles['detail-item']}><strong>{props.person.surname} , {props.person.name}</strong></div>
-              </div>
+  handleOpenDelete = () => {
+    this.setState({ openDelete: true });
+  };
+
+  handleCloseDelete = () => {
+    this.setState({ openDelete: false });
+  };
+
+  handleDelete = () => {
+    this.props.onDelete()
+    this.handleCloseDelete();
+  };
+
+  render() {
+    const propsPerson = this.props.person;
+    const propsIntlMessages = this.props.intl.messages;
+    const textDelete = this.props.person.surname + ', ' + this.props.person.name;
+    return (
+      <div>
+        <ExpansionPanel className={styles['paper-description']}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+            <Grid container spacing={24}>
+              <Grid item xs={4}>
+                <div className={styles['primiry-heading']}>
+                  <FaceIcon/> <div className={styles['detail-item']}><strong>{this.props.person.surname} , {this.props.person.name}</strong></div>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className={styles['secondary-heading']}>
+                  <EmailIcon/> <div className={styles['detail-item']}>{this.props.person.email}</div>
+                </div>
+              </Grid>
+              <Grid item xs={4}>
+                <div className={styles['secondary-heading']}>
+                  <CallIcon/> <div className={styles['detail-item']}>{this.props.person.cellphone}</div>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <div className={styles['secondary-heading']}>
-                <EmailIcon/> <div className={styles['detail-item']}>{props.person.email}</div>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={styles['secondary-heading']}>
-                <CallIcon/> <div className={styles['detail-item']}>{props.person.cellphone}</div>
-              </div>
-            </Grid>
-          </Grid>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Grid container justify={props.sorted}>
-            {Object.keys(props.person)
-              .map(function (key) {
-                if ((props.person[key].length > 0)) {
-                  switch (key) {
-                    case 'dni':
-                      return <Chip key={key} label={props.intl.messages.dni.toUpperCase() + ': ' + props.person[key]}/>;
-                    case 'address':
-                      return <Chip key={key} label={props.intl.messages.address.toUpperCase() + ': ' + props.person[key]}/>;
-                    case 'telephone':
-                      return <Chip key={key} label={props.intl.messages.telephone.toUpperCase() + ': ' + props.person[key]}/>;
-                    case 'birthDate':
-                      return <Chip key={key} label={props.intl.messages.birthDate.toUpperCase() + ': ' + props.person[key].substr(0, 10)}/>;
-                    case 'profession':
-                      return <Chip key={key} label={props.intl.messages.profession.toUpperCase() + ': ' + props.person[key]}/>;
-                    case 'professionPlace':
-                      return <Chip key={key} label={props.intl.messages.professionPlace.toUpperCase() + ': ' + props.person[key]}/>;
-                    default:
-                      return null;
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container justify={this.props.sorted}>
+              {Object.keys(propsPerson)
+                .map(function (key) {
+                  if ((propsPerson[key].length > 0)) {
+                    switch (key) {
+                      case 'dni':
+                        return <Chip key={key} label={propsIntlMessages.dni.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'address':
+                        return <Chip key={key} label={propsIntlMessages.address.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'telephone':
+                        return <Chip key={key} label={propsIntlMessages.telephone.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'birthDate':
+                        return <Chip key={key} label={propsIntlMessages.birthDate.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                      case 'profession':
+                        return <Chip key={key} label={propsIntlMessages.profession.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'professionPlace':
+                        return <Chip key={key} label={propsIntlMessages.professionPlace.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                      case 'birthPlace':
+                        return <Chip key={key} label={propsIntlMessages.birthPlace.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                      default:
+                        return null;
+                    }
+                  } else {
+                    return null;
                   }
-                } else {
-                  return null;
-                }
-              })}
-          </Grid>
-        </ExpansionPanelDetails>
-        <Divider/>
-        <ExpansionPanelActions>
-          <PersonFormDialog personAction={props.onEdit} editMode={true} person={props.person}/>
-          <Button onClick={props.onDelete} mini variant="fab" color="secondary" aria-label="delete">
-            <DeleteIcon/>
-          </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
-    </div>
-  );
+                })}
+            </Grid>
+          </ExpansionPanelDetails>
+          <Divider/>
+          <ExpansionPanelActions>
+            <PersonFormDialog personAction={this.props.onEdit} editMode={true} person={this.props.person}/>
+            <Button onClick={this.handleOpenDelete} mini variant="fab" color="secondary" aria-label="delete">
+              <DeleteIcon/>
+            </Button>
+            <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete}/>
+          </ExpansionPanelActions>
+        </ExpansionPanel>
+      </div>
+    );
+  }
 }
 
 PersonListItem.propTypes = {

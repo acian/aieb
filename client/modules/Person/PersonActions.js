@@ -77,9 +77,9 @@ export function deletePerson(data) {
   };
 }
 
-export function deletePersonRequest(id) {
+export function deletePersonRequest(id, paging) {
   return (dispatch) => {
-    return callApi(`people/${id}`, 'delete').then();
+    return callApi(`people/${id}`, 'delete').then(res => dispatch(deletePerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.deletedPerson })));
   };
 }
 

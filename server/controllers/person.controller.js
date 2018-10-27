@@ -109,7 +109,7 @@ export function deletePerson(req, res) {
       if (err) {
         res.status(500).send(err);
       }
-      res.status(200).end();
+      res.json({ deletedPerson: result });
     });
   });
 }

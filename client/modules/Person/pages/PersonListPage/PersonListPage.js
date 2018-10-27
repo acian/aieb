@@ -7,6 +7,10 @@ import PersonList from '../../components/PersonList';
 import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/PersonSearchAndAddForm';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnackBar';
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest, editPersonRequest } from '../../PersonActions';
@@ -22,27 +26,38 @@ class PersonListPage extends Component {
 
   state = {
     loading: true,
+    openMsj: false,
+    typeMsj: 'error',
+    textMsj: 'Error',
   };
 
   componentDidMount() {
     setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
     this.handleFetchPeople;
     var querySearch = '';
+    setTimeout(() => this.setState({ loading: false }), 500); // simulates an async action, and hides the spinner
   }
 
+  handleOpenMsj = () => {
+    this.setState({ openMsj: true });
+  };
+
+  handleCloseMsj = () => {
+    this.setState({ openMsj: false });
+  };
+
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
-  defaultLimit = 1
-  defaultOffset = 2
+  defaultLimit = 1;
+  defaultOffset = 2;
 
   handleFetchPeople = () => {
     this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
   };
 
   handleDeletePerson = idPerson => {
-    if (confirm('Do you want to delete this person')) { // eslint-disable-line
-      this.props.dispatch(deletePersonRequest(idPerson));
-      this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
-    }
+    this.props.dispatch(deletePersonRequest(idPerson, this.props.paging));
+    this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona eliminada correctamente' });
   };
 
   handlePageChange = (currentPage, limit) => {
@@ -51,10 +66,12 @@ class PersonListPage extends Component {
 
   handleAddPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type) => {
     this.props.dispatch(addPersonRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type }, this.props.paging));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' agregada correctamente' });
   };
 
   handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type, id ) => {
-      this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type }, this.props.paging));
+    this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, birthPlace, type }, this.props.paging));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' editada correctamente' });
   };
 
   handleSearchPeople = (query, currentPage, limit) => {
@@ -63,6 +80,7 @@ class PersonListPage extends Component {
     this.querySearch = query;
     if (query) {
       this.props.dispatch(searchPeopleRequest(this.querySearch, offset, lim));
+      this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Buscando: ' + this.querySearch + '...' });
     } else {
       this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
     }
@@ -81,11 +99,13 @@ class PersonListPage extends Component {
       );
     }
 
+
     return (
       <div>
+        <MessageSnackBar typeMessage={this.state.typeMsj} textMessage={this.state.textMsj} openMsj={this.state.openMsj} handleClose={this.handleCloseMsj} />
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople}/>
+            <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople} />
           </Grid>
           <Grid item xs={12}>
             <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
@@ -95,13 +115,13 @@ class PersonListPage extends Component {
       </div>
     );
   }
-};
+}
 
 // Actions required to provide data for this component to render in sever side.
 // constantes para el paginado, limit y offset de cada consulta server side
 PersonListPage.need = [() => {
-  const defaultLimit = 1
-  const defaultOffset = 2
+  const defaultLimit = 1;
+  const defaultOffset = 2;
   return fetchPeople(defaultLimit, defaultOffset);
 }];
 
