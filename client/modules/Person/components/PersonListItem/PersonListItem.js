@@ -12,11 +12,12 @@ import Divider from '@material-ui/core/Divider';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import PersonFormDialog from '../PersonFormDialog/PersonFormDialog';
 import Grid from '@material-ui/core/Grid';
-import CallIcon from '@material-ui/icons/Call';
+import People from '@material-ui/icons/People';
 import EmailIcon from '@material-ui/icons/Email';
 import FaceIcon from '@material-ui/icons/Face';
 import styles from './PersonListItem.css';
 import DeleteDialog from '../../../App/components/DeleteDialog/DeleteDialog';
+import Assignment from '@material-ui/icons/Assignment';
 
 class PersonListItem extends Component {
   state = { openDelete: false };
@@ -55,7 +56,7 @@ class PersonListItem extends Component {
               </Grid>
               <Grid item xs={4}>
                 <div className={styles['secondary-heading']}>
-                  <CallIcon/> <div className={styles['detail-item']}>{this.props.person.cellphone}</div>
+                  <People/> <div className={styles['detail-item']}>{this.props.person.type}</div>
                 </div>
               </Grid>
             </Grid>
@@ -74,6 +75,8 @@ class PersonListItem extends Component {
                         return <Chip key={key} label={propsIntlMessages.telephone.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'birthDate':
                         return <Chip key={key} label={propsIntlMessages.birthDate.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                      case 'cellphone':
+                        return <Chip key={key} label={propsIntlMessages.cellphone.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       case 'profession':
                         return <Chip key={key} label={propsIntlMessages.profession.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'professionPlace':
@@ -96,6 +99,7 @@ class PersonListItem extends Component {
               <DeleteIcon/>
             </Button>
             <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete}/>
+            {(this.props.person.type === 'Alumno') ? <Button onClick={this.handleOpenDelete} mini variant="fab" aria-label="Inscribir"> <Assignment /> </Button> : null}
           </ExpansionPanelActions>
         </ExpansionPanel>
       </div>

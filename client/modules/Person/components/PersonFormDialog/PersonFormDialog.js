@@ -22,7 +22,7 @@ class PersonFormDialog extends Component {
 
   state = {
     open: false,
-    type: 10,
+    type: this.props.intl.messages.student,
     nameText: '',
     nameError: false,
     error: {
@@ -78,7 +78,7 @@ class PersonFormDialog extends Component {
       this.state.error.name = this.state.error.surname = this.state.error.dni = this.state.error.email = false;
       this.state.error.address = this.state.error.telephone = this.state.error.cellphone = false;
       this.state.error.profession = this.state.error.professionPlace = this.state.error.birthPlace = false;
-      this.state.type = 10;
+      this.state.type = this.props.intl.messages.student;
       this.cleanError();
     }
     this.handleClose();
@@ -122,7 +122,7 @@ class PersonFormDialog extends Component {
 
   handleInitialize = () => {
     if (this.props.person) {
-      this.setState({type: Number.parseInt(this.props.person.type)})
+      this.setState({type: this.props.person.type})
     }
   }
 
@@ -204,8 +204,8 @@ class PersonFormDialog extends Component {
                           id: 'type-simple',
                         }}
                       >
-                        <MenuItem value={10}>{this.props.intl.messages.student}</MenuItem>
-                        <MenuItem value={20}>{this.props.intl.messages.teacher}</MenuItem>
+                        <MenuItem value={this.props.intl.messages.student}>{this.props.intl.messages.student}</MenuItem>
+                        <MenuItem value={this.props.intl.messages.teacher}>{this.props.intl.messages.teacher}</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
