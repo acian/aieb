@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Import Components
-import PersonListItem from './UserListItem/UserListItem';
+import UserListItem from './UserListItem/UserListItem';
 
 function UserList(props) {
   return (
     <div className="listView">
       {
         props.users.map((user, index) => (
-          <PersonListItem
-            person={person}
+          <UserListItem
+            user={user}
             key={index}
-            onDelete={() => props.handleDeletePerson(person._id)}
-            onEdit={props.handleEditPerson}
+            // onDelete={() => props.handleDeletePerson(person._id)}
+            // onEdit={props.handleEditPerson}
           />
         ))
       }

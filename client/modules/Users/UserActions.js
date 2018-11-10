@@ -36,6 +36,7 @@ export function addUserRequest(user) {
         user: user.user,
         password: user.password,
         type: user.type,
+        status: user.status,
       },
     }).then(res => dispatch(addUser(res.user)));
   };

@@ -2,8 +2,8 @@ import { Router } from 'express';
 import * as UserController from '../controllers/user.controller';
 const router = new Router();
 
-// Get user
-//router.route('/login').post(UserController.login);
+// Get users
+router.route('/users').get(UserController.getUsers);
 
 // Add a new person
 router.route('/user').post(UserController.addUser);

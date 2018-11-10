@@ -21,10 +21,6 @@ import EmailIcon from '@material-ui/icons/Email';
 import styles from './UserListItem.css';
 
 function UserListItem(props) {
-  let descriptionPerson = '';
-  descriptionPerson += props.person.email ? `${props.person.email}  /  ` : '';
-  descriptionPerson += props.person.cellphone ? `${props.person.cellphone}  ` : '';
-
   return (
     <div>
       <ExpansionPanel className={styles['paper-description']}>
@@ -32,28 +28,15 @@ function UserListItem(props) {
           <Grid container spacing={24}>
             <Grid item xs={4}>
               <div className={styles['primiry-heading']}>
-                <strong>{props.person.surname} , {props.person.name}</strong>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={styles['secondary-heading']}>
-                <EmailIcon/>  {props.person.email}
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={styles['secondary-heading']}>
-                <CallIcon/>  {props.person.cellphone}
+                <strong>{props.user.user}</strong>
               </div>
             </Grid>
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {Object.keys(props.person).map(function (key) {
-            if ((['birthDate', 'profession', 'professionPlace', 'address'].indexOf(key) >= 0) && (props.person[key].length > 0)) {
-              if (key === 'birthDate') {
-                return <Chip key={key} label={props.person[key].substr(0, 10)} />;
-              }
-              return <Chip key={key} label={props.person[key]} />;
+          {Object.keys(props.user).map(function (key) {
+            if ((['name', 'surname'].indexOf(key) >= 0) && (props.user[key].length > 0)) {
+              return <Chip key={key} label={props.user[key]} />;
             }
           })}
         </ExpansionPanelDetails>

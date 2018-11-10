@@ -29,7 +29,7 @@ class PersonSearchAndAddForm extends Component {
             onKeyPress={(ev) => {
               console.log(`Pressed keyCode ${ev.key}`);
               if (ev.key === 'Enter') {
-                this.searchPeople()
+                this.searchPeople();
                 ev.preventDefault();
               }
             }}

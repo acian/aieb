@@ -2,6 +2,20 @@ import User from '../models/user';
 import UserSession from '../models/userSession';
 import sanitizeHtml from 'sanitize-html';
 
+
+/**
+ * Get users
+ */
+export function getUsers(req, res) {
+  User.find().sort('-dateAdded').exec((err, users) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ users });
+  });
+}
+
+
 /**
  * Get user
  */
@@ -25,6 +39,8 @@ export function addUser(req, res) {
   }
 
   const newUser = sanitizeInputs(req.body.user);
+  newUser.type = req.body.user.type;
+  newUser.active = req.body.user.status == 10 ? true : false;
 
   // Steps:
   // 1. Verify email doesn't exist
@@ -62,7 +78,6 @@ const sanitizeInputs = (user) => {
   newUser.surname = sanitizeHtml(newUser.surname);
   newUser.user = sanitizeHtml(newUser.user);
   newUser.password = sanitizeHtml(newUser.password);
-  newUser.type = sanitizeHtml(newUser.type);
 
   return newUser
 };

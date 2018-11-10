@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 // Import Components
 import UserList from '../../components/UserList';
+import AddForm from '../../components/UserAddForm/UserAddForm';
 import Grid from '@material-ui/core/Grid';
 
 // Import Actions
@@ -43,6 +44,9 @@ class UserListPage extends Component {
     return (
       <div>
         <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <AddForm userAction={this.handleAddUser}/>
+          </Grid>
           <Grid item xs={12}>
             <UserList users={this.props.users} />
           </Grid>
