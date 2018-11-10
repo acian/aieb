@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
   name: { type: 'String', required: true },
+  type: { type: 'String', required: true },
+  year: { type: 'number', required: true },
   teacher: { type: 'String' },
   schedule: { type: 'Date', default: Date.now },
   amount: { type: 'number', required: true },

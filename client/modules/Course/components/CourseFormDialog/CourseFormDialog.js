@@ -27,6 +27,8 @@ class CourseFormDialog extends Component {
     nameError: false,
     error: {
       name: false,
+      type: false,
+      year: false,
       days: false,
       schedule: false,
       amount: false,
@@ -36,12 +38,14 @@ class CourseFormDialog extends Component {
     },
     regex: {
       name: /^[a-z||A-Z||\s]{1,30}$/,
+      type: /^[a-z||A-Z||\s]{1,20}$/,
+      year: /^(\d{4})$/,
       days: /^[a-z||A-Z||\s]{1,30}$/,
       schedule: /^[a-z||A-Z||\s]{1,30}$/,
       amount: /^(\d{1,10})$/,
       dueCost: /^(\d{1,10})$/,
       teacher: /^[a-z||A-Z||\s||\d]{0,50}$/,
-      printCost: /^[a-z||A-Z||\s]{0,30}$/,
+      printCost: /^(\d{1,10})$/,
     }
   };
 
@@ -52,6 +56,8 @@ class CourseFormDialog extends Component {
     }
 
     const nameRef = this.name;
+    const yearRef = this.year;
+    const typeRef = this.type;
     const daysRef = this.days;
     const scheduleRef = this.schedule;
     const amountRef = this.amount;
@@ -68,8 +74,8 @@ class CourseFormDialog extends Component {
     this.props.courseAction(nameRef.value, daysRef.value, scheduleRef.value, amountRef.value,
       dueCostRef.value, teacherRef.value, printCostRef.value, firstDueDateRef.value,
       secondDueDateRef.value, this.props.course ? this.props.course._id : 0);
-    nameRef.value = daysRef.value = scheduleRef.value = amountRef.value = '';
-    dueCostRef.value = teacherRef.value = printCostRef.value = '';
+    nameRef.value = typeRef.value = daysRef.value = scheduleRef.value = amountRef.value = '';
+    dueCostRef.value = yearRef.value = teacherRef.value = printCostRef.value = '';
 
     this.cleanError();
     this.handleClose();
@@ -78,11 +84,13 @@ class CourseFormDialog extends Component {
   cleanError = () => {
     this.state.error.name = this.state.error.days = this.state.error.schedule = false;
     this.state.error.amount = this.state.error.dueCost = this.state.error.teacher = false;
-    this.state.error.printCost = false;
+    this.state.error.printCost = this.state.error.type = this.state.error.year = false;
   };
 
   hasError = () => {
     return this.state.error.name ||
+      this.state.error.type ||
+      this.state.error.year ||
       this.state.error.days ||
       this.state.error.schedule ||
       this.state.error.amount ||
@@ -154,6 +162,22 @@ class CourseFormDialog extends Component {
                                required={true} onBlur={this.validate}
                                error={this.state.error.name}
                                helperText={(this.state.error.name ? this.props.intl.messages.nameValidation : '')}
+                               fullWidth/>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField name="type" inputRef={x => this.type = x}
+                               defaultValue={course ? course.type : ''}
+                               label={this.props.intl.messages.courseType}
+                               onBlur={this.validate} error={this.state.error.type}
+                               helperText={(this.state.error.type ? this.props.intl.messages.typeValidation : '')}
+                               fullWidth/>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField name="year" inputRef={x => this.year = x}
+                               defaultValue={course ? course.year : ''}
+                               label={this.props.intl.messages.year}
+                               onBlur={this.validate} error={this.state.error.year}
+                               helperText={(this.state.error.year ? this.props.intl.messages.yearValidation : '')}
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
@@ -311,6 +335,8 @@ CourseFormDialog.propTypes = {
   course: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    year: PropTypes.number,
     days: PropTypes.string.isRequired,
     schedule: PropTypes.string.isRequired,
     amount: PropTypes.number,

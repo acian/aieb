@@ -27,6 +27,8 @@ export function addCourseRequest(course) {
     return callApi('courses', 'post', {
       course: {
         name: course.name,
+        type: course.type,
+        year: course.year,
         days: course.days,
         schedule: course.schedule,
         amount: course.amount,
@@ -84,6 +86,8 @@ export function editCourseRequest(course, paging) {
     return callApi(`courses/${course.id}`, 'put', {
       course: {
         name: course.name,
+        type: course.type,
+        year: course.year,
         days: course.days,
         schedule: course.schedule,
         amount: course.amount,

@@ -18,6 +18,8 @@ export default {
     searchPeople:'Buscar persona por DNI, Nombre o Apellido',
     //Form course ---------------------------
     days: 'Días de cursado',
+    courseType: 'Tipo',
+    year: 'Año',
     schedule : 'Horario',
     addCourse: 'Agregar Curso',
     editCourse: 'Modificar Curso',

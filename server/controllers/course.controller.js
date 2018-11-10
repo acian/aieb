@@ -131,6 +131,8 @@ export function editCourse(req, res) {
 
   const newData = { name: editedCourse.name,
     days: editedCourse.days,
+    year: editedCourse.year,
+    type: editedCourse.type,
     schedule: editedCourse.schedule,
     amount: editedCourse.amount,
     dueCost: editedCourse.dueCost,
@@ -161,6 +163,8 @@ const sanitizeInputs = (course) => {
   // Let's sanitize inputs
   newCourse.name = sanitizeHtml(newCourse.name);
   newCourse.days = sanitizeHtml(newCourse.days);
+  newCourse.year = sanitizeHtml(newCourse.year);
+  newCourse.type = sanitizeHtml(newCourse.type);
   newCourse.schedule = sanitizeHtml(newCourse.schedule);
   newCourse.amount = sanitizeHtml(newCourse.amount);
   newCourse.dueCost = sanitizeHtml(newCourse.dueCost);

@@ -44,12 +44,12 @@ class CourseListPage extends Component {
     }
   };
 
-  handleEditCourse = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id ) => {
-    this.props.dispatch(editCourseRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+  handleEditCourse = (name, type, year, days, schedule, amount, dueCost, teacher, printCost, id ) => {
+    this.props.dispatch(editCourseRequest({ id, name, type, year, days, schedule, amount, dueCost, teacher, printCost }, this.props.paging));
   };
 
-  handleAddCourse = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type ) => {
-    this.props.dispatch(addCourseRequest({ name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }, this.props.paging));
+  handleAddCourse = (name, type, year, days, schedule, amount, dueCost, teacher, printCost) => {
+    this.props.dispatch(addCourseRequest({ name, type, year, days, schedule, amount, dueCost, teacher, printCost }, this.props.paging));
   };
 
   handleSearchCourses = (query, currentPage, limit) => {
@@ -116,6 +116,8 @@ CourseListPage.propTypes = {
   courses: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    year: PropTypes.number.isRequired,
     days: PropTypes.string.isRequired,
     schedule: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
