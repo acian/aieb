@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {injectIntl, intlShape} from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import Chip from '@material-ui/core/Chip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
@@ -18,24 +18,76 @@ import FaceIcon from '@material-ui/icons/Face';
 import styles from './PersonListItem.css';
 import DeleteDialog from '../../../App/components/DeleteDialog/DeleteDialog';
 import Assignment from '@material-ui/icons/Assignment';
+import InscriptionFormDialog from '../../../Inscription/components/InscriptionFormDialog/InscriptionFormDialog';
+
+// Import Actions
+import { addInscription } from '../../../Inscription/InscriptionActions';
+
 
 class PersonListItem extends Component {
-  state = { openDelete: false };
+  state = {
+    openDelete: false,
+    openInscription: false,
+  };
 
   handleOpenDelete = () => {
     this.setState({ openDelete: true });
+  };
+
+  openInscriptionStudent = () => {
+    this.setState({ openInscription: true });
+  };
+
+  handleInscriptionStudent = () => {
+    this.handleCloseInscription();
+    //this.props.dispatch(addInscription({ idStudent, idCourse }, this.props.paging));
+    //this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' inscripta correctamente' });
   };
 
   handleCloseDelete = () => {
     this.setState({ openDelete: false });
   };
 
+  handleCloseInscription = () => {
+    this.setState({ openInscription: false });
+  };
+
   handleDelete = () => {
-    this.props.onDelete()
+    this.props.onDelete();
     this.handleCloseDelete();
   };
 
   render() {
+    const options = [
+      { id: '1', name: 'nelsonnelsonnelsonnelsonnelsonn' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+      { id: '1', name: 'nelson' },
+      { id: '2', name: 'brian' },
+      { id: '3', name: 'aye' },
+    ];
+
     const propsPerson = this.props.person;
     const propsIntlMessages = this.props.intl.messages;
     const textDelete = this.props.person.surname + ', ' + this.props.person.name;
@@ -46,17 +98,20 @@ class PersonListItem extends Component {
             <Grid container spacing={24}>
               <Grid item xs={4}>
                 <div className={styles['primiry-heading']}>
-                  <FaceIcon/> <div className={styles['detail-item']}><strong>{this.props.person.surname} , {this.props.person.name}</strong></div>
+                  <FaceIcon/>
+                  <div className={styles['detail-item']}><strong>{this.props.person.surname} , {this.props.person.name}</strong></div>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={styles['secondary-heading']}>
-                  <EmailIcon/> <div className={styles['detail-item']}>{this.props.person.email}</div>
+                  <EmailIcon/>
+                  <div className={styles['detail-item']}>{this.props.person.email}</div>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={styles['secondary-heading']}>
-                  <People/> <div className={styles['detail-item']}>{this.props.person.type}</div>
+                  <People/>
+                  <div className={styles['detail-item']}>{this.props.person.type}</div>
                 </div>
               </Grid>
             </Grid>
@@ -68,21 +123,29 @@ class PersonListItem extends Component {
                   if ((propsPerson[key].length > 0)) {
                     switch (key) {
                       case 'dni':
-                        return <Chip key={key} label={propsIntlMessages.dni.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.dni.toString()
+                          .toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'address':
-                        return <Chip key={key} label={propsIntlMessages.address.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.address.toString()
+                          .toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'telephone':
-                        return <Chip key={key} label={propsIntlMessages.telephone.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.telephone.toString()
+                          .toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'birthDate':
-                        return <Chip key={key} label={propsIntlMessages.birthDate.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                        return <Chip key={key} label={propsIntlMessages.birthDate.toString()
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       case 'cellphone':
-                        return <Chip key={key} label={propsIntlMessages.cellphone.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                        return <Chip key={key} label={propsIntlMessages.cellphone.toString()
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       case 'profession':
-                        return <Chip key={key} label={propsIntlMessages.profession.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.profession.toString()
+                          .toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'professionPlace':
-                        return <Chip key={key} label={propsIntlMessages.professionPlace.toString().toUpperCase() + ': ' + propsPerson[key]}/>;
+                        return <Chip key={key} label={propsIntlMessages.professionPlace.toString()
+                          .toUpperCase() + ': ' + propsPerson[key]}/>;
                       case 'birthPlace':
-                        return <Chip key={key} label={propsIntlMessages.birthPlace.toString().toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                        return <Chip key={key} label={propsIntlMessages.birthPlace.toString()
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
                       default:
                         return null;
                     }
@@ -99,7 +162,10 @@ class PersonListItem extends Component {
               <DeleteIcon/>
             </Button>
             <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete}/>
-            {(this.props.person.type === 'Alumno') ? <Button onClick={this.handleOpenDelete} mini variant="fab" aria-label="Inscribir"> <Assignment /> </Button> : null}
+            {(this.props.person.type === this.props.intl.messages.student) ?
+              <Button onClick={this.openInscriptionStudent} mini variant="fab" aria-label="Inscribir"> <Assignment/> </Button> : null}
+            <InscriptionFormDialog openInscription={this.state.openInscription} course={options} inscriptionAction={this.handleInscriptionStudent}
+                                   closeAction={this.handleCloseInscription}/>
           </ExpansionPanelActions>
         </ExpansionPanel>
       </div>
@@ -127,6 +193,7 @@ PersonListItem.propTypes = {
   onEdit: PropTypes.func.isRequired,
   sorted: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
+  //dispatch: PropTypes.func.isRequired,
 };
 
 export default injectIntl(PersonListItem);

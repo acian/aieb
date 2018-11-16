@@ -25,12 +25,12 @@ class Pagination extends React.Component {
 
   render() {
     const currentPage = this.props.paging.offset;
-    const totalPersons = this.props.paging.total;
-    const totalPages = (Math.round(totalPersons / this.props.paging.limit) > 1) ? Math.round(totalPersons / this.props.paging.limit) : 1;
+    const totalItems = this.props.paging.total;
+    const totalPages = (Math.round(totalItems / this.props.paging.limit) > 1) ? Math.round(totalItems / this.props.paging.limit) : 1;
 
     // Logic for displaying page numbers
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(totalPersons / this.props.paging.limit); i++) {
+    for (let i = 1; i <= Math.ceil(totalItems / this.props.paging.limit); i++) {
       pageNumbers.push(i);
     }
 
@@ -66,7 +66,7 @@ class Pagination extends React.Component {
           }
         </Grid>
         <Grid item>
-          <span>{totalPersons} {" "} <FormattedMessage id="personas" /> </span>
+          <span>{totalItems} {" "} <FormattedMessage id="items" /> </span>
         </Grid>
       </Grid>
     );

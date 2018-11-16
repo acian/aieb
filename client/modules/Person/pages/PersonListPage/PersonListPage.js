@@ -7,9 +7,6 @@ import PersonList from '../../components/PersonList';
 import PersonSearchAndAddForm from '../../components/PersonSearchAndAddForm/PersonSearchAndAddForm';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Snackbar from '@material-ui/core/Snackbar';
-import CloseIcon from '@material-ui/icons/Close';
-import Button from '@material-ui/core/Button';
 import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnackBar';
 
 // Import Actions
@@ -20,7 +17,7 @@ import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople, getPaging } from '../../PersonReducer';
 
 // pagination
-import Pagination from '../../components/Pagination/Pagination.js';
+import Pagination from '../../../../components/Pagination/Pagination.js';
 
 class PersonListPage extends Component {
 

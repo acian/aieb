@@ -103,3 +103,24 @@ export function editPersonRequest(person, paging) {
     }).then(res => dispatch(editPerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedPerson })));
   };
 }
+
+export function inscriptionPersonRequest(person, paging) {
+  return (dispatch) => {
+    return callApi(`people/${person.id}`, 'put', {
+      person: {
+        studentId: person.name,
+        courseId: person.surname,
+        status: person.dni,
+        address: person.address,
+        email: person.email,
+        telephone: person.telephone,
+        cellphone: person.cellphone,
+        birthDate: person.birthDate,
+        profession: person.profession,
+        professionPlace: person.professionPlace,
+        birthPlace: person.birthPlace,
+        type: person.type,
+      },
+    }).then(res => dispatch(editPerson({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedPerson })));
+  };
+}
