@@ -12,13 +12,21 @@ export function addInscription(data) {
   };
 }
 
-export function addInscriptionRequest(inscription, paging) {
+export function addInscriptionRequest(idStudent, idCourse, discountAmount) {
+  console.log("addInscriptionRequest: " + idStudent + " - " + idCourse + " - " + discountAmount)
   return (dispatch) => {
     return callApi('inscription', 'post', {
       inscription: {
-        studentId: inscription.studentId,
-        courseId: inscription.courseId,
+        studentId: idStudent,
+        courseId: idCourse,
+        discountAmount: discountAmount
       },
-    }).then(res => dispatch(addInscription({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.person })));
+    }).then(res => {
+      if (res.error) {
+        console.log("Inscription error: " + res.error)
+        dispatch(addInscription(res.error))
+      } else {
+        dispatch(addInscription(res.inscriptedPerson))
+      }});
   };
 }

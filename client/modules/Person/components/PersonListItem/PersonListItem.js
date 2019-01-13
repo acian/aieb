@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import Chip from '@material-ui/core/Chip';
@@ -19,15 +20,27 @@ import styles from './PersonListItem.css';
 import DeleteDialog from '../../../App/components/DeleteDialog/DeleteDialog';
 import Assignment from '@material-ui/icons/Assignment';
 import InscriptionFormDialog from '../../../Inscription/components/InscriptionFormDialog/InscriptionFormDialog';
+import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnackBar';
 
 // Import Actions
-import { addInscription } from '../../../Inscription/InscriptionActions';
+import { addInscriptionRequest } from '../../../Inscription/InscriptionActions';
+import { fetchCourses } from '../../../Course/CourseActions';
+
+// Import Selectors
+import { getCourses } from '../../../Course/CourseReducer';
 
 
 class PersonListItem extends Component {
   state = {
     openDelete: false,
     openInscription: false,
+    openMsj: false,
+    typeMsj: 'error',
+    textMsj: 'Error',
+  };
+
+  handleCloseMsj = () => {
+    this.setState({ openMsj: false });
   };
 
   handleOpenDelete = () => {
@@ -35,13 +48,14 @@ class PersonListItem extends Component {
   };
 
   openInscriptionStudent = () => {
+    this.props.dispatch(fetchCourses(1, 5));
     this.setState({ openInscription: true });
   };
 
-  handleInscriptionStudent = () => {
+  handleInscriptionStudent = (idStudent,idCourse, discountAmount) => {
     this.handleCloseInscription();
-    //this.props.dispatch(addInscription({ idStudent, idCourse }, this.props.paging));
-    //this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona: ' + surname + ', ' + name + ' inscripta correctamente' });
+    this.props.dispatch(addInscriptionRequest(idStudent, idCourse, discountAmount));
+    this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona inscripta correctamente.' });
   };
 
   handleCloseDelete = () => {
@@ -58,41 +72,13 @@ class PersonListItem extends Component {
   };
 
   render() {
-    const options = [
-      { id: '1', name: 'nelsonnelsonnelsonnelsonnelsonn' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-      { id: '1', name: 'nelson' },
-      { id: '2', name: 'brian' },
-      { id: '3', name: 'aye' },
-    ];
 
     const propsPerson = this.props.person;
     const propsIntlMessages = this.props.intl.messages;
     const textDelete = this.props.person.surname + ', ' + this.props.person.name;
     return (
       <div>
+        <MessageSnackBar typeMessage={this.state.typeMsj} textMessage={this.state.textMsj} openMsj={this.state.openMsj} handleClose={this.handleCloseMsj} />
         <ExpansionPanel className={styles['paper-description']}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
             <Grid container spacing={24}>
@@ -157,20 +143,33 @@ class PersonListItem extends Component {
           </ExpansionPanelDetails>
           <Divider/>
           <ExpansionPanelActions>
-            <PersonFormDialog personAction={this.props.onEdit} editMode={true} person={this.props.person}/>
+            <PersonFormDialog
+              personAction={this.props.onEdit}
+              editMode={true} person={this.props.person}/>
             <Button onClick={this.handleOpenDelete} mini variant="fab" color="secondary" aria-label="delete">
               <DeleteIcon/>
             </Button>
             <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete}/>
             {(this.props.person.type === this.props.intl.messages.student) ?
               <Button onClick={this.openInscriptionStudent} mini variant="fab" aria-label="Inscribir"> <Assignment/> </Button> : null}
-            <InscriptionFormDialog openInscription={this.state.openInscription} course={options} inscriptionAction={this.handleInscriptionStudent}
-                                   closeAction={this.handleCloseInscription}/>
+            <InscriptionFormDialog
+              openInscription={this.state.openInscription}
+              courses={this.props.courses}
+              inscriptionAction={this.handleInscriptionStudent}
+              closeAction={this.handleCloseInscription}
+              person={this.props.person}/>
           </ExpansionPanelActions>
         </ExpansionPanel>
       </div>
     );
   }
+}
+
+// Retrieve data from store as props
+function mapStateToProps(state) {
+  return {
+    courses: getCourses(state),
+  };
 }
 
 PersonListItem.propTypes = {
@@ -193,7 +192,13 @@ PersonListItem.propTypes = {
   onEdit: PropTypes.func.isRequired,
   sorted: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
-  //dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    year: PropTypes.string,
+  })).isRequired,
 };
 
-export default injectIntl(PersonListItem);
+export default connect(mapStateToProps)(injectIntl(PersonListItem));

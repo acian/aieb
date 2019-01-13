@@ -11,10 +11,12 @@ import MessageSnackBar from '../../../App/components/MessageSnackBar/MessageSnac
 
 // Import Actions
 import { addPersonRequest, fetchPeople, deletePersonRequest, searchPeopleRequest, editPersonRequest } from '../../PersonActions';
+import { fetchCourses } from '../../../Course/CourseActions';
 
 // Import Selectors
 import { getShowAddPerson } from '../../../App/AppReducer';
 import { getPeople, getPaging } from '../../PersonReducer';
+import { getCourses } from '../../../Course/CourseReducer';
 
 // pagination
 import Pagination from '../../../../components/Pagination/Pagination.js';
@@ -105,7 +107,7 @@ class PersonListPage extends Component {
             <PersonSearchAndAddForm addPerson={this.handleAddPerson} searchPeople={this.handleSearchPeople} fetchPeople={this.handleFetchPeople} />
           </Grid>
           <Grid item xs={12}>
-            <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} />
+            <PersonList handleDeletePerson={this.handleDeletePerson} handleEditPerson={this.handleEditPerson} people={this.props.people} courses={this.props.courses}/>
           </Grid>
         </Grid>
         <Pagination paging={this.props.paging} handlePageChange={this.handlePageChange} />
@@ -127,6 +129,7 @@ function mapStateToProps(state) {
   return {
     showAddPerson: getShowAddPerson(state),
     people: getPeople(state),
+    courses: getCourses(state),
     paging: getPaging(state),
   };
 }
@@ -146,6 +149,12 @@ PersonListPage.propTypes = {
     dateCreated: PropTypes.string,
     type: PropTypes.string.isRequired,
   })).isRequired,
+  courses: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    year: PropTypes.string,
+  })),
   paging: PropTypes.arrayOf(PropTypes.shape({
     total: PropTypes.number.isRequired,
     limit: PropTypes.number.isRequired,

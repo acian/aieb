@@ -39,6 +39,7 @@ import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
 import people from './routes/person.routes';
 import courses from './routes/course.routes';
+import inscription from './routes/inscription.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -63,6 +64,7 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', people);
 app.use('/api', courses);
+app.use('/api', inscription);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

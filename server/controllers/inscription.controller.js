@@ -8,17 +8,22 @@ import sanitizeHtml from 'sanitize-html';
  * @returns void
  */
 export function addInscription(req, res) {
+  console.log("studen: " + req.body.inscription.studentId);
+  console.log("course: " + req.body.inscription.courseId);
+  console.log("amount: " + req.body.inscription.discountAmount);
   if (!req.body.inscription.studentId || !req.body.inscription.courseId) {
-    res.status(403).end();
+    return res.json({status: 403, error: "Faltan datos del studen id: "+ req.body.inscription.studentId + " o course id: " + req.body.inscription.courseId});
   }
 
   const newInscription = sanitizeInputs(req.body.inscription);
 
   newInscription.save((err, saved) => {
     if (err) {
-      res.status(500).send(err);
+      console.log("error: " + err);
+      return res.json({status: 500, error: "Internal Server Error - Saved Inscription"});
+    }else{
+      res.json({ inscriptedPerson: saved });
     }
-    res.json({ inscription: saved });
   });
 }
 

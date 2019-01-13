@@ -18,6 +18,7 @@ function PersonList(props) {
             onDelete={() => props.handleDeletePerson(person._id)}
             onEdit={props.handleEditPerson}
             sorted={(i % 2 === 0 || i === 0) ? 'flex-start' : 'flex-end'}
+            courses={props.courses}
           />
         ))
       }
@@ -32,6 +33,12 @@ PersonList.propTypes = {
     surname: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
   })).isRequired,
+  courses: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    year: PropTypes.string,
+  })),
   handleDeletePerson: PropTypes.func.isRequired,
   handleEditPerson: PropTypes.func.isRequired,
 };

@@ -12,19 +12,31 @@ import { injectIntl, intlShape } from 'react-intl';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import TextField from '@material-ui/core/TextField';
 
 
 class InscriptionFormDialog extends Component {
   constructor(props) {
     super();
     this.state = {
-      value: props.value,
+      value: null,
+      valueDiscountAmountRef: 0,
     };
   }
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.setState({ value: value });
+  };
+
+  handleChangeDiscountAmount = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  inscriptionAction = () => {
+    this.setState({ value: null, valueDiscountAmountRef: 0 });
+    this.props.inscriptionAction(this.props.person._id, this.state.value, this.state.valueDiscountAmountRef)
   };
 
   render() {
@@ -37,24 +49,32 @@ class InscriptionFormDialog extends Component {
           disableEscapeKeyDown
           keepMounted
         >
-          <DialogTitle id="confirmation-dialog-title">Cursos a Inscribir</DialogTitle>
+          <DialogTitle id="confirmation-dialog-title">Cursos a Inscribir para <strong><u>{this.props.person.name}, {this.props.person.surname}</u></strong></DialogTitle>
           <DialogContent>
             <RadioGroup
-              aria-label="Ringtone"
-              name="ringtone"
+              ref="courseId"
               value={this.state.value}
               onChange={this.handleChange}
             >
-              {this.props.course.map(option => (
-                <FormControlLabel value={option.id} key={option.id} control={<Radio/>} label={option.name}/>
+              {this.props.courses.map(option => (
+                <FormControlLabel value={option._id} key={option._id} control={<Radio />} label={option.name + " " + option.type + " - " + option.year + " - " + option.teacher} />
               ))}
+              <TextField
+                id="standard-textarea"
+                label="Porcentaje de descuento"
+                placeholder="Porcentaje de descuento"
+                type="number"
+                value={this.state.valueDiscountAmountRef}
+                margin="normal"
+                onChange={this.handleChangeDiscountAmount('valueDiscountAmountRef')}
+              />
             </RadioGroup>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.props.closeAction}>
               Cancelar
             </Button>
-            <Button onClick={this.props.inscriptionAction} color="primary">
+            <Button onClick={this.inscriptionAction} color="primary">
               Inscribir
             </Button>
           </DialogActions>
@@ -69,9 +89,14 @@ InscriptionFormDialog.propTypes = {
   openInscription: PropTypes.bool.isRequired,
   inscriptionAction: PropTypes.func.isRequired,
   closeAction: PropTypes.func.isRequired,
-  course: PropTypes.arrayOf(PropTypes.shape({
+  courses: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
+  })),
+  person: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    surname: PropTypes.string,
   })),
 };
 
