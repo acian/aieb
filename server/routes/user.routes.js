@@ -8,6 +8,9 @@ router.route('/users').get(UserController.getUsers);
 // Add a new person
 router.route('/user').post(UserController.addUser);
 
+// Edit person
+router.route('/user/:id').put(UserController.editUser);
+
 // Log in
 router.route('/user/login').post(UserController.login);
 

@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import Chip from '@material-ui/core/Chip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -11,10 +8,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Grid from '@material-ui/core/Grid';
-import CallIcon from '@material-ui/icons/Call';
-import EmailIcon from '@material-ui/icons/Email';
+import AddForm from '../UserAddForm/UserAddForm';
+import {injectIntl, intlShape} from 'react-intl';
+import UserIcon from '@material-ui/icons/PermIdentity';
+import TypeIcon from '@material-ui/icons/VpnKey';
+import ActiveIcon from '@material-ui/icons/Check';
+import InactiveIcon from '@material-ui/icons/Close';
 
-//import PersonFormDialog from '../PersonFormDialog/PersonFormDialog';
 
 
 // Import Style
@@ -27,8 +27,18 @@ function UserListItem(props) {
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <Grid container spacing={24}>
             <Grid item xs={4}>
-              <div className={styles['primiry-heading']}>
-                <strong>{props.user.user}</strong>
+              <div className={styles['primary-heading']}>
+                <UserIcon/> <div className={styles['detail-item']}><strong>{props.user.user}</strong></div>
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className={styles['secondary-heading']}>
+                <TypeIcon/> <div className={styles['detail-item']}>{props.user.type === "admin" ? props.intl.messages.admin : props.intl.messages.operator}</div>
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <div className={props.user.active === true ? styles['active'] : styles['inactive']}>
+                {(props.user.active && <ActiveIcon/>) || (!props.user.active && <InactiveIcon/>)} <div className={styles['detail-item']}>{props.user.active ? props.intl.messages.active : props.intl.messages.inactive}</div>
               </div>
             </Grid>
           </Grid>
@@ -42,10 +52,7 @@ function UserListItem(props) {
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          {/*<PersonFormDialog personAction={props.onEdit} editMode={true} person={props.person}/>*/}
-          <Button onClick={props.onDelete} mini variant="fab" color="secondary" aria-label="delete">
-            <DeleteIcon />
-          </Button>
+          <AddForm userAction={props.onEdit} editMode={true} user={props.user} />
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
@@ -59,9 +66,10 @@ UserListItem.propTypes = {
     surname: PropTypes.string.isRequired,
     user: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
   }).isRequired,
-  //onDelete: PropTypes.func.isRequired,
-  //onEdit: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  intl: intlShape,
 };
 
-export default UserListItem;
+export default injectIntl(UserListItem);

@@ -13,7 +13,7 @@ function UserList(props) {
             user={user}
             key={index}
             // onDelete={() => props.handleDeletePerson(person._id)}
-            // onEdit={props.handleEditPerson}
+            onEdit={props.handleEditUser}
           />
         ))
       }
@@ -27,8 +27,7 @@ UserList.propTypes = {
     surname: PropTypes.string.isRequired,
     user: PropTypes.string.isRequired,
   })).isRequired,
-  //handleDeletePerson: PropTypes.func.isRequired,
-  //handleEditPerson: PropTypes.func.isRequired,
+  handleEditUser: PropTypes.func.isRequired,
 };
 
 export default UserList;

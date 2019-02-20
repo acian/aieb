@@ -57,6 +57,8 @@ export default {
     professionValidation: 'Debes ingresar un valor alfanumérico de hasta 50 caracteres',
     cellphoneValidation: 'Debes ingresar un valor numérico de hasta 15 dígitos',
     emailValidation: 'Debes ingresar un email válido',
+    userValidation: 'Debes ingresar un valor alfabético entre 4 y 10 caracteres',
+    passwordValidation: 'Debes ingresar un valor alfanumérico entre 4 y 10 carácteres',
     comment: `user {name} {value, plural,
     	  =0 {does not have any comments}
     	  =1 {has # comment}

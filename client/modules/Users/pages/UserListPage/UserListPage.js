@@ -8,7 +8,7 @@ import AddForm from '../../components/UserAddForm/UserAddForm';
 import Grid from '@material-ui/core/Grid';
 
 // Import Actions
-import { fetchUsers, addUserRequest } from '../../UserActions';
+import { fetchUsers, addUserRequest, editUserRequest } from '../../UserActions';
 
 // Import Selectors
 import { getShowAddUser } from '../../../App/AppReducer';
@@ -24,17 +24,10 @@ class UserListPage extends Component {
     this.props.dispatch(fetchUsers());
   };
 
-  //Disable USER
-  // handleDeletePerson = idPerson => {
-  //   if (confirm('Do you want to delete this person')) { // eslint-disable-line
-  //     this.props.dispatch(deletePersonRequest(idPerson));
-  //   }
-  // };
-
-  //Reset PASSWORD
-  // handleEditPerson = (name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type, id ) => {
-  //   this.props.dispatch(editPersonRequest({ id, name, surname, dni, address, email, telephone, cellphone, birthDate, profession, professionPlace, type }));
-  // };
+  //Edit user
+  handleEditUser = (name, surname, user, password, type, status, id ) => {
+     this.props.dispatch(editUserRequest({ name, surname, user, password, type, status, id }));
+  };
 
   handleAddUser = (name, surname, user, password, type ) => {
     this.props.dispatch(addUserRequest({ name, surname, user, password, type }));
@@ -48,7 +41,7 @@ class UserListPage extends Component {
             <AddForm userAction={this.handleAddUser}/>
           </Grid>
           <Grid item xs={12}>
-            <UserList users={this.props.users} />
+            <UserList users={this.props.users} handleEditUser={this.handleEditUser} />
           </Grid>
         </Grid>
       </div>

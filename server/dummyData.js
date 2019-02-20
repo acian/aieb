@@ -26,7 +26,7 @@ export default function () {
       return;
     }
 
-    const user1 = new User({ name: 'Jorge', surname: 'Lopez', user: 'jlopez', password: '123', type:'10', active:true, dateCreated: Date.now()});
+    const user1 = new User({ name: 'Jorge', surname: 'Lopez', user: 'jlopez', password: '123', type:'operator', active:true, dateCreated: Date.now()});
 
     user1.password = user1.generateHash(user1.password);
 

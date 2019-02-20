@@ -67,7 +67,7 @@
   padding-top: 8px;
 }
 
-.primiry-heading{
+.primary-heading{
   flex-basis: 33.33%;
   flex-shrink: 0%;
   text-decoration: black
@@ -76,3 +76,17 @@
 .secondary-heading{
   color: rgba(46, 46, 155, 0.705);
 }
+
+.inactive{
+  color: rgba(155, 7, 6, 0.7);
+}
+
+.active{
+  color: rgba(0, 155, 33, 0.7);
+}
+
+.detail-item{
+  margin-top: -1.56em;
+  margin-left: 1.9em;
+}
+

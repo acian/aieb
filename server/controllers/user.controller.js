@@ -40,7 +40,7 @@ export function addUser(req, res) {
 
   const newUser = sanitizeInputs(req.body.user);
   newUser.type = req.body.user.type;
-  newUser.active = req.body.user.status == 10 ? true : false;
+  newUser.active = req.body.user.status == 'active' ? true : false;
 
   // Steps:
   // 1. Verify email doesn't exist
@@ -69,6 +69,46 @@ export function addUser(req, res) {
     });
   });
 }
+
+/**
+ * Add user
+ */
+export function editUser(req, res) {
+  if (!req.body.user.name || !req.body.user.surname || !req.body.user.user) {
+    res.status(403).end();
+  }
+
+  const editedUser = sanitizeInputs(req.body.user);
+  editedUser._id = req.params.id;
+
+  const newData = { name: editedUser.name,
+    surname: editedUser.surname,
+    user: editedUser.user,
+    password: editedUser.password,
+    type: editedUser.type,
+    active: editedUser.active,
+  };
+
+  User.findOne({ _id: req.params.id }).exec((err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+
+    if (newData.password === "") {
+      newData.password = user.password;
+    } else {
+      newData.password = user.generateHash(newData.password);
+    }
+
+    user.update(newData, function(err, result) {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.json({ editedUser });
+    });
+  });
+}
+
 
 const sanitizeInputs = (user) => {
   const newUser = new User(user);

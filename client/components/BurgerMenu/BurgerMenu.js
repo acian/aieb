@@ -4,7 +4,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Settings from '@material-ui/icons/Settings';
 import ContactMail from '@material-ui/icons/ContactMail';
-import UserIcon from '@material-ui/icons/HowToReg'
+import UserIcon from '@material-ui/icons/GroupAdd';
 
 import stylesBM from './BurgerMenuStyles.js';
 import styles from './BurgerMenu.css';
@@ -18,7 +18,7 @@ export class BurgerMenu extends Component {
             <PersonIcon /> <div className={styles['detail-item']}><span>Personas</span></div>
           </a>
           <a id="Users" href="/users">
-            <UserIcon/><span>Usuarios</span>
+            <UserIcon/><div className={styles['detail-item']}><span>Usuarios</span></div>
           </a>
           <a id="about" href="/">
             <AssignmentIcon /> <div className={styles['detail-item']}><span>About</span></div>

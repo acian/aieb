@@ -25,8 +25,8 @@ class UserAddForm extends Component {
 
   state = {
     open: false,
-    type: 10,
-    status: 10,
+    type: 'operator',
+    status: 'active',
     nameText: '',
     nameError: false,
     error: {
@@ -38,8 +38,8 @@ class UserAddForm extends Component {
     regex: {
       name: /^[a-z||A-Z||\s]{1,30}$/,
       surname: /^[a-z||A-Z||\s]{1,30}$/,
-      dni: /^(\d{7,12})$/,
-      address: /^[a-z||A-Z||\s||\d]{1,50}$/,
+      user: /^[a-z||A-Z||\s]{4,10}$/,
+      password: /^[a-z||A-Z||\s||\d]{4,10}$/,
     }
   };
 
@@ -56,13 +56,11 @@ class UserAddForm extends Component {
     const type = this.type.node;
     const status = this.status.node;
 
-    if (name.value && surname.value && user.value && password.value) {
+    if (name.value && surname.value && user.value && ((this.props.editMode) || (!this.props.editMode && password.value))) {
       this.props.userAction(name.value, surname.value, user.value, password.value,
         type.value, status.value, this.props.editMode ? this.props.user._id : 0);
       name.value = surname.value = user.value = password.value = '';
       this.cleanError();
-      this.state.type = 10;
-      this.state.status = 10;
     }
     this.handleClose();
   };
@@ -97,8 +95,8 @@ class UserAddForm extends Component {
 
   handleInitialize = () => {
     if (this.props.user) {
-      this.setState({type: Number.parseInt(this.props.user.type)});
-      this.setState({status: Number.parseInt(this.props.user.status)})
+      this.setState({type: this.props.user.type});
+      this.setState({status: this.props.user.active ? 'active' : 'inactive'})
     }
   };
 
@@ -164,6 +162,7 @@ class UserAddForm extends Component {
                                defaultValue={user ? user.user : ''}
                                required={true} onBlur={this.validate}
                                error={this.state.error.user}
+                               disabled={editMode}
                                helperText={(this.state.error.user ? this.props.intl.messages.userValidation : '')}
                                fullWidth/>
                   </Grid>
@@ -187,8 +186,8 @@ class UserAddForm extends Component {
                           id: 'type-simple',
                         }}
                       >
-                        <MenuItem value={10}>{this.props.intl.messages.operator}</MenuItem>
-                        <MenuItem value={20}>{this.props.intl.messages.admin}</MenuItem>
+                        <MenuItem value={'operator'}>{this.props.intl.messages.operator}</MenuItem>
+                        <MenuItem value={'admin'}>{this.props.intl.messages.admin}</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -204,8 +203,8 @@ class UserAddForm extends Component {
                           id: 'status-simple',
                         }}
                       >
-                        <MenuItem value={10}>{this.props.intl.messages.active}</MenuItem>
-                        <MenuItem value={20}>{this.props.intl.messages.inactive}</MenuItem>
+                        <MenuItem value={'active'}>{this.props.intl.messages.active}</MenuItem>
+                        <MenuItem value={'inactive'}>{this.props.intl.messages.inactive}</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -239,7 +238,7 @@ UserAddForm.propTypes = {
     password: PropTypes.string,
     email: PropTypes.string,
     type: PropTypes.string,
-    status: PropTypes.string,
+    active: PropTypes.bool,
   }),
 };
 

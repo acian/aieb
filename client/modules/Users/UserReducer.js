@@ -1,4 +1,4 @@
-import { ADD_USERS, ADD_USER, GET_USER } from './UserActions';
+import { ADD_USERS, ADD_USER, GET_USER, EDIT_USER } from './UserActions';
 
 // Initial State
 const initialState = { data: [] };
@@ -11,12 +11,19 @@ const UserReducer = (state = initialState, action) => {
           };
 
         case ADD_USER:
-            return {
-              data: [action.user, ...state.data],
+          return {
+            data: [action.user, ...state.data],
             };
 
+        case EDIT_USER:
+          return {
+            data: state.data.map(user => {
+              return user._id === action.data._id ? action.data : user;
+            }),
+          };
+
         default:
-            return state;
+          return state;
     }
 }
 
