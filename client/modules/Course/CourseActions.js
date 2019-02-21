@@ -24,18 +24,23 @@ export function editCourse(data) {
 
 export function addCourseRequest(course) {
   return (dispatch) => {
-    return callApi('courses', 'post', {
+    return callApi('course', 'post', {
       course: {
         name: course.name,
         type: course.type,
         year: course.year,
-        days: course.days,
         schedule: course.schedule,
         amount: course.amount,
         dueCost: course.dueCost,
         teacher: course.teacher,
         printCost: course.printCost,
-        dateCreated: course.dateCreated
+        dateCreated: course.dateCreated,
+        monday: course.monday,
+        thursday: course.thursday,
+        wednesday: course.wednesday,
+        tuesday: course.tuesday,
+        friday: course.friday,
+        saturday: course.saturday,
       },
     }).then(res => dispatch(addCourse({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.course })));
   };
@@ -83,18 +88,23 @@ export function deleteCourseRequest(id) {
 
 export function editCourseRequest(course, paging) {
   return (dispatch) => {
-    return callApi(`courses/${course.id}`, 'put', {
+    return callApi(`course/${course.id}`, 'put', {
       course: {
         name: course.name,
         type: course.type,
         year: course.year,
-        days: course.days,
         schedule: course.schedule,
         amount: course.amount,
         dueCost: course.dueCost,
         teacher: course.teacher,
         printCost: course.printCost,
         dateCreated: course.dateCreated,
+        monday: course.monday,
+        thursday: course.thursday,
+        wednesday: course.wednesday,
+        tuesday: course.tuesday,
+        friday: course.friday,
+        saturday: course.saturday,
       },
     }).then(res => dispatch(editCourse({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedCourse })));
   };

@@ -6,7 +6,7 @@ const courseSchema = new Schema({
   type: { type: 'String', required: true },
   year: { type: 'number', required: true },
   teacher: { type: 'String' },
-  schedule: { type: 'Date', default: Date.now },
+  schedule: { type: 'String' },
   amount: { type: 'number', required: true },
   dueCost: { type: 'number', required: true },
   printCost: { type: 'number', required: true },

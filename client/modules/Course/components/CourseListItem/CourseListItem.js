@@ -52,7 +52,6 @@ CourseListItem.propTypes = {
   course: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    days: PropTypes.string.isRequired,
     schedule: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
     dueCost: PropTypes.number.isRequired,
