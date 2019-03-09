@@ -29,8 +29,8 @@ class UserListPage extends Component {
      this.props.dispatch(editUserRequest({ name, surname, user, password, type, status, id }));
   };
 
-  handleAddUser = (name, surname, user, password, type ) => {
-    this.props.dispatch(addUserRequest({ name, surname, user, password, type }));
+  handleAddUser = (name, surname, user, password, type, status ) => {
+    this.props.dispatch(addUserRequest({ name, surname, user, password, type, status }));
   };
 
   render() {

@@ -40,10 +40,9 @@ export function addUser(req, res) {
 
   const newUser = sanitizeInputs(req.body.user);
   newUser.type = req.body.user.type;
-  newUser.active = req.body.user.status == 'active' ? true : false;
+  newUser.active = req.body.user.active;
 
   // Steps:
-  // 1. Verify email doesn't exist
   // 2. Save
   User.find({
     user: newUser.user
@@ -208,7 +207,7 @@ export function logout(req, res) {
 }
 
 /**
- * Logout
+ * Is logged in?
  */
 export function isLoggedIn(req, res) {
   // Get the token

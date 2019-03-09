@@ -59,7 +59,7 @@ export function addUserRequest(user) {
         user: user.user,
         password: user.password,
         type: user.type,
-        status: user.status,
+        active: user.status === 'active' ? true : false,
       },
     }).then(res => dispatch(addUser(res.user)));
   };

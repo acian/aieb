@@ -1,5 +1,5 @@
 import callApi from '../../util/apiCaller';
-import { getFromStorage, setInStorage } from '../../util/storage';
+import { setInStorage } from '../../util/storage';
 //import history from '../../history';
 
 
@@ -25,10 +25,9 @@ export function loginRequest(user, password) {
     }).then(res => {
       if (res.success) {
         dispatch(login({user: user, token: res.token}));
-        setInStorage('aei_loggedin_user', { token: res.token });
+        setInStorage('aei_loggedin_session', { token: res.token });
         //browserHistory.push('/');
-      }
-      else {
+      } else {
 
       }
     });
