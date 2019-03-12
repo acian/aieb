@@ -157,6 +157,26 @@ export function editCourse(req, res) {
 
 }
 
+/**
+ * Get courses to inscript
+ * @param req
+ * @param res
+ * @returns void
+ */
+export function getCoursesToInscript(req, res) {
+  Course.find({active: true, year:req.query.year, status: req.query.status})
+    .skip(offset > 0 ? ((offset - 1) * limit) : 0)
+    .limit(limit)
+    .sort({ dateCreated: -1 })
+    .exec((err, courses) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      //TODO VER ERROR
+      res.json(courses);
+    });
+}
+
 const sanitizeInputs = (course) => {
   const newCourse = new Course(course);
 

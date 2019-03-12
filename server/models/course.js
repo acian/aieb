@@ -17,6 +17,7 @@ const courseSchema = new Schema({
   friday: { type: 'Boolean', default: false },
   saturday: { type: 'Boolean', default: false },
   active: { type: 'Boolean', default: true },
+  status: { type: 'String' },
   dateCreated: { type: 'Date', default: Date.now },
 });
 

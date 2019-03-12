@@ -27,6 +27,25 @@ export function addInscription(req, res) {
   });
 }
 
+/**
+ * Get inscriptions by person
+ * @param req
+ * @param res
+ * @returns list of inscriptions
+ */
+export function getInscriptionsByPerson(req, res) {
+  console.log("getInscriptionsByPerson2: " + req.params.idStudent);
+  Inscription.find({studentId: req.params.idStudent, status:"Inscripto"})
+.sort({ dateCreated: -1 }).exec((err, inscriptions) => {
+    if (err) {
+      console.log("error: " + err);
+      return res.json({status: 500, error: "Internal Server Error - Get Inscription by person"});
+    }else{
+      res.json({ inscByPer: inscriptions });
+    }
+  });
+}
+
 
 const sanitizeInputs = (inscription) => {
   const newInscription = new Inscription(inscription);

@@ -2,6 +2,7 @@
  * Created by ext_acian on 10/06/18.
  */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,18 +15,33 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 
+// Import Actions
+import { getInscriptionByPersonRequest } from '../../../Inscription/InscriptionActions';
+
+// Import Selectors
+import { getInscriptionsByPerson } from '../../InscriptionReducer';
+
 
 class InscriptionFormDialog extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       value: null,
       valueDiscountAmountRef: 0,
+      inscriptionsByPerson: this.props.inscriptionsByPerson,
+      okToInscript: false
     };
   }
 
   handleChange = (event, value) => {
     this.setState({ value: value });
+    this.checkInscription();
+  };
+
+  checkInscription = () => {
+    this.props.dispatch(getInscriptionByPersonRequest(this.props.person._id));
+    this.setState({ inscriptionsByPerson: this.props.inscriptionsByPerson });
+    this.setState({ okToInscript: true });
   };
 
   handleChangeDiscountAmount = name => event => {
@@ -57,7 +73,8 @@ class InscriptionFormDialog extends Component {
               onChange={this.handleChange}
             >
               {this.props.courses.map(option => (
-                <FormControlLabel value={option._id} key={option._id} control={<Radio />} label={option.name + " " + option.type + " - " + option.year + " - " + option.teacher} />
+                (option.year == new Date().getFullYear() || option.year == new Date().getFullYear() + 1) ? 
+                <FormControlLabel value={option._id} key={option._id} control={<Radio />} label={option.name + " " + option.type + " - " + option.year + " - " + option.teacher} /> : null
               ))}
               <TextField
                 id="standard-textarea"
@@ -68,20 +85,37 @@ class InscriptionFormDialog extends Component {
                 margin="normal"
                 onChange={this.handleChangeDiscountAmount('valueDiscountAmountRef')}
               />
+              {this.props.courses.map(cour => (
+                this.state.inscriptionsByPerson.map(insc => (
+                  (cour._id == insc.courseId && (cour.year == new Date().getFullYear() || cour.year == new Date().getFullYear() + 1)) ? <a>Inscripto en: {cour.name} - {cour.type} - {cour.year} - {cour.teacher}</a> : null
+                ))
+              ))}
             </RadioGroup>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.props.closeAction}>
               Cancelar
             </Button>
-            <Button onClick={this.inscriptionAction} color="primary">
-              Inscribir
-            </Button>
+            {(this.state.okToInscript) ?
+              <Button onClick={this.inscriptionAction} color="primary">
+                Inscribir
+              </Button> :
+              <Button onClick={this.inscriptionAction} disabled color="primary">
+                Inscribir
+              </Button>
+            }
           </DialogActions>
         </Dialog>
       </div>
     );
   }
+}
+
+// Retrieve data from store as props
+function mapStateToProps(state) {
+  return {
+    inscriptionsByPerson: getInscriptionsByPerson(state),
+  };
 }
 
 InscriptionFormDialog.propTypes = {
@@ -93,11 +127,18 @@ InscriptionFormDialog.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   })),
+  dispatch: PropTypes.func.isRequired,
   person: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     surname: PropTypes.string,
   })),
+  inscriptionsByPerson: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    studentId: PropTypes.string,
+    courseId: PropTypes.string,
+    status: PropTypes.string,
+  })),
 };
 
-export default injectIntl(InscriptionFormDialog);
+export default connect(mapStateToProps)(injectIntl(InscriptionFormDialog));

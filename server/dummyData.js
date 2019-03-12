@@ -45,9 +45,11 @@ export default function () {
     const person4 = new Person({ name: 'Fabiana', surname: 'Sanchez', dni: 30123456, address: 'Carbó 444', email: 'fsanchez@gmail.com', telephone:'3434223344', cellphone:'34345667890', birthDate:Date.now(), profession:'vendedora', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
     const person5 = new Person({ name: 'Marta', surname: 'Perez', dni: 29123456, address: 'Feliciano 326', email: 'mperez@gmail.com', telephone:'3434112233', cellphone:'34345667890', birthDate:Date.now(), profession:'directora', professionPlace:'Paraná', dateCreated:Date.now(), type:'10', active:true});
 
-    const course1 = new Course({ name: 'Segmento 1', type: 'A', year: 2018, teacher: 'Mercedes', amount: 1000, dueCost:10, printCost:10, active:true });
+    const course1 = new Course({ name: 'Segmento 1', type: 'A', year: 2019, teacher: 'Mercedes', amount: 1000, dueCost:10, printCost:10, active:true });
     const course2 = new Course({ name: 'Segmento 1', type: 'B', year: 2018, teacher: 'Mercedes2', amount: 1000, dueCost:10, printCost:10, active:true });
-    const course3 = new Course({ name: 'Junior', type: 'A', year: 2018, teacher: 'Mercedes3', amount: 1000, dueCost:10, printCost:10, active:true });
+    const course3 = new Course({ name: 'Junior', type: 'A', year: 2019, teacher: 'Mercedes3', amount: 1000, dueCost:10, printCost:10, active:true });
+    const course4 = new Course({ name: 'Segmento 1', type: 'B', year: 2019, teacher: 'Otra teacher', amount: 1000, dueCost:10, printCost:10, active:true });
+    const course5 = new Course({ name: 'Segmento 2', type: 'B', year: 2020, teacher: 'Otra teacher', amount: 1000, dueCost:10, printCost:10, active:true });
 
     Post.create([post1, post2], (error) => {
       if (!error) {
@@ -61,7 +63,7 @@ export default function () {
       }
     });
 
-    Course.create([course1,course2,course3], (error) => {
+    Course.create([course1,course2,course3,course4,course5], (error) => {
       if (error) {
         console.log(`ERROR ${error}`);
       }

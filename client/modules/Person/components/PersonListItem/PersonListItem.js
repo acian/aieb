@@ -29,6 +29,9 @@ import { fetchCourses } from '../../../Course/CourseActions';
 // Import Selectors
 import { getCourses } from '../../../Course/CourseReducer';
 
+//Import Service
+import { getInscriptionByPersonRequest }  from '../../../Inscription/Service/InscriptionService';
+
 
 class PersonListItem extends Component {
   state = {
@@ -48,11 +51,12 @@ class PersonListItem extends Component {
   };
 
   openInscriptionStudent = () => {
+    //let ins = getInscriptionByPersonRequest(this.props.person._id)
     this.props.dispatch(fetchCourses(1, 5));
     this.setState({ openInscription: true });
   };
 
-  handleInscriptionStudent = (idStudent,idCourse, discountAmount) => {
+  handleInscriptionStudent = (idStudent, idCourse, discountAmount) => {
     this.handleCloseInscription();
     this.props.dispatch(addInscriptionRequest(idStudent, idCourse, discountAmount));
     this.setState({ openMsj: true, typeMsj: 'success', textMsj: 'Persona inscripta correctamente.' });
@@ -80,23 +84,23 @@ class PersonListItem extends Component {
       <div>
         <MessageSnackBar typeMessage={this.state.typeMsj} textMessage={this.state.textMsj} openMsj={this.state.openMsj} handleClose={this.handleCloseMsj} />
         <ExpansionPanel className={styles['paper-description']}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Grid container spacing={24}>
               <Grid item xs={4}>
                 <div className={styles['primiry-heading']}>
-                  <FaceIcon/>
+                  <FaceIcon />
                   <div className={styles['detail-item']}><strong>{this.props.person.surname} , {this.props.person.name}</strong></div>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={styles['secondary-heading']}>
-                  <EmailIcon/>
+                  <EmailIcon />
                   <div className={styles['detail-item']}>{this.props.person.email}</div>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={styles['secondary-heading']}>
-                  <People/>
+                  <People />
                   <div className={styles['detail-item']}>{this.props.person.type}</div>
                 </div>
               </Grid>
@@ -110,28 +114,28 @@ class PersonListItem extends Component {
                     switch (key) {
                       case 'dni':
                         return <Chip key={key} label={propsIntlMessages.dni.toString()
-                          .toUpperCase() + ': ' + propsPerson[key]}/>;
+                          .toUpperCase() + ': ' + propsPerson[key]} />;
                       case 'address':
                         return <Chip key={key} label={propsIntlMessages.address.toString()
-                          .toUpperCase() + ': ' + propsPerson[key]}/>;
+                          .toUpperCase() + ': ' + propsPerson[key]} />;
                       case 'telephone':
                         return <Chip key={key} label={propsIntlMessages.telephone.toString()
-                          .toUpperCase() + ': ' + propsPerson[key]}/>;
+                          .toUpperCase() + ': ' + propsPerson[key]} />;
                       case 'birthDate':
                         return <Chip key={key} label={propsIntlMessages.birthDate.toString()
-                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)} />;
                       case 'cellphone':
                         return <Chip key={key} label={propsIntlMessages.cellphone.toString()
-                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)} />;
                       case 'profession':
                         return <Chip key={key} label={propsIntlMessages.profession.toString()
-                          .toUpperCase() + ': ' + propsPerson[key]}/>;
+                          .toUpperCase() + ': ' + propsPerson[key]} />;
                       case 'professionPlace':
                         return <Chip key={key} label={propsIntlMessages.professionPlace.toString()
-                          .toUpperCase() + ': ' + propsPerson[key]}/>;
+                          .toUpperCase() + ': ' + propsPerson[key]} />;
                       case 'birthPlace':
                         return <Chip key={key} label={propsIntlMessages.birthPlace.toString()
-                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)}/>;
+                          .toUpperCase() + ': ' + propsPerson[key].substr(0, 10)} />;
                       default:
                         return null;
                     }
@@ -141,23 +145,23 @@ class PersonListItem extends Component {
                 })}
             </Grid>
           </ExpansionPanelDetails>
-          <Divider/>
+          <Divider />
           <ExpansionPanelActions>
             <PersonFormDialog
               personAction={this.props.onEdit}
-              editMode={true} person={this.props.person}/>
+              editMode={true} person={this.props.person} />
             <Button onClick={this.handleOpenDelete} mini variant="fab" color="secondary" aria-label="delete">
-              <DeleteIcon/>
+              <DeleteIcon />
             </Button>
-            <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete}/>
+            <DeleteDialog id={this.props.person._id} text={textDelete} openDialog={this.state.openDelete} deleteAction={this.handleDelete} closeAction={this.handleCloseDelete} />
             {(this.props.person.type === this.props.intl.messages.student) ?
-              <Button onClick={this.openInscriptionStudent} mini variant="fab" aria-label="Inscribir"> <Assignment/> </Button> : null}
+              <Button onClick={this.openInscriptionStudent} mini variant="fab" aria-label="Inscribir"> <Assignment /> </Button> : null}
             <InscriptionFormDialog
               openInscription={this.state.openInscription}
               courses={this.props.courses}
               inscriptionAction={this.handleInscriptionStudent}
               closeAction={this.handleCloseInscription}
-              person={this.props.person}/>
+              person={this.props.person} />
           </ExpansionPanelActions>
         </ExpansionPanel>
       </div>
