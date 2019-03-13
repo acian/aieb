@@ -32,7 +32,7 @@ export function getCourses(req, res) {
  * @returns void
  */
 export function addCourse(req, res) {
-  if (!req.body.person.name) {
+  if (!req.body.course.name) {
     res.status(403).end();
   }
 
@@ -40,8 +40,17 @@ export function addCourse(req, res) {
 
   newCourse.save((err, saved) => {
     if (err) {
+      console.log(`ADD COURSE EN CONTROLLER ${err}`);
       res.status(500).send(err);
     }
+    console.log(`ADD COURSE DESPUES POR GUARDAR ${req.body.course.schedule}`);
+    console.log(`ADD COURSE LUNES ${req.body.course.monday}`);
+    console.log(`ADD COURSE Martes ${req.body.course.thursday}`);
+    console.log(`ADD COURSE miercoles ${req.body.course.wednesday}`);
+    console.log(`ADD COURSE jueves ${req.body.course.tuesday}`);
+    console.log(`ADD COURSE viernes ${req.body.course.friday}`);
+    console.log(`ADD COURSE sabado ${req.body.course.saturday}`);
+    console.log(`ADD COURSE status ${req.body.course.status}`);
     res.json({ course: saved });
   });
 }
@@ -130,7 +139,6 @@ export function editCourse(req, res) {
   editedCourse._id = req.params.id;
 
   const newData = { name: editedCourse.name,
-    days: editedCourse.days,
     year: editedCourse.year,
     type: editedCourse.type,
     schedule: editedCourse.schedule,
@@ -138,12 +146,31 @@ export function editCourse(req, res) {
     dueCost: editedCourse.dueCost,
     teacher: editedCourse.teacher,
     printCost: editedCourse.printCost,
+    monday: editedCourse.monday,
+    thursday: editedCourse.thursday,
+    wednesday: editedCourse.wednesday,
+    tuesday: editedCourse.tuesday,
+    friday : editedCourse.friday,
+    saturdayRef : editedCourse.saturday,
     active: editedCourse.active,
-    dateCreated: editedCourse.dateCreated
+    dateCreated: editedCourse.dateCreated,
+    status: editedCourse.status
   }
 
   Course.findOne({ _id: req.params.id }).exec((err, course) => {
+
+    console.log(`EDIT COURSE DESPUES POR GUARDAR ${req.body.course.schedule}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.monday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.thursday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.wednesday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.tuesday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.friday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.saturday}`);
+    console.log(`EDIT COURSE STATUS ${req.body.course.status}`);
+    console.log(`EDIT COURSE ID ${req.params.id}`);
+
     if (err) {
+      console.log(`ERROR AL EDITAR ${err}`);
       res.status(500).send(err);
     }
 
@@ -151,6 +178,7 @@ export function editCourse(req, res) {
       if (err) {
         res.status(500).send(err);
       }
+
       res.json({ editedCourse });
     });
   });
@@ -182,7 +210,6 @@ const sanitizeInputs = (course) => {
 
   // Let's sanitize inputs
   newCourse.name = sanitizeHtml(newCourse.name);
-  newCourse.days = sanitizeHtml(newCourse.days);
   newCourse.year = sanitizeHtml(newCourse.year);
   newCourse.type = sanitizeHtml(newCourse.type);
   newCourse.schedule = sanitizeHtml(newCourse.schedule);

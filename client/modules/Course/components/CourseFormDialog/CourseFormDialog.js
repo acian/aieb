@@ -15,6 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/ModeEdit';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 
 import styles from './CourseFormDialog.css';
 
@@ -22,14 +27,11 @@ class CourseFormDialog extends Component {
 
   state = {
     open: false,
-    type: 10,
-    nameText: '',
-    nameError: false,
+    status: 10,
     error: {
       name: false,
       type: false,
       year: false,
-      days: false,
       schedule: false,
       amount: false,
       dueCost: false,
@@ -37,14 +39,13 @@ class CourseFormDialog extends Component {
       printCost: false,
     },
     regex: {
-      name: /^[a-z||A-Z||\s]{1,30}$/,
-      type: /^[a-z||A-Z||\s]{1,20}$/,
+      name: /^[a-z||A-Z||\s||\d]{1,50}$/,
+      type: /^[a-z||A-Z||\s||\d]{1,10}$/,
       year: /^(\d{4})$/,
-      days: /^[a-z||A-Z||\s]{1,30}$/,
-      schedule: /^[a-z||A-Z||\s]{1,30}$/,
+      schedule: /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
       amount: /^(\d{1,10})$/,
       dueCost: /^(\d{1,10})$/,
-      teacher: /^[a-z||A-Z||\s||\d]{0,50}$/,
+      teacher: /^[a-z||A-Z||\s]{1,50}$/,
       printCost: /^(\d{1,10})$/,
     }
   };
@@ -58,31 +59,39 @@ class CourseFormDialog extends Component {
     const nameRef = this.name;
     const yearRef = this.year;
     const typeRef = this.type;
-    const daysRef = this.days;
     const scheduleRef = this.schedule;
     const amountRef = this.amount;
     const dueCostRef = this.dueCost;
     const teacherRef = this.teacher;
     const printCostRef = this.printCost;
-    const mondayRef = this.monday;
-    const thursdayRef = this.thursday;
-    const wednesdayRef = this.wednesday;
-    const tuesdayRef = this.tuesday;
-    const fridayRef = this.friday;
-    const saturdayRef = this.saturday;
+    const mondayRef = this.monday.checked;
+    const thursdayRef = this.thursday.checked;
+    const wednesdayRef = this.wednesday.checked;
+    const tuesdayRef = this.tuesday.checked;
+    const fridayRef = this.friday.checked;
+    const saturdayRef = this.saturday.checked;
+    const statusRef = this.status.node;
 
-    this.props.courseAction(nameRef.value, daysRef.value, scheduleRef.value, amountRef.value,
-      dueCostRef.value, teacherRef.value, printCostRef.value, firstDueDateRef.value,
-      secondDueDateRef.value, this.props.course ? this.props.course._id : 0);
-    nameRef.value = typeRef.value = daysRef.value = scheduleRef.value = amountRef.value = '';
+    this.props.courseAction(nameRef.value, typeRef.value, yearRef.value, scheduleRef.value,
+    amountRef.value, dueCostRef.value, teacherRef.value, printCostRef.value, mondayRef,
+    thursdayRef, wednesdayRef, tuesdayRef, fridayRef, saturdayRef, statusRef.value,
+    this.props.course ? this.props.course._id : 0);
+
+    //Clean form fields
+    nameRef.value = typeRef.value = scheduleRef.value = amountRef.value = '';
     dueCostRef.value = yearRef.value = teacherRef.value = printCostRef.value = '';
+
+    this.monday.checked = this.thursday.checked = this.wednesday.checked = false;
+    this.tuesday.checked = this.friday.checked = this.saturday.checked = false;
+
+    this.state.status = 10;
 
     this.cleanError();
     this.handleClose();
   };
 
   cleanError = () => {
-    this.state.error.name = this.state.error.days = this.state.error.schedule = false;
+    this.state.error.name = this.state.error.schedule = false;
     this.state.error.amount = this.state.error.dueCost = this.state.error.teacher = false;
     this.state.error.printCost = this.state.error.type = this.state.error.year = false;
   };
@@ -91,7 +100,6 @@ class CourseFormDialog extends Component {
     return this.state.error.name ||
       this.state.error.type ||
       this.state.error.year ||
-      this.state.error.days ||
       this.state.error.schedule ||
       this.state.error.amount ||
       this.state.error.dueCost ||
@@ -112,6 +120,10 @@ class CourseFormDialog extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
+  handleCheckboxChange = event => {
+    this.setState({[event.target.name]: event.target.checked});
+  };
+
   validate = event => {
 
     let inputName = event.target.name;
@@ -125,6 +137,21 @@ class CourseFormDialog extends Component {
     this.setState(statusCopy);
   };
 
+  componentDidMount = () => {
+    this.handleInitialize();
+  }
+
+  handleInitialize = () => {
+    if (this.props.course) {
+      this.setState({monday: this.props.course.monday})
+      this.setState({thursday: this.props.course.thursday})
+      this.setState({wednesday: this.props.course.wednesday})
+      this.setState({tuesday: this.props.course.tuesday})
+      this.setState({friday: this.props.course.friday})
+      this.setState({saturday: this.props.course.saturday})
+      this.setState({status: Number.parseInt(this.props.course.status)})
+    }
+  }
 
   render() {
     let button;
@@ -213,8 +240,9 @@ class CourseFormDialog extends Component {
                                fullWidth/>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField name="schedule" inputRef={x => this.schedule = x}
+                    <TextField inputRef={x => this.schedule = x}
                                id="time"
+                               name="schedule"
                                label={this.props.intl.messages.schedule}
                                defaultValue={course ? course.schedule : "20:30"}
                                type="time"
@@ -225,7 +253,7 @@ class CourseFormDialog extends Component {
                                  shrink: true,
                                }}
                                inputProps={{
-                                 step: 300, // 5 min
+                                 step: 300 // 5 min
                                }}
                                fullWidth/>
                   </Grid>
@@ -237,8 +265,10 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-up']}
                       control={
                         <Checkbox
-                          checked={this.mondayRef}
-                          inputRef={x => this.mondayRef = x}
+                          name="monday"
+                          checked={this.state.monday}
+                          inputRef={x => this.monday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
@@ -250,8 +280,10 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-up']}
                       control={
                         <Checkbox
-                          checked={this.thursdayRef}
-                          inputRef={x => this.thursdayRef = x}
+                          name="thursday"
+                          checked={this.state.thursday}
+                          inputRef={x => this.thursday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
@@ -263,8 +295,10 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-up']}
                       control={
                         <Checkbox
-                          checked={this.wednesdayRef}
-                          inputRef={x => this.wednesdayRef = x}
+                          name="wednesday"
+                          checked={this.state.wednesday}
+                          inputRef={x => this.wednesday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
@@ -276,8 +310,10 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-low']}
                       control={
                         <Checkbox
-                          checked={this.tuesdayRef}
-                          inputRef={x => this.tuesdayRef = x}
+                          name="tuesday"
+                          checked={this.state.tuesday}
+                          inputRef={x => this.tuesday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
@@ -289,8 +325,10 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-low']}
                       control={
                         <Checkbox
-                          checked={this.fridayRef}
-                          inputRef={x => this.fridayRef = x}
+                          name="friday"
+                          checked={this.state.friday}
+                          inputRef={x => this.friday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
@@ -302,13 +340,32 @@ class CourseFormDialog extends Component {
                       className={styles['days-week-low']}
                       control={
                         <Checkbox
-                          checked={this.saturdayRef}
-                          inputRef={x => this.saturdayRef = x}
+                          name="saturday"
+                          checked={this.state.saturday}
+                          inputRef={x => this.saturday = x}
+                          onChange={this.handleCheckboxChange}
                           color="primary"
                         />
                       }
                       label={this.props.intl.messages.saturday}
                     />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth>
+                      <InputLabel htmlFor="type-simple">{this.props.intl.messages.status}</InputLabel>
+                      <Select
+                        inputRef={x => this.status = x}
+                        value= {this.state.status}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'status',
+                          id: 'status-simple',
+                        }}
+                      >
+                        <MenuItem value={10}>{this.props.intl.messages.open}</MenuItem>
+                        <MenuItem value={20}>{this.props.intl.messages.closed}</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               </div>
@@ -337,8 +394,7 @@ CourseFormDialog.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     year: PropTypes.number,
-    days: PropTypes.string.isRequired,
-    schedule: PropTypes.string.isRequired,
+    schedule: PropTypes.string,
     amount: PropTypes.number,
     dueCost: PropTypes.number,
     teacher: PropTypes.string,

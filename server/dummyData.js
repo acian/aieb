@@ -52,14 +52,16 @@ export default function () {
     const course5 = new Course({ name: 'Segmento 2', type: 'B', year: 2020, teacher: 'Otra teacher', amount: 1000, dueCost:10, printCost:10, active:true });
 
     Post.create([post1, post2], (error) => {
+      console.log(`Creando Post ${error}`);
       if (!error) {
-        // console.log('ready to go....');
+        console.log(`ERROR POST ${error}`);
       }
     });
 
     Person.create([person1, person2, person3, person4, person5], (error) => {
+      console.log(`Creando Persona ${error}`);
       if (error) {
-        console.log(`ERROR ${error}`);
+        console.log(`ERROR PERSON ${error}`);
       }
     });
 
