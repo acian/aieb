@@ -50,6 +50,7 @@ export function addCourse(req, res) {
     console.log(`ADD COURSE jueves ${req.body.course.tuesday}`);
     console.log(`ADD COURSE viernes ${req.body.course.friday}`);
     console.log(`ADD COURSE sabado ${req.body.course.saturday}`);
+    console.log(`ADD COURSE status ${req.body.course.status}`);
     res.json({ course: saved });
   });
 }
@@ -153,10 +154,23 @@ export function editCourse(req, res) {
     saturdayRef : editedCourse.saturday,
     active: editedCourse.active,
     dateCreated: editedCourse.dateCreated,
+    status: editedCourse.status
   }
 
   Course.findOne({ _id: req.params.id }).exec((err, course) => {
+
+    console.log(`EDIT COURSE DESPUES POR GUARDAR ${req.body.course.schedule}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.monday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.thursday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.wednesday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.tuesday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.friday}`);
+    console.log(`EDIT COURSE LUNES ${req.body.course.saturday}`);
+    console.log(`EDIT COURSE STATUS ${req.body.course.status}`);
+    console.log(`EDIT COURSE ID ${req.params.id}`);
+
     if (err) {
+      console.log(`ERROR AL EDITAR ${err}`);
       res.status(500).send(err);
     }
 
@@ -164,13 +178,7 @@ export function editCourse(req, res) {
       if (err) {
         res.status(500).send(err);
       }
-      console.log(`EDIT COURSE DESPUES POR GUARDAR ${req.body.course.schedule}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.monday}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.thursday}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.wednesday}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.tuesday}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.friday}`);
-      console.log(`EDIT COURSE LUNES ${req.body.course.saturday}`);
+
       res.json({ editedCourse });
     });
   });

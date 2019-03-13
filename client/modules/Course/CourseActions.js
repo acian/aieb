@@ -41,6 +41,7 @@ export function addCourseRequest(course) {
         tuesday: course.tuesday,
         friday: course.friday,
         saturday: course.saturday,
+        status: course.status
       },
     }).then(res => dispatch(addCourse({ paging: { total: paging.total + 1, limit: paging.limit, offset: 1 }, results: res.course })));
   };
@@ -105,6 +106,7 @@ export function editCourseRequest(course, paging) {
         tuesday: course.tuesday,
         friday: course.friday,
         saturday: course.saturday,
+        status: course.status
       },
     }).then(res => dispatch(editCourse({ paging: { total: paging.total, limit: paging.limit, offset: paging.offset }, results: res.editedCourse })));
   };

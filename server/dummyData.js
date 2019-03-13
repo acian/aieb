@@ -61,12 +61,12 @@ export default function () {
       }
     });
 
-    Course.create([course1], (error) => {
+    /*Course.create([course1], (error) => {
       console.log(`Creando Course ${error}`);
       if (error) {
         console.log(`ERROR COURSE ${error}`);
       }
-    });
+    });*/
 
   });
 }

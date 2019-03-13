@@ -15,6 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/ModeEdit';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 
 import styles from './CourseFormDialog.css';
 
@@ -65,10 +70,11 @@ class CourseFormDialog extends Component {
     const tuesdayRef = this.tuesday.checked;
     const fridayRef = this.friday.checked;
     const saturdayRef = this.saturday.checked;
+    const statusRef = this.status.node;
 
     this.props.courseAction(nameRef.value, typeRef.value, yearRef.value, scheduleRef.value,
     amountRef.value, dueCostRef.value, teacherRef.value, printCostRef.value, mondayRef,
-    thursdayRef, wednesdayRef, tuesdayRef, fridayRef, saturdayRef,
+    thursdayRef, wednesdayRef, tuesdayRef, fridayRef, saturdayRef, statusRef.value,
     this.props.course ? this.props.course._id : 0);
 
     //Clean form fields
@@ -77,6 +83,8 @@ class CourseFormDialog extends Component {
 
     this.monday.checked = this.thursday.checked = this.wednesday.checked = false;
     this.tuesday.checked = this.friday.checked = this.saturday.checked = false;
+
+    this.state.status = 10;
 
     this.cleanError();
     this.handleClose();

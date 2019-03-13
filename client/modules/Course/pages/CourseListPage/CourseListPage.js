@@ -44,12 +44,12 @@ class CourseListPage extends Component {
     }
   };
 
-  handleEditCourse = (name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday, id) => {
-    this.props.dispatch(editCourseRequest({ id, name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday }, this.props.paging));
+  handleEditCourse = (name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday, status, id) => {
+    this.props.dispatch(editCourseRequest({ id, name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday, status }, this.props.paging));
   };
 
-  handleAddCourse = (name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday) => {
-    this.props.dispatch(addCourseRequest({ name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday }, this.props.paging));
+  handleAddCourse = (name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday, status) => {
+    this.props.dispatch(addCourseRequest({ name, type, year, schedule, amount, dueCost, teacher, printCost, monday, thursday, wednesday, tuesday, friday, saturday, status }, this.props.paging));
   };
 
   handleSearchCourses = (query, currentPage, limit) => {
