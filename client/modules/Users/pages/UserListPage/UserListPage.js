@@ -1,0 +1,79 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+// Import Components
+import UserList from '../../components/UserList';
+import AddForm from '../../components/UserAddForm/UserAddForm';
+import Grid from '@material-ui/core/Grid';
+
+// Import Actions
+import { fetchUsers, addUserRequest, editUserRequest } from '../../UserActions';
+
+// Import Selectors
+import { getShowAddUser } from '../../../App/AppReducer';
+import { getUsers } from '../../UserReducer';
+
+
+class UserListPage extends Component {
+  componentDidMount() {
+    this.handleFetchUsers;
+  }
+
+  handleFetchUsers = () => {
+    this.props.dispatch(fetchUsers());
+  };
+
+  //Edit user
+  handleEditUser = (name, surname, user, password, type, status, id ) => {
+     this.props.dispatch(editUserRequest({ name, surname, user, password, type, status, id }));
+  };
+
+  handleAddUser = (name, surname, user, password, type, status ) => {
+    this.props.dispatch(addUserRequest({ name, surname, user, password, type, status }));
+  };
+
+  render() {
+    return (
+      <div>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <AddForm userAction={this.handleAddUser}/>
+          </Grid>
+          <Grid item xs={12}>
+            <UserList users={this.props.users} handleEditUser={this.handleEditUser} />
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
+}
+
+// Actions required to provide data for this component to render in sever side.
+UserListPage.need = [() => { return fetchUsers(); }];
+
+// Retrieve data from store as props
+function mapStateToProps(state) {
+  return {
+    showAddPerson: getShowAddUser(state),
+    users: getUsers(state),
+  };
+}
+
+UserListPage.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    surname: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  })).isRequired,
+  //showAddPerson: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+UserListPage.contextTypes = {
+  router: PropTypes.object,
+};
+
+export default connect(mapStateToProps)(UserListPage);

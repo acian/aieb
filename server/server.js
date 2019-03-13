@@ -40,6 +40,7 @@ import posts from './routes/post.routes';
 import people from './routes/person.routes';
 import courses from './routes/course.routes';
 import inscription from './routes/inscription.routes';
+import users from './routes/user.routes';
 import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -65,6 +66,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', people);
 app.use('/api', courses);
 app.use('/api', inscription);
+app.use('/api', users);
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {

@@ -5,35 +5,42 @@ import GroupIcon from '@material-ui/icons/Group';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Settings from '@material-ui/icons/Settings';
 import ContactMail from '@material-ui/icons/ContactMail';
+import UserIcon from '@material-ui/icons/GroupAdd';
 
 import stylesBM from './BurgerMenuStyles.js';
 import styles from './BurgerMenu.css';
 
 export class BurgerMenu extends Component {
-	showSettings (event) {
-	    event.preventDefault();
-  }
 
-	render () {
-	    return (
-	      <Menu styles={stylesBM}>
-          <a id="Students" href="/">
-            <PersonIcon /> <div className={styles['detail-item']}><span>Personas</span></div>
-          </a>
-          <a id="Courses" href="/courses">
-            <GroupIcon /> <div className={styles['detail-item']}><span>Cursos</span></div>
-          </a>
-          <a id="about" href="/">
-            <AssignmentIcon /> <div className={styles['detail-item']}><span>About</span></div>
-          </a>
-          <a id="AssignmentIcon" href="/">
-            <ContactMail/> <div className={styles['detail-item']}><span>Contact</span></div>
-          </a>
-          <a id="settings" href="/">
-            <Settings /> <div className={styles['detail-item']}><span>Settings</span></div>
-          </a>
-	      </Menu>
-	    );
+  render() {
+    return (
+      <Menu styles={stylesBM}>
+        <a id="Students" href="/">
+          <PersonIcon/>
+          <div className={styles['detail-item']}><span>Personas</span></div>
+        </a>
+        <a id="Users" href="/users">
+          <UserIcon/>
+          <div className={styles['detail-item']}><span>Usuarios</span></div>
+        </a>
+        <a id="Courses" href="/courses">
+          <GroupIcon/>
+          <div className={styles['detail-item']}><span>Cursos</span></div>
+        </a>
+        <a id="about" href="/">
+          <AssignmentIcon/>
+          <div className={styles['detail-item']}><span>About</span></div>
+        </a>
+        <a id="AssignmentIcon" href="/">
+          <ContactMail/>
+          <div className={styles['detail-item']}><span>Contact</span></div>
+        </a>
+        <a id="settings" href="/">
+          <Settings/>
+          <div className={styles['detail-item']}><span>Settings</span></div>
+        </a>
+      </Menu>
+    );
   }
 };
 

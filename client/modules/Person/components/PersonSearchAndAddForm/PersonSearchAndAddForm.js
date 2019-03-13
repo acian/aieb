@@ -25,7 +25,7 @@ class PersonSearchAndAddForm extends Component {
             inputRef={x => this.query = x}
             onKeyPress={(ev) => {
               if (ev.key === 'Enter') {
-                this.searchPeople()
+                this.searchPeople();
                 ev.preventDefault();
               }
             }}
