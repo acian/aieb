@@ -47,7 +47,7 @@ class PersonListPage extends Component {
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
   defaultLimit = 1;
-  defaultOffset = 2;
+  defaultOffset = 5;
 
   handleFetchPeople = () => {
     this.props.dispatch(fetchPeople(this.defaultLimit, this.defaultOffset));
@@ -120,7 +120,7 @@ class PersonListPage extends Component {
 // constantes para el paginado, limit y offset de cada consulta server side
 PersonListPage.need = [() => {
   const defaultLimit = 1;
-  const defaultOffset = 2;
+  const defaultOffset = 5;
   return fetchPeople(defaultLimit, defaultOffset);
 }];
 

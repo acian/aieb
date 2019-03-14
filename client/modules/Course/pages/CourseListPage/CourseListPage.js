@@ -26,7 +26,7 @@ class CourseListPage extends Component {
 
   // constantes para el paginado, limit y offset de cada consulta server side - ver tambien en PersonListPage.need, deben ser iguales
   defaultLimit = 1
-  defaultOffset = 2
+  defaultOffset = 5
 
   componentDidMount() {
     setTimeout(() => this.setState({ loading: false }), 500);
@@ -99,7 +99,7 @@ class CourseListPage extends Component {
 // Actions required to provide data for this component to render in sever side.
 CourseListPage.need = [() => {
   const defaultLimit = 1
-  const defaultOffset = 2
+  const defaultOffset = 5
   return fetchCourses(defaultLimit, defaultOffset);
   }];
 
